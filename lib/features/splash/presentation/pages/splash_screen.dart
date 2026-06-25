@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/features/home/presentation/pages/home_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/splash_provider.dart';
 
@@ -24,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
     await provider.initializeApp();
 
     if (mounted) {
-      // Navigator.pushReplacementNamed(context, '/homeScreen');
+      Navigator.push(context, MaterialPageRoute(builder:(context) => HomeScreen() ) );
     }
   }
 
@@ -48,6 +49,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget _buildOrangeLogo() {
-    return Image.asset("assets/images/logo.jpg",height: 120,width: 120,);
+    return Image.asset("assets/images/logo.jpg",height: 150,width: 150,);
   }
 }
