@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/features/home/presentation/providers/home_provider.dart';
 import 'package:provider/provider.dart';
 
 import 'features/splash/domain/usecases/init_app_usecase.dart';
@@ -20,6 +21,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (_) => SplashProvider(initAppUseCase: InitAppUseCase()),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => HomeProvider(),
         ),
       ],
       child: MaterialApp(

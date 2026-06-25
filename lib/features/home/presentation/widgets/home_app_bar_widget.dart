@@ -7,32 +7,28 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.white,
-      elevation: 0, // إلغاء الظل تماماً ليتناسب مع التصميم البسيط والنظيف
-      scrolledUnderElevation: 0, // يضمن ثبات اللون الأبيض حتى عند التمرير
+      elevation: 0, 
+      scrolledUnderElevation: 0, 
       
-      // 1. اللوغو البرتقالي على اليسار (Leading)
       leading: Padding(
-        padding: const EdgeInsets.only(left: 16.0), // مسافة أمان من حافة الشاشة اليسرى
+        padding: const EdgeInsets.only(left: 16.0), 
         child: _buildOrangeLogo(),
       ),
-      leadingWidth: 56, // إعطاء مساحة عرض مناسبة للوغو لمنع انضغاطه
+      leadingWidth: 56,
       
-      // 2. الصورة الشخصية للموظف على اليمين (Actions)
       actions: [
         _buildProfileAvatar(),
-        const SizedBox(width: 16), // مسافة أمان قبل حافة الشاشة اليمنى
+        const SizedBox(width: 16), 
       ],
     );
   }
 
-  // ويدجت اللوغو البرتقالي المبسط
   Widget _buildOrangeLogo() {
     return Center(
       child: Image.asset("assets/images/logo.jpg",height: 170,width: 170,)
     );
   }
 
-  // ويدجت الصورة الشخصية (Profile Avatar)
   Widget _buildProfileAvatar() {
     return GestureDetector(
      
@@ -50,7 +46,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         child: ClipRRect(
           borderRadius: BorderRadius.circular(20),
           child: Image.network(
-            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256', // رابط صورة تجريبية عالية الجودة
+            'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256', 
             fit: BoxFit.cover,
             errorBuilder: (context, error, stackTrace) {
               return const Icon(Icons.person, color: Colors.grey);
