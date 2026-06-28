@@ -1,61 +1,58 @@
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/features/home/presentation/widgets/home_app_bar_widget.dart';
+import 'package:orange_hr_dev/features/home/presentation/widgets/home_bottom_nav_bar.dart';
 import 'package:orange_hr_dev/features/home/presentation/widgets/home_carousel_banner.dart';
+import 'package:orange_hr_dev/features/home/presentation/widgets/home_actions_grid.dart';
 
 class HomeScreen extends StatelessWidget {
-  // إضافة const هنا تضمن كفاءة استهلاك الذاكرة وعدم إعادة بناء هيكل الشاشة دون داعٍ
   const HomeScreen({super.key});
-  
 
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
+      bottomNavigationBar: HomeBottomNavBar(),
       backgroundColor: Colors.white,
-      // الـ AppBar المبسط (اللوغو + الصورة الشخصية)
       appBar: HomeAppBar(),
-      
       body: SafeArea(
         child: SingleChildScrollView(
           physics: BouncingScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
               Padding(
-                padding: EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                     "Hi Anas",
+                      "Hi Mohammed",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 28,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
-                        height: 1.15, // تقريب السطرين لبعضهما مثل التصميم تماماً
-                        letterSpacing: 0.5,
+                        height: 1.2,
+                        letterSpacing: 0.2,
                       ),
-                    ), Text(
-                 "welcome back",
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 28,
-                  
-                    height: 1.15, // تقريب السطرين لبعضهما مثل التصميم تماماً
-                    letterSpacing: 0.5,
-                  ),
-                ),
+                    ),
+                    SizedBox(height: 4),
+                    Text(
+                      "Welcome Back",
+                      style: TextStyle(
+                        color: Color(0xFF606060), 
+                        fontSize: 18,
+                        height: 1.2,
+                        letterSpacing: 0.2,
+                      ),
+                    ),
                   ],
                 ),
               ),
-              
-              // 2. الجزء الثاني: بنر الصورة (مدمج مباشرة أسفل العنوان بمسافات متناسقة)
               Padding(
-                padding: EdgeInsets.symmetric(vertical: 8.0),
+                padding: EdgeInsets.symmetric(vertical: 12.0),
                 child: HomeCarouselBanner(),
               ),
-              
-              // أي عناصر أو أقسام جديدة سنضيفها هنا بكل سهولة مستقبلاً...
+              HomeActionsGrid(),
+              SizedBox(height: 24), // Extra bottom padding
             ],
           ),
         ),
@@ -63,4 +60,3 @@ class HomeScreen extends StatelessWidget {
     );
   }
 }
-
