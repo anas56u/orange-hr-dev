@@ -98,23 +98,23 @@ class HomeActionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-      child: GridView.builder(
-        itemCount: _mockCategories.length,
-        shrinkWrap: true, // Important for placing inside SingleChildScrollView
-        physics:
-            const NeverScrollableScrollPhysics(), // Disable GridView's own scrolling
+      sliver:SliverGrid(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
           crossAxisSpacing: 16.0,
           mainAxisSpacing: 16.0,
-          childAspectRatio: 1.0, // Square cards
+          childAspectRatio: 1.0,
         ),
-        itemBuilder: (context, index) {
-          final category = _mockCategories[index];
-          return ActionCardWidget(category: category);
-        },
+        // 3. استخدام SliverChildBuilderDelegate لبناء العناصر بكفاءة عالية (Lazy Loading)
+        delegate: SliverChildBuilderDelegate(
+          (context, index) {
+            final category = _mockCategories[index];
+            return ActionCardWidget(category: category);
+          },
+          childCount: _mockCategories.length, // من المهم جداً تحديد العدد
+        ),
       ),
     );
   }

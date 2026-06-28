@@ -1,4 +1,3 @@
-// هذا الكلاس مسؤول فقط عن عملية تهيئة التطبيق الأولية
 class InitAppUseCase {
   
   Future<void> execute() async {
