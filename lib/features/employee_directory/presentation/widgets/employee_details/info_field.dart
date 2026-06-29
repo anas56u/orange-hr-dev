@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// A simple row displaying a label (in orange) and a value below it,
-/// used for Unit, Organization, and Address fields.
 class InfoField extends StatelessWidget {
   final String label;
   final String value;

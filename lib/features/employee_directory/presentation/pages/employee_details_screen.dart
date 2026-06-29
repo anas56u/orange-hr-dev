@@ -5,10 +5,6 @@ import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/e
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/employee_details/info_field.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/employee_details/back_action_button.dart';
 
-/// Full-screen Employee Details page.
-///
-/// Accepts an [Employee] via its constructor — all data is passed from
-/// the list screen, keeping this widget stateless and fast to render.
 class EmployeeDetailsScreen extends StatelessWidget {
   final Employee employee;
 
@@ -34,7 +30,6 @@ class EmployeeDetailsScreen extends StatelessWidget {
           children: [
             const SizedBox(height: 8),
 
-            // --- Avatar + Name + Position (centered) ---
             Center(
               child: EmployeeAvatarSection(
                 imageUrl: employee.imageUrl,
@@ -45,17 +40,15 @@ class EmployeeDetailsScreen extends StatelessWidget {
 
             const SizedBox(height: 28),
 
-            // --- Email Card ---
             ContactInfoCard(
               label: 'Email:',
               value: employee.email,
               actionIcon: Icons.mail,
-              actionIconColor: const Color(0xFF4FC3F7), // Light blue
+              actionIconColor: const Color(0xFF4FC3F7),
             ),
 
             const SizedBox(height: 14),
 
-            // --- Mobile Card ---
             ContactInfoCard(
               label: 'Mobile:',
               value: employee.mobile,
