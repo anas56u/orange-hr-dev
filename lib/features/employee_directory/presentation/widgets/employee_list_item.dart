@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:orange_hr_dev/features/employee_directory/presentation/pages/employee_directory_screen.dart'; // Import to get Employee model
+import 'package:orange_hr_dev/features/employee_directory/presentation/pages/employee_directory_screen.dart';
+import 'package:orange_hr_dev/features/employee_directory/presentation/pages/employee_details_screen.dart';
 
 class EmployeeListItem extends StatelessWidget {
   final Employee employee;
@@ -13,13 +14,17 @@ class EmployeeListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // Handle tap
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => EmployeeDetailsScreen(employee: employee),
+          ),
+        );
       },
+
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
         child: Row(
           children: [
-            // Avatar
             ClipOval(
               child: Image.network(
                 employee.imageUrl,
