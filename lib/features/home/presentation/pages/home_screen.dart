@@ -6,6 +6,7 @@ import 'package:orange_hr_dev/features/home/presentation/widgets/home_bottom_nav
 import 'package:orange_hr_dev/features/home/presentation/widgets/home_tab_content.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/pages/employee_directory_screen.dart';
 import 'package:orange_hr_dev/features/notifications/presentation/pages/notifications_screen.dart';
+import 'package:orange_hr_dev/features/inbox/presentation/pages/inbox_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -25,7 +26,7 @@ class HomeScreen extends StatelessWidget {
               children: const [
                 HomeTabContent(), // Index 0: Home
                 EmployeeDirectoryScreen(), // Index 1: Address Book
-                Center(child: Text("Folder Content")), // Index 2: Placeholder
+                InboxScreen(), // Index 2: Inbox / Worklist
                 NotificationsScreen(), // Index 3: Notifications
                 Center(child: Text("Settings")), // Index 4: Placeholder
               ],
