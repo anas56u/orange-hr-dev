@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:iconsax/iconsax.dart'; 
+import 'package:iconsax/iconsax.dart';
 import '../providers/home_provider.dart';
 
 class HomeBottomNavBar extends StatelessWidget {
@@ -8,31 +8,31 @@ class HomeBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // 1. حذفنا ()context.watch تماماً من هنا لمنع إعادة بناء الحاوية والأيقونات كلها.
-    // الدالة build هنا ستُنفذ "مرة واحدة فقط" عند فتح الشاشة أول مرة.
 
     return Container(
-      padding: const EdgeInsets.symmetric(vertical: 12),
+      padding: const EdgeInsets.symmetric(vertical: 18),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
-        ), 
+        ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.08), 
+            color: Colors.black.withOpacity(0.11),
             blurRadius: 20,
-            offset: const Offset(0, -5), // تم تعديل الإزاحة لتكون للأعلى ليظهر الظل فوق الشريط
+            offset: const Offset(
+              0,
+              -5,
+            ),
           ),
         ],
       ),
       child: SafeArea(
-        bottom: false, 
+        bottom: false,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly, 
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            // 2. قمنا بإزالة تمرير الـ currentIndex لكل عنصر لأن العنصر سيجلب حالته بنفسه
             CustomNavItem(
               icon: Iconsax.home,
               activeIcon: Iconsax.home_15,
@@ -46,7 +46,7 @@ class HomeBottomNavBar extends StatelessWidget {
               onTap: () => context.read<HomeProvider>().updateTabIndex(1),
             ),
             CustomNavItem(
-              icon: Iconsax.direct_inbox, 
+              icon: Iconsax.direct_inbox,
               activeIcon: Iconsax.direct_inbox5,
               index: 2,
               onTap: () => context.read<HomeProvider>().updateTabIndex(2),
@@ -95,19 +95,19 @@ class CustomNavItem extends StatelessWidget {
         builder: (context, isSelected, child) {
           // الكود هنا بداخل الـ builder لن يُنفذ إلا إذا تغيرت قيمة isSelected فقط!
           return Column(
-            mainAxisSize: MainAxisSize.min, 
+            mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 isSelected ? activeIcon : icon,
-                color: isSelected ? Colors.black : Colors.grey.shade400, 
+                color: isSelected ? Colors.black : Colors.grey.shade400,
                 size: 26,
               ),
-              const SizedBox(height: 6), 
+              const SizedBox(height: 6),
               AnimatedContainer(
                 duration: const Duration(milliseconds: 300),
-                curve: Curves.easeOutCubic, 
+                curve: Curves.easeOutCubic,
                 height: 4,
-                width: isSelected ? 16 : 0, 
+                width: isSelected ? 16 : 0,
                 decoration: BoxDecoration(
                   color: isSelected ? Colors.orange : Colors.transparent,
                   borderRadius: BorderRadius.circular(2),
