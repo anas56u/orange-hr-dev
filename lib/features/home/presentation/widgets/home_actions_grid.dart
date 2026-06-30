@@ -93,43 +93,94 @@ class HomeActionsGrid extends StatelessWidget {
     );
   }
 }
-
-class ActionCardWidget extends StatelessWidget {
+class ActionCardWidget extends StatefulWidget {
   final ActionCategory category;
+  
+  // Best Practice: تمرير دالة تنفيذية من الأب للابن
+  // لكي نحدد ماذا سيحدث برمجياً عند الضغط (مثل فتح صفحة جديدة)
+  final VoidCallback? onTap; 
 
-  const ActionCardWidget({super.key, required this.category});
+  const ActionCardWidget({
+    super.key, 
+    required this.category,
+    this.onTap,
+  });
+
+  @override
+  State<ActionCardWidget> createState() => _ActionCardWidgetState();
+}
+
+class _ActionCardWidgetState extends State<ActionCardWidget> {
+  // متغير يحفظ حالة الكرت: هل هو مضغوط الآن أم لا؟
+  bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(24.0),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.04),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
-          ),
-        ],
-      ),
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(category.icon, color: category.iconColor, size: 40.0),
-          const SizedBox(height: 29),
-          Text(
-            category.title,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18.0,
-              fontWeight: FontWeight.bold,
-              height: 1.2,
+    return GestureDetector(
+      // عند بداية لمس الشاشة
+      onTapDown: (_) {
+        setState(() {
+          isPressed = true; // تغيير الحالة إلى "مضغوط"
+        });
+      },
+      // عند رفع الإصبع (اكتمال الضغطة بنجاح)
+      onTapUp: (_) {
+        setState(() {
+          isPressed = false; // إعادة الحالة للوضع الطبيعي
+        });
+        
+        // تنفيذ الحدث الفعلي إذا تم تمريره (مثل الانتقال لصفحة أخرى)
+        if (widget.onTap != null) {
+          widget.onTap!();
+        }
+      },
+      // عند سحب الإصبع بعيداً عن الكرت قبل إفلاته (إلغاء الضغطة)
+      onTapCancel: () {
+        setState(() {
+          isPressed = false;
+        });
+      },
+      
+      // Best Practice: استخدام AnimatedContainer بدلاً من Container العادي
+      // هذا سيعطي انتقالاً حركياً ناعماً (Smooth Transition) للألوان بدلاً من التغير المفاجئ
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 150), // سرعة التغير
+        decoration: BoxDecoration(
+          // إذا كان مضغوطاً نجعل الخلفية سوداء، وإلا بيضاء
+          color: isPressed ? Colors.black : Colors.white,
+          borderRadius: BorderRadius.circular(24.0),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.04),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
             ),
-          ),
-        ],
+          ],
+        ),
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              widget.category.icon, 
+              // إذا كان مضغوطاً نجعل الأيقونة بيضاء، وإلا نستخدم لونها الأصلي
+              color: isPressed ? Colors.white : widget.category.iconColor, 
+              size: 40.0,
+            ),
+            const SizedBox(height: 29),
+            Text(
+              widget.category.title,
+              style: TextStyle(
+                // إذا كان مضغوطاً نجعل النص أبيض، وإلا أسود
+                color: isPressed ? Colors.white : Colors.black,
+                fontSize: 18.0,
+                fontWeight: FontWeight.bold,
+                height: 1.2,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
