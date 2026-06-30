@@ -13,6 +13,10 @@ const Set<String> _categoriesWithSubPages = {
   'Objectives & Appraisal',
   'Employee Benefits',
   'Health Insurance',
+  'Approval Center', 
+  'Jobs & Recruitment',
+  'Training & Certificates',
+  'Internal Communication',
 };
 
 const List<ActionCategory> _mockCategories = [

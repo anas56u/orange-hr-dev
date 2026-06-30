@@ -5,35 +5,128 @@ import '../../domain/entities/category_detail.dart';
 
 class CategoryLocalDataSource {
   static final Map<String, CategoryDetail> _categoryData = {
-    "Approval center": const CategoryDetail(
-      title: "Approval center",
+    "Approval Center": const CategoryDetail(
+      title: "Approval Center",
       icon: Icons.check_circle,
       iconColor: Colors.green,
       actions: [
-
-
-    ]),"Jobs& Recruitment": const CategoryDetail(
-     title: 'Jobs& Recruitment',
-    icon: Iconsax.people5,
-    iconColor: Color(0xFF607D8B),
+        CategoryActionItem(
+          title: 'Leave Approvals',
+          routeId: 'leave_approvals',
+        ),
+        CategoryActionItem(
+          title: 'pr / po Approvals',
+          routeId: 'overtime_approvals',
+        ),
+        CategoryActionItem(
+          title: 'ir  Approvals',
+          routeId: 'letter_approvals',
+        ),
+        CategoryActionItem(
+          title: 'invoice Approvals',
+          routeId: 'loan_approvals',
+        ),
+      ],
+    ),
+    // 1. لاحظ أننا أضفنا المسافة ليصبح "Jobs & Recruitment"
+    "Jobs & Recruitment": const CategoryDetail(
+      title: 'Jobs & Recruitment',
+      icon: Iconsax.people5,
+      iconColor: Color(0xFF607D8B),
       actions: [
-        
-
-    ]),"Training& Certificates": const CategoryDetail(
-       title: 'Training& Certificates',
-    icon: Iconsax.teacher5,
-    iconColor: Color(0xFF29B6F6),
+        // 2. العنصر الأول من الصورة
+       CategoryActionItem(
+    title: 'Job Description',
+    routeId: 'job_description',
+  ),
+  CategoryActionItem(
+    title: 'Apply For A Job',
+    routeId: 'apply_for_a_job',
+  ),
+  CategoryActionItem(
+    title: 'Recruitment Request',
+    routeId: 'recruitment_request',
+  ),
+      ],
+    ),
+    "Training & Certificates": const CategoryDetail(
+      title: 'Training & Certificates',
+      icon: Iconsax.teacher5,
+      iconColor: Color(0xFF29B6F6),
       actions: [
-        
-
-    ]),"Internal Communication": const CategoryDetail(
-       title: 'Internal Communication',
-    icon: Iconsax.message5,
-    iconColor: Color(0xFFFF6B35),
+        CategoryActionItem(
+          title: 'My Qualification',
+          routeId: 'my_qualification',
+        ),
+        CategoryActionItem(
+          title: 'Employee Learning',
+          routeId: 'employee_learning',
+        ),
+        CategoryActionItem(
+          title: 'In-House Training',
+          routeId: 'in_house_training',
+        ),
+        CategoryActionItem(
+          title: 'Local & International Training',
+          routeId: 'local_and_international_training',
+        ),
+        CategoryActionItem(
+          title: 'Training And Travel Request',
+          routeId: 'training_and_travel_request',
+        ),
+        CategoryActionItem(
+          title: 'Future Skills Training Request',
+          routeId: 'future_skills_training_request',
+        ),
+        CategoryActionItem(
+          title: 'Training Report - Jtg',
+          routeId: 'training_report_jtg',
+        ),
+        CategoryActionItem(
+          title: 'Upload Professional Certificate',
+          routeId: 'upload_professional_certificate',
+        ),
+        CategoryActionItem(
+          title: 'Request New Professional Certificate',
+          routeId: 'request_new_professional_certificate',
+        ),
+        CategoryActionItem(
+          title: 'Orange Scholarship',
+          routeId: 'orange_scholarship',
+        ),
+      ],
+    ),
+    "Internal Communication": const CategoryDetail(
+      title: 'Internal Communication',
+      icon: Iconsax.message5,
+      iconColor: Color(0xFFFF6B35),
       actions: [
-        
-
-    ]),
+         CategoryActionItem(
+      title: 'Intranet',
+      routeId: 'intranet',
+    ),
+    CategoryActionItem(
+      title: 'Orange Radio',
+      routeId: 'orange_radio',
+    ),
+    CategoryActionItem(
+      title: 'Plazza',
+      routeId: 'plazza',
+    ),
+    CategoryActionItem(
+      title: 'Wellbeing',
+      routeId: 'wellbeing',
+    ),
+    CategoryActionItem(
+      title: 'Internal Communication Requests',
+      routeId: 'internal_communication_requests',
+    ),
+    CategoryActionItem(
+      title: 'Thank You Card',
+      routeId: 'thank_you_card',
+    ),
+      ],
+    ),
     'Payroll & Letters': const CategoryDetail(
       title: 'Payroll & Letters',
       icon: Iconsax.document_text5,
@@ -62,6 +155,21 @@ class CategoryLocalDataSource {
         CategoryActionItem(title: 'Salary Slip', routeId: 'salary_slip'),
         CategoryActionItem(
           title: 'Salary Transfer',
+          routeId: 'salary_transfer',
+        ), CategoryActionItem(
+          title: 'Salary Transfer (conditinal)',
+          routeId: 'salary_transfer',
+        ), CategoryActionItem(
+          title: 'Salary Transfer continuity',
+          routeId: 'salary_transfer',
+        ), CategoryActionItem(
+          title: 'provident fund slip',
+          routeId: 'salary_transfer',
+        ), CategoryActionItem(
+          title: 'orange money extra amount',
+          routeId: 'salary_transfer',
+        ), CategoryActionItem(
+          title: 'family offers',
           routeId: 'salary_transfer',
         ),
       ],
