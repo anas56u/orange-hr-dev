@@ -1,23 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import '../../domain/entities/action_category.dart';
+import '../pages/category_detail_screen.dart';
+import '../pages/placeholder_sub_page.dart';
 
-class ActionCategory {
-  final String title;
-  final IconData icon;
-  final Color iconColor;
-
-  const ActionCategory({
-    required this.title,
-    required this.icon,
-    required this.iconColor,
-  });
-}
+/// Categories with defined sub-actions in [CategoryLocalDataSource].
+/// Used to determine whether to navigate to [CategoryDetailScreen]
+/// or [PlaceholderSubPage].
+const Set<String> _categoriesWithSubPages = {
+  'Payroll & Letters',
+  'Attendance & Overtime',
+  'Objectives & Appraisal',
+  'Employee Benefits',
+  'Health Insurance',
+};
 
 const List<ActionCategory> _mockCategories = [
   ActionCategory(
     title: 'Approval\nCenter',
     icon: Icons.check_circle,
     iconColor: Colors.green,
+  ),
+  ActionCategory(
+    title: 'Payroll\n& Letters',
+    icon: Iconsax.document_text5,
+    iconColor: Color(0xFF65B4E3),
   ),
   ActionCategory(
     title: 'Attendance\n& Overtime',
@@ -34,37 +41,35 @@ const List<ActionCategory> _mockCategories = [
     icon: Iconsax.heart5,
     iconColor: Color(0xFFF396D1),
   ),
-
-  // ✅ الجديدة
   ActionCategory(
     title: 'Objectives\n& Appraisal',
-    icon: Iconsax.award, // 🏅 أو جرب Iconsax.award5
+    icon: Iconsax.award,
     iconColor: Color(0xFF4CAF50),
   ),
   ActionCategory(
     title: 'Employee\nBenefits',
     icon: Iconsax.gift5,
-    iconColor: Color(0xFFFFC107), // أصفر
+    iconColor: Color(0xFFFFC107),
   ),
   ActionCategory(
     title: 'Internal\nCommunication',
     icon: Iconsax.message5,
-    iconColor: Color(0xFFFF6B35), // برتقالي
+    iconColor: Color(0xFFFF6B35),
   ),
   ActionCategory(
     title: 'Jobs\n& Recruitment',
     icon: Iconsax.people5,
-    iconColor: Color(0xFF607D8B), // رمادي
+    iconColor: Color(0xFF607D8B),
   ),
   ActionCategory(
     title: 'Training\n& Certificates',
     icon: Iconsax.teacher5,
-    iconColor: Color(0xFF29B6F6), // أزرق
+    iconColor: Color(0xFF29B6F6),
   ),
   ActionCategory(
     title: 'Latest\nOffers',
     icon: Iconsax.tag5,
-    iconColor: Color(0xFFFF6B35), // برتقالي
+    iconColor: Color(0xFFFF6B35),
   ),
 ];
 
@@ -85,23 +90,47 @@ class HomeActionsGrid extends StatelessWidget {
         delegate: SliverChildBuilderDelegate(
           (context, index) {
             final category = _mockCategories[index];
-            return ActionCardWidget(category: category);
+            return ActionCardWidget(
+              category: category,
+              onTap: () => _navigateToCategory(context, category),
+            );
           },
-          childCount: _mockCategories.length, 
+          childCount: _mockCategories.length,
         ),
       ),
     );
   }
+
+  /// Navigates to the appropriate screen based on whether the category
+  /// has defined sub-actions or not.
+  void _navigateToCategory(BuildContext context, ActionCategory category) {
+    final displayTitle = category.displayTitle;
+
+    if (_categoriesWithSubPages.contains(displayTitle)) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => CategoryDetailScreen(category: category),
+        ),
+      );
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => PlaceholderSubPage(title: displayTitle),
+        ),
+      );
+    }
+  }
 }
+
 class ActionCardWidget extends StatefulWidget {
   final ActionCategory category;
-  
+
   // Best Practice: تمرير دالة تنفيذية من الأب للابن
   // لكي نحدد ماذا سيحدث برمجياً عند الضغط (مثل فتح صفحة جديدة)
-  final VoidCallback? onTap; 
+  final VoidCallback? onTap;
 
   const ActionCardWidget({
-    super.key, 
+    super.key,
     required this.category,
     this.onTap,
   });
@@ -128,7 +157,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
         setState(() {
           isPressed = false; // إعادة الحالة للوضع الطبيعي
         });
-        
+
         // تنفيذ الحدث الفعلي إذا تم تمريره (مثل الانتقال لصفحة أخرى)
         if (widget.onTap != null) {
           widget.onTap!();
@@ -140,7 +169,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
           isPressed = false;
         });
       },
-      
+
       // Best Practice: استخدام AnimatedContainer بدلاً من Container العادي
       // هذا سيعطي انتقالاً حركياً ناعماً (Smooth Transition) للألوان بدلاً من التغير المفاجئ
       child: AnimatedContainer(
@@ -151,7 +180,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
           borderRadius: BorderRadius.circular(24.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.04),
+              color: Colors.black.withValues(alpha: 0.04),
               blurRadius: 15,
               offset: const Offset(0, 8),
             ),
@@ -163,9 +192,8 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
-              widget.category.icon, 
-              // إذا كان مضغوطاً نجعل الأيقونة بيضاء، وإلا نستخدم لونها الأصلي
-              color: isPressed ? Colors.white : widget.category.iconColor, 
+              widget.category.icon,
+              color: isPressed ? Colors.white : widget.category.iconColor,
               size: 40.0,
             ),
             const SizedBox(height: 29),
