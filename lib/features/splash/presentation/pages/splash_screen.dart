@@ -52,6 +52,6 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Widget _buildOrangeLogo() {
-    return Image.asset("assets/images/logo.jpg",height: 150,width: 150,);
+    return Image.asset("assets/images/logo.png",height: 150,width: 150,);
   }
 }

@@ -34,7 +34,6 @@ class CategoryLocalDataSource {
       icon: Iconsax.people5,
       iconColor: Color(0xFF607D8B),
       actions: [
-        // 2. العنصر الأول من الصورة
        CategoryActionItem(
     title: 'Job Description',
     routeId: 'job_description',

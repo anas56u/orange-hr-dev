@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:orange_hr_dev/features/home/presentation/providers/home_provider.dart';
 import 'package:orange_hr_dev/features/notifications/domain/models/notification_item.dart';
 import 'package:orange_hr_dev/features/notifications/presentation/widgets/notification_list_item.dart';
 
@@ -13,9 +15,21 @@ class NotificationsScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        // --- Back arrow ---
+        Padding(
+          padding: const EdgeInsets.only(left: 4.0, top: 8.0),
+          child: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.black87),
+            onPressed: () {
+              // Navigate back to the Home tab
+              context.read<HomeProvider>().updateTabIndex(0);
+            },
+          ),
+        ),
+
         // --- Title ---
         const Padding(
-          padding: EdgeInsets.only(left: 20.0, top: 16.0, right: 20.0),
+          padding: EdgeInsets.only(left: 20.0, right: 20.0),
           child: Text(
             'Notifications',
             style: TextStyle(

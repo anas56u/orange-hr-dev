@@ -1,3 +1,4 @@
+import 'dart:async'; // 1. إضافة المكتبة
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/home_provider.dart';
@@ -11,6 +12,7 @@ class HomeCarouselBanner extends StatefulWidget {
 
 class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
   late final PageController _pageController;
+  Timer? _timer; // 2. تعريف الـ Timer
   
   final List<String> _bannerImages = [
     'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000',
@@ -22,10 +24,31 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
+    _startAutoPlay(); 
+  }
+
+  void _startAutoPlay() {
+    _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
+      if (_pageController.hasClients) {
+        int nextPage = _pageController.page!.round() + 1;
+        
+        if (nextPage >= _bannerImages.length) {
+          nextPage = 0;
+        }
+        
+        // حركة تمرير ناعمة للصفحة التالية
+        _pageController.animateToPage(
+          nextPage,
+          duration: const Duration(milliseconds: 400),
+          curve: Curves.easeInOutCubic,
+        );
+      }
+    });
   }
 
   @override
   void dispose() {
+    _timer?.cancel(); // 4. إيقاف الـ Timer لتجنب تسريب الذاكرة
     _pageController.dispose();
     super.dispose();
   }
@@ -42,11 +65,9 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
               borderRadius: BorderRadius.circular(16.0),
               child: PageView.builder(
                 controller: _pageController,
-                physics: const BouncingScrollPhysics(), // حركة تمرير ناعمة
+                physics: const BouncingScrollPhysics(),
                 itemCount: _bannerImages.length,
-                // هنا نربط الـ PageView بالـ Provider
                 onPageChanged: (index) {
-                  // نستخدم read لأننا نرسل أمر التحديث فقط ولا نريد إعادة بناء الـ PageView نفسه
                   context.read<HomeProvider>().updateBannerIndex(index);
                 },
                 itemBuilder: (context, index) {
@@ -57,15 +78,13 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
           ),
         ),
         
-        const SizedBox(height: 12), // مسافة بين الصورة والنقاط
+        const SizedBox(height: 12),
         
-        // 2. مؤشر النقاط (Dots Indicator)
         _buildDotsIndicator(),
       ],
     );
   }
 
-  // ويدجت بناء الصورة المفردة
   Widget _buildImageItem(String imageUrl) {
     return Image.network(
       imageUrl,
@@ -88,23 +107,18 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
     );
   }
 
-  // ويدجت بناء النقاط السفلية (عالي الأداء)
   Widget _buildDotsIndicator() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      // نقوم بتوليد النقاط بناءً على عدد الصور
       children: List.generate(_bannerImages.length, (index) {
-        // سر الأداء العالي: نستخدم Selector هنا لكي نعيد بناء "النقطة" فقط وليس الشاشة 
-        // عند تغير الرقم في الـ Provider
         return Selector<HomeProvider, int>(
           selector: (context, provider) => provider.currentBannerIndex,
           builder: (context, currentIndex, child) {
             bool isActive = currentIndex == index;
-            // حركة (Animation) ناعمة جداً عند تغير النقطة النشطة
             return AnimatedContainer(
               duration: const Duration(milliseconds: 300),
               margin: const EdgeInsets.symmetric(horizontal: 4.0),
-              width: isActive ? 24.0 : 8.0, // النقطة النشطة تكون أعرض قليلاً حسب التصاميم العصرية
+              width: isActive ? 24.0 : 8.0,
               height: 8.0,
               decoration: BoxDecoration(
                 color: isActive ? Colors.orange : Colors.grey[300],

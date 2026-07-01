@@ -13,7 +13,7 @@ const Set<String> _categoriesWithSubPages = {
   'Objectives & Appraisal',
   'Employee Benefits',
   'Health Insurance',
-  'Approval Center', 
+  'Approval Center',
   'Jobs & Recruitment',
   'Training & Certificates',
   'Internal Communication',
@@ -26,20 +26,16 @@ const List<ActionCategory> _mockCategories = [
     iconColor: Colors.green,
   ),
   ActionCategory(
-    title: 'Payroll\n& Letters',
-    icon: Iconsax.document_text5,
-    iconColor: Color(0xFF65B4E3),
-  ),
-  ActionCategory(
     title: 'Attendance\n& Overtime',
     icon: Iconsax.timer_15,
     iconColor: Color(0xFFA67BC5),
   ),
   ActionCategory(
-    title: 'Document\nCenter',
-    icon: Iconsax.document_copy5,
+    title: 'Payroll\n& Letters',
+    icon: Iconsax.document_text5,
     iconColor: Color(0xFF65B4E3),
   ),
+
   ActionCategory(
     title: 'Health\nInsurance',
     icon: Iconsax.heart5,
@@ -91,16 +87,13 @@ class HomeActionsGrid extends StatelessWidget {
           mainAxisSpacing: 16.0,
           childAspectRatio: 1.0,
         ),
-        delegate: SliverChildBuilderDelegate(
-          (context, index) {
-            final category = _mockCategories[index];
-            return ActionCardWidget(
-              category: category,
-              onTap: () => _navigateToCategory(context, category),
-            );
-          },
-          childCount: _mockCategories.length,
-        ),
+        delegate: SliverChildBuilderDelegate((context, index) {
+          final category = _mockCategories[index];
+          return ActionCardWidget(
+            category: category,
+            onTap: () => _navigateToCategory(context, category),
+          );
+        }, childCount: _mockCategories.length),
       ),
     );
   }
@@ -133,11 +126,7 @@ class ActionCardWidget extends StatefulWidget {
   // لكي نحدد ماذا سيحدث برمجياً عند الضغط (مثل فتح صفحة جديدة)
   final VoidCallback? onTap;
 
-  const ActionCardWidget({
-    super.key,
-    required this.category,
-    this.onTap,
-  });
+  const ActionCardWidget({super.key, required this.category, this.onTap});
 
   @override
   State<ActionCardWidget> createState() => _ActionCardWidgetState();

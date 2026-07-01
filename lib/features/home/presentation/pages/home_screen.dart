@@ -13,15 +13,16 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      bottomNavigationBar: const HomeBottomNavBar(),
-      backgroundColor: Colors.white,
-      appBar: const HomeAppBar(),
-      body: SafeArea(
-        child: Selector<HomeProvider, int>(
-          selector: (context, provider) => provider.currentTabIndex,
-          builder: (context, currentIndex, child) {
-            return IndexedStack(
+    return Selector<HomeProvider, int>(
+      selector: (context, provider) => provider.currentTabIndex,
+      builder: (context, currentIndex, child) {
+        return Scaffold(
+          bottomNavigationBar: const HomeBottomNavBar(),
+          backgroundColor: Colors.white,
+          // Hide the shared AppBar on the Notifications tab (index 3)
+          appBar: currentIndex == 3 ? null : const HomeAppBar(),
+          body: SafeArea(
+            child: IndexedStack(
               index: currentIndex,
               children: const [
                 HomeTabContent(), // Index 0: Home
@@ -30,10 +31,10 @@ class HomeScreen extends StatelessWidget {
                 NotificationsScreen(), // Index 3: Notifications
                 Center(child: Text("Settings")), // Index 4: Placeholder
               ],
-            );
-          },
-        ),
-      ),
+            ),
+          ),
+        );
+      },
     );
   }
 }

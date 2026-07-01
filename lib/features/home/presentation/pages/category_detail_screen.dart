@@ -81,16 +81,16 @@ class _CategoryDetailBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 20.0,
-                    vertical: 8.0,
+                    vertical: 12.0,
                   ),
                   child: Row(
                     children: [
                       Icon(
                         category.icon,
                         color: category.iconColor,
-                        size: 36,
+                        size: 32,
                       ),
-                      const SizedBox(width: 12),
+                      const SizedBox(width: 16),
                       Expanded(
                         child: Text(
                           category.displayTitle,
