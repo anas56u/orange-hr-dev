@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 
 /// Header widget for the Latest Offers screen.
-///
-/// Displays the orange tag icon (matching the home grid icon for
-/// "Latest Offers") alongside the screen title. Follows the same
-/// header pattern used in [CategoryDetailScreen].
 class OffersHeader extends StatelessWidget {
   const OffersHeader({super.key});
 

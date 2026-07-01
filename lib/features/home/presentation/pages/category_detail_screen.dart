@@ -6,6 +6,7 @@ import '../../domain/entities/action_category.dart';
 import '../../domain/usecases/get_category_detail_usecase.dart';
 import '../providers/category_detail_provider.dart';
 import '../widgets/category_action_tile.dart';
+import '../../../../features/absence/presentation/pages/absence_management_screen.dart';
 import 'placeholder_sub_page.dart';
 
 /// Screen displaying the sub-actions for a given category.
@@ -118,6 +119,18 @@ class _CategoryDetailBody extends StatelessWidget {
                       return CategoryActionTile(
                         title: action.title,
                         onTap: () {
+                          // Intercept "Absence Management" to navigate
+                          // to the dedicated feature screen.
+                          if (action.routeId == 'absence_management') {
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
+                                builder: (_) =>
+                                    const AbsenceManagementScreen(),
+                              ),
+                            );
+                            return;
+                          }
+
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (_) => PlaceholderSubPage(
