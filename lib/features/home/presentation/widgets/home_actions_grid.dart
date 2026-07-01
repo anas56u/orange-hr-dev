@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import '../../domain/entities/action_category.dart';
 import '../pages/category_detail_screen.dart';
+import '../pages/latest_offers_screen.dart';
 import '../pages/placeholder_sub_page.dart';
 
 /// Categories with defined sub-actions in [CategoryLocalDataSource].
@@ -91,6 +92,7 @@ class HomeActionsGrid extends StatelessWidget {
           final category = _mockCategories[index];
           return ActionCardWidget(
             category: category,
+            
             onTap: () => _navigateToCategory(context, category),
           );
         }, childCount: _mockCategories.length),
@@ -102,6 +104,16 @@ class HomeActionsGrid extends StatelessWidget {
   /// has defined sub-actions or not.
   void _navigateToCategory(BuildContext context, ActionCategory category) {
     final displayTitle = category.displayTitle;
+
+    // Intercept "Latest Offers" — navigate to the dedicated screen.
+    if (displayTitle == 'Latest Offers') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => const LatestOffersScreen(),
+        ),
+      );
+      return;
+    }
 
     if (_categoriesWithSubPages.contains(displayTitle)) {
       Navigator.of(context).push(

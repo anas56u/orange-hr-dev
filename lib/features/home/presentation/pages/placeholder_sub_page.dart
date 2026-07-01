@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 /// Generic placeholder screen for sub-actions that don't have
 /// a dedicated implementation yet.
-///
 /// Displays the action title in the center with a back button.
 class PlaceholderSubPage extends StatelessWidget {
   final String title;

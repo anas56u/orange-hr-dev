@@ -108,7 +108,6 @@ class _CategoryDetailBody extends StatelessWidget {
 
                 const SizedBox(height: 12),
 
-                // --- Sub-action list (lazy-loaded via ListView.builder) ---
                 Expanded(
                   child: ListView.builder(
                     physics: const BouncingScrollPhysics(),
