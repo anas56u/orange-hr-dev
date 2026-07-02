@@ -27,12 +27,6 @@ class AbsenceTypeListItem extends StatelessWidget {
 
   // --- Const style tokens ----------------------------------------------------
 
-  static const _titleStyle = TextStyle(
-    color: Colors.black87,
-    fontSize: 16,
-    fontWeight: FontWeight.w500,
-  );
-
   static const _itemPadding = EdgeInsets.symmetric(
     horizontal: 20.0,
     vertical: 16.0,

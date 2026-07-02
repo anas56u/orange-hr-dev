@@ -4,6 +4,7 @@ import '../../domain/entities/action_category.dart';
 import '../pages/category_detail_screen.dart';
 import '../pages/latest_offers_screen.dart';
 import '../pages/placeholder_sub_page.dart';
+import '../../../../features/absence/presentation/pages/absence_management_screen.dart';
 
 /// Categories with defined sub-actions in [CategoryLocalDataSource].
 /// Used to determine whether to navigate to [CategoryDetailScreen]
@@ -72,6 +73,11 @@ const List<ActionCategory> _mockCategories = [
     icon: Iconsax.tag5,
     iconColor: Color(0xFFFF6B35),
   ),
+  ActionCategory(
+    title: 'Absence\nManagement',
+    icon: Iconsax.calendar_remove5,
+    iconColor: Color(0xFFE57373),
+  ),
 ];
 
 class HomeActionsGrid extends StatelessWidget {
@@ -110,6 +116,16 @@ class HomeActionsGrid extends StatelessWidget {
       Navigator.of(context).push(
         MaterialPageRoute(
           builder: (_) => const LatestOffersScreen(),
+        ),
+      );
+      return;
+    }
+
+    // Intercept "Absence Management" — navigate to the dedicated screen.
+    if (displayTitle == 'Absence Management') {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => const AbsenceManagementScreen(),
         ),
       );
       return;
