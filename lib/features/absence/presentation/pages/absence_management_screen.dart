@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:orange_hr_dev/features/home/presentation/pages/home_screen.dart';
 import '../providers/absence_provider.dart';
 import '../widgets/absence_type_field.dart';
 import '../widgets/absence_type_bottom_sheet.dart';
+import '../widgets/awesome_success_dialog.dart';
 
 /// Main screen for the Absence Management feature.
 /// Displays the "Submit Absence" form matching the design:
@@ -143,6 +145,7 @@ class _AbsenceManagementBody extends StatelessWidget {
               builder: (context, provider, _) {
                 return _SubmitButton(
                   enabled: provider.canSubmit,
+                  isSubmitting: provider.isSubmitting,
                   onPressed: () => _handleSubmit(context, provider),
                 );
               },
@@ -229,15 +232,59 @@ class _AbsenceManagementBody extends StatelessWidget {
     }
   }
 
-  void _handleSubmit(BuildContext context, AbsenceProvider provider) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Absence submitted successfully!'),
-        backgroundColor: Colors.green,
-        behavior: SnackBarBehavior.floating,
-      ),
+  Future<void> _handleSubmit(
+    BuildContext context,
+    AbsenceProvider provider,
+  ) async {
+    // 1. Trigger submission method in the provider and wait for it to complete.
+    await provider.submitAbsence();
+
+    // Guard against using context across async gaps if the widget was unmounted.
+    if (!context.mounted) return;
+
+    // 2. Display the high-performance AwesomeSuccessDialog using showGeneralDialog.
+    // Why showGeneralDialog? It allows us to customize the enter/exit transition
+    // duration and animation curves without needing boilerplate animation controllers.
+    showGeneralDialog(
+      context: context,
+      barrierDismissible: false, // Prevent closing by tapping outside during the 2s window
+      barrierLabel: 'Success Dialog',
+      barrierColor: Colors.black.withValues(alpha: 0.5),
+      transitionDuration: const Duration(milliseconds: 350),
+      pageBuilder: (context, anim1, anim2) {
+        return const AwesomeSuccessDialog();
+      },
+      // transitionBuilder coordinates how the dialog modal enters and exits the screen.
+      // We combine a CurvedAnimation with Curves.easeOutBack for a slight overshoot scale
+      // on entry, paired with a FadeTransition for smooth opacity fading.
+      transitionBuilder: (context, anim1, anim2, child) {
+        return Transform.scale(
+          scale: CurvedAnimation(
+            parent: anim1,
+            curve: Curves.easeOutBack,
+          ).value,
+          child: FadeTransition(
+            opacity: anim1,
+            child: child,
+          ),
+        );
+      },
     );
-    provider.resetForm();
+
+    // 3. Show dialog for exactly 2 seconds before automatic navigation.
+    await Future.delayed(const Duration(seconds: 2));
+
+    if (!context.mounted) return;
+
+    // 4. Automatically close the dialog first.
+    Navigator.of(context).pop();
+
+    // 5. Navigate to HomeScreen and clear the entire navigation stack so the
+    // user cannot press back and return to the absence submission form.
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(builder: (_) => const HomeScreen()),
+      (route) => false,
+    );
   }
 }
 
@@ -329,11 +376,17 @@ class _FormActionField extends StatelessWidget {
 
 /// The submit button pinned to the bottom of the form.
 /// Visually disabled (greyed out with white text) when [enabled] is false.
+/// Displays a loading spinner when [isSubmitting] is true.
 class _SubmitButton extends StatelessWidget {
   final bool enabled;
+  final bool isSubmitting;
   final VoidCallback? onPressed;
 
-  const _SubmitButton({required this.enabled, this.onPressed});
+  const _SubmitButton({
+    required this.enabled,
+    this.isSubmitting = false,
+    this.onPressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -354,10 +407,19 @@ class _SubmitButton extends StatelessWidget {
             ),
             elevation: 0,
           ),
-          child: const Text(
-            'SUBMIT',
-            style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-          ),
+          child: isSubmitting
+              ? const SizedBox(
+                  width: 24,
+                  height: 24,
+                  child: CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 2.5,
+                  ),
+                )
+              : const Text(
+                  'SUBMIT',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                ),
         ),
       ),
     );

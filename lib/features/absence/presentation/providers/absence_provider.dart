@@ -10,6 +10,15 @@ import 'package:flutter/material.dart';
 /// [ChangeNotifierProvider] and auto-disposes when the screen is popped.
 class AbsenceProvider extends ChangeNotifier {
   // ---------------------------------------------------------------------------
+  // Submission Loading State
+  // ---------------------------------------------------------------------------
+
+  bool _isSubmitting = false;
+
+  /// Returns `true` while the absence submission is in progress.
+  bool get isSubmitting => _isSubmitting;
+
+  // ---------------------------------------------------------------------------
   // Absence Type
   // ---------------------------------------------------------------------------
 
@@ -88,13 +97,35 @@ class AbsenceProvider extends ChangeNotifier {
     return '${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')} HRS';
   }
 
-  /// Returns `true` when every required field has a value, enabling
-  /// the submit button.
+  /// Returns `true` when every required field has a value and not currently submitting,
+  /// enabling the submit button.
   bool get canSubmit =>
+      !_isSubmitting &&
       _selectedType != null &&
       _date != null &&
       _fromTime != null &&
       _toTime != null;
+
+  /// Executes the submission logic asynchronously.
+  /// Sets loading state, simulates network request/repository call, resets form, and returns.
+  Future<void> submitAbsence() async {
+    if (_isSubmitting) return;
+
+    _isSubmitting = true;
+    notifyListeners();
+
+    // Simulate async submission logic (e.g. API/Repository call)
+    await Future.delayed(const Duration(milliseconds: 1000));
+
+    // Reset fields upon successful submission
+    _selectedType = null;
+    _date = null;
+    _fromTime = null;
+    _toTime = null;
+
+    _isSubmitting = false;
+    notifyListeners();
+  }
 
   /// Resets every field back to its initial empty state.
   void resetForm() {

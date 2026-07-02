@@ -6,9 +6,6 @@ import '../pages/latest_offers_screen.dart';
 import '../pages/placeholder_sub_page.dart';
 import '../../../../features/absence/presentation/pages/absence_management_screen.dart';
 
-/// Categories with defined sub-actions in [CategoryLocalDataSource].
-/// Used to determine whether to navigate to [CategoryDetailScreen]
-/// or [PlaceholderSubPage].
 const Set<String> _categoriesWithSubPages = {
   'Payroll & Letters',
   'Attendance & Overtime',
@@ -73,11 +70,6 @@ const List<ActionCategory> _mockCategories = [
     icon: Iconsax.tag5,
     iconColor: Color(0xFFFF6B35),
   ),
-  ActionCategory(
-    title: 'Absence\nManagement',
-    icon: Iconsax.calendar_remove5,
-    iconColor: Color(0xFFE57373),
-  ),
 ];
 
 class HomeActionsGrid extends StatelessWidget {
@@ -98,7 +90,7 @@ class HomeActionsGrid extends StatelessWidget {
           final category = _mockCategories[index];
           return ActionCardWidget(
             category: category,
-            
+
             onTap: () => _navigateToCategory(context, category),
           );
         }, childCount: _mockCategories.length),
@@ -106,27 +98,20 @@ class HomeActionsGrid extends StatelessWidget {
     );
   }
 
-  /// Navigates to the appropriate screen based on whether the category
-  /// has defined sub-actions or not.
   void _navigateToCategory(BuildContext context, ActionCategory category) {
     final displayTitle = category.displayTitle;
 
-    // Intercept "Latest Offers" — navigate to the dedicated screen.
     if (displayTitle == 'Latest Offers') {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => const LatestOffersScreen(),
-        ),
-      );
+      Navigator.of(
+        context,
+      ).push(MaterialPageRoute(builder: (_) => const LatestOffersScreen()));
       return;
     }
 
     // Intercept "Absence Management" — navigate to the dedicated screen.
     if (displayTitle == 'Absence Management') {
       Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => const AbsenceManagementScreen(),
-        ),
+        MaterialPageRoute(builder: (_) => const AbsenceManagementScreen()),
       );
       return;
     }
@@ -150,8 +135,6 @@ class HomeActionsGrid extends StatelessWidget {
 class ActionCardWidget extends StatefulWidget {
   final ActionCategory category;
 
-  // Best Practice: تمرير دالة تنفيذية من الأب للابن
-  // لكي نحدد ماذا سيحدث برمجياً عند الضغط (مثل فتح صفحة جديدة)
   final VoidCallback? onTap;
 
   const ActionCardWidget({super.key, required this.category, this.onTap});
@@ -161,13 +144,11 @@ class ActionCardWidget extends StatefulWidget {
 }
 
 class _ActionCardWidgetState extends State<ActionCardWidget> {
-  // متغير يحفظ حالة الكرت: هل هو مضغوط الآن أم لا؟
   bool isPressed = false;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      // عند بداية لمس الشاشة
       onTapDown: (_) {
         setState(() {
           isPressed = true; // تغيير الحالة إلى "مضغوط"
