@@ -12,7 +12,20 @@ import 'package:iconsax/iconsax.dart';
 /// - Utilizes `const` constructors for all static text, padding, borders, and
 ///   decoration widgets to maximize widget reuse and memory efficiency.
 class AwesomeSuccessDialog extends StatelessWidget {
-  const AwesomeSuccessDialog({super.key});
+  /// Callback triggered when the user taps the confirmation button.
+  ///
+  /// **Clean Architecture & Decoupling:**
+  /// By accepting an [onConfirm] callback instead of hardcoding navigation or
+  /// router logic inside this dialog, we preserve separation of concerns.
+  /// The dialog remains a purely visual presentation component that is completely
+  /// decoupled from routing state, stack clearing, or feature-specific logic,
+  /// making it 100% reusable across any feature or workflow in the application.
+  final VoidCallback onConfirm;
+
+  const AwesomeSuccessDialog({
+    super.key,
+    required this.onConfirm,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +120,36 @@ class AwesomeSuccessDialog extends StatelessWidget {
                   height: 1.4,
                 ),
                 textAlign: TextAlign.center,
+              ),
+
+              const SizedBox(height: 28),
+
+              // ---------------------------------------------------------------
+              // Confirmation Button (Decoupled Navigation)
+              // ---------------------------------------------------------------
+              // Tapping this button invokes [onConfirm], delegating the
+              // navigation action to the caller and keeping this widget clean.
+              SizedBox(
+                width: double.infinity,
+                height: 48,
+                child: ElevatedButton(
+                  onPressed: onConfirm,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: const Text(
+                    'DONE',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
               ),
             ],
           ),

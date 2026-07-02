@@ -245,14 +245,31 @@ class _AbsenceManagementBody extends StatelessWidget {
     // 2. Display the high-performance AwesomeSuccessDialog using showGeneralDialog.
     // Why showGeneralDialog? It allows us to customize the enter/exit transition
     // duration and animation curves without needing boilerplate animation controllers.
+    //
+    // Clean Architecture & Decoupling:
+    // We pass the navigation callback directly into [onConfirm]. The dialog itself
+    // has no knowledge of [HomeScreen] or route stacks; it simply invokes this
+    // callback when the user clicks DONE.
     showGeneralDialog(
       context: context,
-      barrierDismissible: false, // Prevent closing by tapping outside during the 2s window
+      barrierDismissible: false, // Prevent closing by tapping outside
       barrierLabel: 'Success Dialog',
       barrierColor: Colors.black.withValues(alpha: 0.5),
       transitionDuration: const Duration(milliseconds: 350),
       pageBuilder: (context, anim1, anim2) {
-        return const AwesomeSuccessDialog();
+        return AwesomeSuccessDialog(
+          onConfirm: () {
+            // Automatically close the dialog first.
+            Navigator.of(context).pop();
+
+            // Navigate to HomeScreen and clear the entire navigation stack so the
+            // user cannot press back and return to the absence submission form.
+            Navigator.of(context).pushAndRemoveUntil(
+              MaterialPageRoute(builder: (_) => const HomeScreen()),
+              (route) => false,
+            );
+          },
+        );
       },
       // transitionBuilder coordinates how the dialog modal enters and exits the screen.
       // We combine a CurvedAnimation with Curves.easeOutBack for a slight overshoot scale
@@ -269,21 +286,6 @@ class _AbsenceManagementBody extends StatelessWidget {
           ),
         );
       },
-    );
-
-    // 3. Show dialog for exactly 2 seconds before automatic navigation.
-    await Future.delayed(const Duration(seconds: 2));
-
-    if (!context.mounted) return;
-
-    // 4. Automatically close the dialog first.
-    Navigator.of(context).pop();
-
-    // 5. Navigate to HomeScreen and clear the entire navigation stack so the
-    // user cannot press back and return to the absence submission form.
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => const HomeScreen()),
-      (route) => false,
     );
   }
 }
