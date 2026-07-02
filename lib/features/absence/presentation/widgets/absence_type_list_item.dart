@@ -72,7 +72,6 @@ class AbsenceTypeListItem extends StatelessWidget {
                   : null,
             ),
             const SizedBox(width: 14),
-            // --- Type title ---
             Expanded(
               child: Text(
                 title,
