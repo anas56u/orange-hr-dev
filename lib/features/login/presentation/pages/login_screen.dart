@@ -1,0 +1,379 @@
+import 'package:flutter/material.dart';
+import 'package:iconsax/iconsax.dart';
+import 'package:provider/provider.dart';
+
+import '../../../home/presentation/pages/home_screen.dart';
+import '../../domain/entities/login_state.dart';
+import '../providers/login_provider.dart';
+import '../widgets/biometric_login_widget.dart';
+import '../widgets/login_button.dart';
+import '../widgets/login_text_field.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen>
+    with SingleTickerProviderStateMixin {
+  final _phoneController = TextEditingController();
+  final _passwordController = TextEditingController();
+
+  late final AnimationController _fadeController;
+  late final Animation<double> _fadeAnimation;
+  late final Animation<Offset> _slideAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Entrance animation for the form.
+    _fadeController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _fadeAnimation = CurvedAnimation(
+      parent: _fadeController,
+      curve: Curves.easeOutCubic,
+    );
+    _slideAnimation = Tween<Offset>(
+      begin: const Offset(0, 0.08),
+      end: Offset.zero,
+    ).animate(_fadeAnimation);
+
+    _fadeController.forward();
+  }
+
+  @override
+  void dispose() {
+    _phoneController.dispose();
+    _passwordController.dispose();
+    _fadeController.dispose();
+    super.dispose();
+  }
+
+  // ---------------------------------------------------------------------------
+  // State listener — reacts to provider changes via didChangeDependencies
+  // ---------------------------------------------------------------------------
+
+  LoginState? _previousState;
+
+  /// We use a post‑frame callback so that Snackbars / navigation don't
+  /// fire during the build phase.
+  void _handleStateChange(LoginState state) {
+    if (state == _previousState) return;
+    _previousState = state;
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (!mounted) return;
+
+      switch (state) {
+        case LoginSuccess():
+          ScaffoldMessenger.of(context)
+            ..clearSnackBars()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.check_circle_rounded,
+                        color: Colors.white, size: 20),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                backgroundColor: const Color(0xFF43A047),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                margin: const EdgeInsets.all(16),
+                duration: const Duration(seconds: 2),
+              ),
+            );
+
+          // Navigate to Home after the snackbar is visible.
+          Future.delayed(const Duration(milliseconds: 800), () {
+            if (!mounted) return;
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(builder: (_) => HomeScreen()),
+            );
+          });
+
+        case LoginError():
+          ScaffoldMessenger.of(context)
+            ..clearSnackBars()
+            ..showSnackBar(
+              SnackBar(
+                content: Row(
+                  children: [
+                    const Icon(Icons.error_outline_rounded,
+                        color: Colors.white, size: 20),
+                    const SizedBox(width: 12),
+                    Expanded(
+                      child: Text(
+                        state.message,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.w600,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                backgroundColor: const Color(0xFFE53935),
+                behavior: SnackBarBehavior.floating,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                margin: const EdgeInsets.all(16),
+                duration: const Duration(seconds: 3),
+              ),
+            );
+
+        case LoginInitial():
+        case LoginLoading():
+          break;
+      }
+    });
+  }
+
+  // ---------------------------------------------------------------------------
+  // Build
+  // ---------------------------------------------------------------------------
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = context.watch<LoginProvider>();
+    final state = provider.state;
+    final isLoading = state is LoginLoading;
+
+    // Fire side‑effects (snackbar, navigation) based on state transitions.
+    _handleStateChange(state);
+
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: SafeArea(
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return SingleChildScrollView(
+                padding: const EdgeInsets.symmetric(horizontal: 28),
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: IntrinsicHeight(
+                    child: FadeTransition(
+                      opacity: _fadeAnimation,
+                      child: SlideTransition(
+                        position: _slideAnimation,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: [
+                            const SizedBox(height: 48),
+
+                            // ── Logo ───────────────────────────────────
+                            _buildLogoSection(),
+
+                            const SizedBox(height: 40),
+
+                            // ── Heading ────────────────────────────────
+                            _buildHeading(),
+
+                            const SizedBox(height: 36),
+
+                            // ── Phone field ────────────────────────────
+                            _buildPhoneField(provider, isLoading),
+
+                            const SizedBox(height: 20),
+
+                            // ── Password field ─────────────────────────
+                            _buildPasswordField(provider, isLoading),
+
+                            const SizedBox(height: 8),
+
+                            // ── Forgot password ────────────────────────
+                            _buildForgotPassword(),
+
+                            const SizedBox(height: 28),
+
+                            // ── Login button ───────────────────────────
+                            LoginButton(
+                              text: 'Login',
+                              isLoading: isLoading,
+                              onPressed: isLoading
+                                  ? null
+                                  : () => provider.login(
+                                        phone: _phoneController.text,
+                                        password: _passwordController.text,
+                                      ),
+                            ),
+
+                            // Push biometric section to the bottom.
+                            const Spacer(),
+
+                            // ── Biometric section ──────────────────────
+                            const Padding(
+                              padding: EdgeInsets.only(bottom: 32, top: 36),
+                              child: BiometricLoginWidget(),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ),
+    );
+  }
+
+  // ---------------------------------------------------------------------------
+  // Sub‑builders
+  // ---------------------------------------------------------------------------
+
+  Widget _buildLogoSection() {
+    return Center(
+      child: Container(
+        width: 80,
+        height: 80,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          boxShadow: [
+            BoxShadow(
+              color: const Color(0xFFFF6D00).withValues(alpha: 0.18),
+              blurRadius: 24,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(20),
+          child: Image.asset(
+            'assets/images/logo.png',
+            fit: BoxFit.cover,
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildHeading() {
+    return const Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Welcome Back 👋',
+          style: TextStyle(
+            fontSize: 28,
+            fontWeight: FontWeight.w800,
+            color: Color(0xFF1E1E1E),
+            letterSpacing: -0.5,
+            height: 1.2,
+          ),
+        ),
+        SizedBox(height: 8),
+        Text(
+          'Login to your account to continue',
+          style: TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w400,
+            color: Color(0xFF78909C),
+            height: 1.4,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPhoneField(LoginProvider provider, bool isLoading) {
+    final error = provider.autoValidate
+        ? provider.validatePhone(_phoneController.text)
+        : null;
+
+    return LoginTextField(
+      controller: _phoneController,
+      labelText: 'Phone Number',
+      hintText: '07XXXXXXXX',
+      prefixIcon: Iconsax.call,
+      keyboardType: TextInputType.phone,
+      enabled: !isLoading,
+      errorText: error,
+      onChanged: (_) {
+        // Re‑validate on every keystroke once auto‑validate is on.
+        if (provider.autoValidate) {
+          provider.resetState();
+        }
+      },
+    );
+  }
+
+  Widget _buildPasswordField(LoginProvider provider, bool isLoading) {
+    final error = provider.autoValidate
+        ? provider.validatePassword(_passwordController.text)
+        : null;
+
+    return LoginTextField(
+      controller: _passwordController,
+      labelText: 'Password',
+      hintText: 'Enter your password',
+      prefixIcon: Iconsax.lock,
+      obscureText: !provider.isPasswordVisible,
+      enabled: !isLoading,
+      errorText: error,
+      onChanged: (_) {
+        if (provider.autoValidate) {
+          provider.resetState();
+        }
+      },
+      suffixIcon: IconButton(
+        onPressed: isLoading ? null : provider.togglePasswordVisibility,
+        icon: Icon(
+          provider.isPasswordVisible ? Iconsax.eye : Iconsax.eye_slash,
+          size: 20,
+          color: const Color(0xFF90A4AE),
+        ),
+        splashRadius: 20,
+      ),
+    );
+  }
+
+  Widget _buildForgotPassword() {
+    return Align(
+      alignment: Alignment.centerRight,
+      child: TextButton(
+        onPressed: () {
+          // No-op — placeholder for future forgot‑password flow.
+        },
+        style: TextButton.styleFrom(
+          padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),
+          minimumSize: Size.zero,
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
+        child: const Text(
+          'Forgot Password?',
+          style: TextStyle(
+            fontSize: 13.5,
+            fontWeight: FontWeight.w600,
+            color: Color(0xFFFF6D00),
+          ),
+        ),
+      ),
+    );
+  }
+}

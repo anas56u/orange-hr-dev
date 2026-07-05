@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/features/home/presentation/providers/home_provider.dart';
 import 'package:provider/provider.dart';
 
+import 'features/login/domain/usecases/login_usecase.dart';
+import 'features/login/presentation/providers/login_provider.dart';
 import 'features/splash/domain/usecases/init_app_usecase.dart';
 import 'features/splash/presentation/providers/splash_provider.dart';
 import 'features/splash/presentation/pages/splash_screen.dart';
@@ -24,6 +26,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => HomeProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (_) => LoginProvider(loginUseCase: LoginUseCase()),
         ),
       ],
       child: MaterialApp(

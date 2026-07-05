@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:orange_hr_dev/features/home/presentation/pages/home_screen.dart';
+import 'package:orange_hr_dev/features/login/presentation/pages/login_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/splash_provider.dart';
 
@@ -27,7 +27,7 @@ class _SplashScreenState extends State<SplashScreen> {
    if (mounted) {
     Navigator.pushReplacement(
       context, 
-      MaterialPageRoute(builder: (context) =>  HomeScreen()),
+      MaterialPageRoute(builder: (context) => const LoginScreen()),
     );
   }
   }
