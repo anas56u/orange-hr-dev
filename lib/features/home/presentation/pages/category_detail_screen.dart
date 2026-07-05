@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../data/datasources/category_local_data_source.dart';
 import '../../data/repositories/category_repository_impl.dart';
 import '../../domain/entities/action_category.dart';
@@ -93,7 +94,7 @@ class _CategoryDetailBody extends StatelessWidget {
                       const SizedBox(width: 16),
                       Expanded(
                         child: Text(
-                          category.displayTitle,
+                          category.displayTitle.tr(),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 22,

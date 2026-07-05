@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// Reusable tile widget for a sub-action item within a category.
 ///
@@ -23,7 +24,7 @@ class CategoryActionTile extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withOpacity(0.09),
+                color: Colors.black.withValues(alpha: 0.09),
                 offset: const Offset(0, 4),
                 blurRadius: 10,
               ),
@@ -36,7 +37,7 @@ class CategoryActionTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  title,
+                  title.tr(),
                   style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 15,

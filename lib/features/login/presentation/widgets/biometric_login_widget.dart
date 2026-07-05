@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 /// A small bottom‑aligned widget showing a fingerprint icon with a
 /// "Biometric Login" label. Currently visual‑only (no‑op on tap).
@@ -23,7 +24,7 @@ class BiometricLoginWidget extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                'or',
+                'or'.tr(),
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
@@ -68,9 +69,9 @@ class BiometricLoginWidget extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 10),
-              const Text(
-                'Biometric Login',
-                style: TextStyle(
+              Text(
+                'biometric_login'.tr(),
+                style: const TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
                   color: Color(0xFF546E7A),

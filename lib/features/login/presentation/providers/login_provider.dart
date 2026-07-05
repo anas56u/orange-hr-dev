@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../domain/entities/login_state.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -6,10 +7,9 @@ import '../../domain/usecases/login_usecase.dart';
 /// Manages all login‑related state and exposes it to the UI
 /// via [ChangeNotifier].
 class LoginProvider extends ChangeNotifier {
-  final LoginUseCase _loginUseCase;
+  final LoginUseCase loginUseCase;
 
-  LoginProvider({required LoginUseCase loginUseCase})
-      : _loginUseCase = loginUseCase;
+  LoginProvider({required this.loginUseCase});
 
 
   // ---------------------------------------------------------------------------
@@ -37,10 +37,10 @@ class LoginProvider extends ChangeNotifier {
   /// Returns an error string if [phone] is invalid, `null` otherwise.
   String? validatePhone(String? phone) {
     if (phone == null || phone.trim().isEmpty) {
-      return 'Phone number is required';
+      return 'phone_required'.tr();
     }
     if (!_phoneRegex.hasMatch(phone.trim())) {
-      return 'Enter a valid Jordanian mobile (07XXXXXXXX)';
+      return 'phone_invalid'.tr();
     }
     return null;
   }
@@ -48,10 +48,10 @@ class LoginProvider extends ChangeNotifier {
   /// Returns an error string if [password] is invalid, `null` otherwise.
   String? validatePassword(String? password) {
     if (password == null || password.isEmpty) {
-      return 'Password is required';
+      return 'password_required'.tr();
     }
     if (password.length < 6) {
-      return 'Password must be at least 6 characters';
+      return 'password_length'.tr();
     }
     return null;
   }
@@ -98,20 +98,20 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
 
     try {
-      final success = await _loginUseCase.execute(
+      final success = await loginUseCase.execute(
         phone: phone.trim(),
         password: password,
       );
 
       if (success) {
-        _state = const LoginSuccess();
+        _state = LoginSuccess(message: 'login_success'.tr());
       } else {
-        _state = const LoginError(
-          message: 'Invalid phone number or password. Please try again.',
+        _state = LoginError(
+          message: 'login_error'.tr(),
         );
       }
     } catch (e) {
-      _state = LoginError(message: 'Something went wrong: $e');
+      _state = LoginError(message: 'something_went_wrong'.tr(args: [e.toString()]));
     }
 
     notifyListeners();

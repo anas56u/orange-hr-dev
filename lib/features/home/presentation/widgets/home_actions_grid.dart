@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../../domain/entities/action_category.dart';
 import '../pages/category_detail_screen.dart';
 import '../pages/latest_offers_screen.dart';
@@ -193,7 +194,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
             ),
             const SizedBox(height: 29),
             Text(
-              widget.category.title,
+              widget.category.title.tr(),
               style: TextStyle(
                 // إذا كان مضغوطاً نجعل النص أبيض، وإلا أسود
                 color: isPressed ? Colors.white : Colors.black,

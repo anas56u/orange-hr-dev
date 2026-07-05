@@ -70,13 +70,3 @@ class _ProfileInfoRow extends StatelessWidget {
     );
   }
 }
-
-/// Thin grey divider between info rows.
-class _FieldDivider extends StatelessWidget {
-  const _FieldDivider();
-
-  @override
-  Widget build(BuildContext context) {
-    return const Divider(color: Color(0xFFEEEEEE), height: 1, thickness: 1);
-  }
-}

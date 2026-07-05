@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 
 import '../../../home/presentation/pages/home_screen.dart';
 import '../../domain/entities/login_state.dart';
@@ -211,7 +212,7 @@ class _LoginScreenState extends State<LoginScreen>
 
                             // ── Login button ───────────────────────────
                             LoginButton(
-                              text: 'Login',
+                              text: 'login_btn'.tr(),
                               isLoading: isLoading,
                               onPressed: isLoading
                                   ? null
@@ -274,12 +275,12 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Widget _buildHeading() {
-    return const Column(
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Welcome Back 👋',
-          style: TextStyle(
+          'welcome_back'.tr(),
+          style: const TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
             color: Color(0xFF1E1E1E),
@@ -287,10 +288,10 @@ class _LoginScreenState extends State<LoginScreen>
             height: 1.2,
           ),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         Text(
-          'Login to your account to continue',
-          style: TextStyle(
+          'login_subtitle'.tr(),
+          style: const TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w400,
             color: Color(0xFF78909C),
@@ -308,8 +309,8 @@ class _LoginScreenState extends State<LoginScreen>
 
     return LoginTextField(
       controller: _phoneController,
-      labelText: 'Phone Number',
-      hintText: '07XXXXXXXX',
+      labelText: 'phone_number'.tr(),
+      hintText: 'phone_hint'.tr(),
       prefixIcon: Iconsax.call,
       keyboardType: TextInputType.phone,
       enabled: !isLoading,
@@ -330,8 +331,8 @@ class _LoginScreenState extends State<LoginScreen>
 
     return LoginTextField(
       controller: _passwordController,
-      labelText: 'Password',
-      hintText: 'Enter your password',
+      labelText: 'password'.tr(),
+      hintText: 'password_hint'.tr(),
       prefixIcon: Iconsax.lock,
       obscureText: !provider.isPasswordVisible,
       enabled: !isLoading,
@@ -365,9 +366,9 @@ class _LoginScreenState extends State<LoginScreen>
           minimumSize: Size.zero,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
-        child: const Text(
-          'Forgot Password?',
-          style: TextStyle(
+        child: Text(
+          'forgot_password'.tr(),
+          style: const TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w600,
             color: Color(0xFFFF6D00),
