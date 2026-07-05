@@ -6,7 +6,6 @@ import '../../domain/usecases/get_offer_categories_usecase.dart';
 import '../providers/latest_offers_provider.dart';
 import '../widgets/latest_offers/offer_category_card.dart';
 import '../widgets/latest_offers/offers_header.dart';
-import 'placeholder_sub_page.dart';
 
 /// Dedicated screen for the "Latest Offers" category.
 ///
@@ -105,13 +104,7 @@ class _LatestOffersBody extends StatelessWidget {
                       return OfferCategoryCard(
                         category: category,
                         onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => PlaceholderSubPage(
-                                title: category.title.replaceAll('\n', ' '),
-                              ),
-                            ),
-                          );
+                          
                         },
                       );
                     },

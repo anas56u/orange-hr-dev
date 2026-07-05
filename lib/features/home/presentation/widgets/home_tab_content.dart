@@ -23,17 +23,17 @@ class HomeTabContent extends StatelessWidget {
                       "Hi Anas",
                       style: TextStyle(
                         color: Colors.black,
-                        fontSize: 22,
+                        fontSize: 25,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
                         letterSpacing: 0.2,
                       ),
                     ),
-                    SizedBox(height: 4),
+                    SizedBox(height: 8),
                     Text(
                       "Welcome Back",
                       style: TextStyle(
-                        color: Color(0xFF606060), 
+                        color: Color(0xFF606060),
                         fontSize: 18,
                         height: 1.2,
                         letterSpacing: 0.2,
@@ -50,9 +50,7 @@ class HomeTabContent extends StatelessWidget {
           ),
         ),
         const HomeActionsGrid(),
-        const SliverToBoxAdapter(
-          child: SizedBox(height: 24),
-        ),
+        const SliverToBoxAdapter(child: SizedBox(height: 24)),
       ],
     );
   }

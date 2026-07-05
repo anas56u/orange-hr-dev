@@ -3,7 +3,6 @@ import 'package:iconsax/iconsax.dart';
 import '../../domain/entities/action_category.dart';
 import '../pages/category_detail_screen.dart';
 import '../pages/latest_offers_screen.dart';
-import '../pages/placeholder_sub_page.dart';
 import '../../../../features/absence/presentation/pages/absence_management_screen.dart';
 
 const Set<String> _categoriesWithSubPages = {
@@ -122,13 +121,7 @@ class HomeActionsGrid extends StatelessWidget {
           builder: (_) => CategoryDetailScreen(category: category),
         ),
       );
-    } else {
-      Navigator.of(context).push(
-        MaterialPageRoute(
-          builder: (_) => PlaceholderSubPage(title: displayTitle),
-        ),
-      );
-    }
+    } else {}
   }
 }
 

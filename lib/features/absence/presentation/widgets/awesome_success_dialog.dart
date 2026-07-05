@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// A modern, highly performant stateless success dialog with a large,
-/// professionally drawn green checkmark (hand-painted, not an icon font).
 class AwesomeSuccessDialog extends StatelessWidget {
-  /// Callback triggered when the user taps the confirmation button.
   final VoidCallback onConfirm;
 
   const AwesomeSuccessDialog({
