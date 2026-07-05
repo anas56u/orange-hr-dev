@@ -7,6 +7,7 @@ import 'package:orange_hr_dev/features/home/presentation/widgets/home_tab_conten
 import 'package:orange_hr_dev/features/employee_directory/presentation/pages/employee_directory_screen.dart';
 import 'package:orange_hr_dev/features/notifications/presentation/pages/notifications_screen.dart';
 import 'package:orange_hr_dev/features/inbox/presentation/pages/inbox_screen.dart';
+import 'package:orange_hr_dev/features/settings/presentation/pages/settings_screen.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -19,8 +20,8 @@ class HomeScreen extends StatelessWidget {
         return Scaffold(
           bottomNavigationBar: const HomeBottomNavBar(),
           backgroundColor: Colors.white,
-          // Hide the shared AppBar on the Notifications tab (index 3)
-          appBar: currentIndex == 3 ? null : const HomeAppBar(),
+          // Hide the shared AppBar on Notifications (index 3) and Settings (index 4)
+          appBar: (currentIndex == 3 || currentIndex == 4) ? null : const HomeAppBar(),
           body: SafeArea(
             child: IndexedStack(
               index: currentIndex,
@@ -29,7 +30,7 @@ class HomeScreen extends StatelessWidget {
                 EmployeeDirectoryScreen(), // Index 1: Address Book
                 InboxScreen(), // Index 2: Inbox / Worklist
                 NotificationsScreen(), // Index 3: Notifications
-                Center(child: Text("Settings")), // Index 4: Placeholder
+                SettingsScreen(), // Index 4: Settings
               ],
             ),
           ),

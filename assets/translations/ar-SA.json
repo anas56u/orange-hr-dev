@@ -1,0 +1,15 @@
+{
+  "settings": "الإعدادات",
+  "preferences": "التفضيلات",
+  "dark_mode": "الوضع الليلي",
+  "dark_mode_desc": "تفعيل المظهر الليلي للتطبيق",
+  "language": "اللغة",
+  "language_desc": "اختر لغة التطبيق المفضلة",
+  "english": "الإنجليزية",
+  "arabic": "العربية",
+  "general": "عام",
+  "about": "حول التطبيق",
+  "app_version": "إصدار التطبيق",
+  "version_number": "1.0.0+1",
+  "logout": "تسجيل الخروج"
+}

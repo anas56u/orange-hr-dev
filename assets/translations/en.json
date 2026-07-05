@@ -1,0 +1,15 @@
+{
+  "settings": "Settings",
+  "preferences": "Preferences",
+  "dark_mode": "Dark Mode",
+  "dark_mode_desc": "Enable dark theme for the application",
+  "language": "Language",
+  "language_desc": "Choose your preferred application language",
+  "english": "English",
+  "arabic": "Arabic",
+  "general": "General",
+  "about": "About App",
+  "app_version": "App Version",
+  "version_number": "1.0.0+1",
+  "logout": "Log Out"
+}
