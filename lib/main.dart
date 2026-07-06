@@ -65,12 +65,8 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-            // KEY CHANGE: locale now comes from the provider.
-            // When settingsProvider.notifyListeners() fires,
-            // this Consumer rebuilds, passing the NEW locale
-            // to MaterialApp — causing the entire app to
-            // re-render with the new language.
-            locale: settingsProvider.locale,
+           
+            locale: context.locale,
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
               useMaterial3: true,

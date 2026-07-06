@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:easy_localization/easy_localization.dart';
 import '../../domain/entities/app_language.dart';
 import '../../domain/usecases/change_language_usecase.dart';
 
@@ -23,24 +22,18 @@ class SettingsProvider extends ChangeNotifier {
       // ignore: prefer_initializing_formals
       : _changeLanguageUseCase = changeLanguageUseCase;
 
-  /// Changes the app language. Two things happen:
+  /// Changes the app language state and persists the choice:
   ///
-  /// 1. `context.setLocale()` tells EasyLocalization to load
-  ///    the new translation strings (e.g., ar.json).
-  /// 2. We update [_locale] and call [notifyListeners], which
-  ///    triggers the [Consumer] in main.dart to rebuild
-  ///    [MaterialApp] with the new locale.
-  Future<void> updateLanguage(BuildContext context, AppLanguage language) async {
-    // Tell EasyLocalization to swap the translation strings.
-    await context.setLocale(language.locale);
-
+  /// 1. Persists the choice via the domain layer.
+  /// 2. Updates [_locale] and calls [notifyListeners], keeping
+  ///    our state in sync with the app's selected language.
+  Future<void> updateLanguage(AppLanguage language) async {
     // Persist the choice via the domain layer.
     await _changeLanguageUseCase.execute(language.locale);
 
     // Update our state and notify listeners.
-    // The Consumer<SettingsProvider> in main.dart will rebuild
-    // MaterialApp with this new locale value.
     _locale = language.locale;
     notifyListeners();
   }
 }
+

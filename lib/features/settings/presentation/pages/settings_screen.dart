@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:easy_localization/easy_localization.dart';
-import 'package:orange_hr_dev/features/login/presentation/pages/login_screen.dart';
 import '../widgets/dark_mode_toggle_tile.dart';
 import '../widgets/language_selector_tile.dart';
 import '../widgets/settings_section_title.dart';
