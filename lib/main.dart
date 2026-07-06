@@ -25,7 +25,7 @@ void main() async {
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
       useOnlyLangCode: true,
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
@@ -57,18 +57,9 @@ class MyApp extends StatelessWidget {
           },
         ),
       ],
-      // ┌─────────────────────────────────────────────────────┐
-      // │  THIS IS THE FIX: Consumer<SettingsProvider> wraps  │
-      // │  MaterialApp so it REBUILDS when locale changes.    │
-      // └─────────────────────────────────────────────────────┘
+     
       child: Consumer<SettingsProvider>(
         builder: (context, settingsProvider, _) {
-          // On the very first build, sync the provider's _locale
-          // with whatever EasyLocalization has persisted.
-          // This is safe in build() because initLocale only assigns
-          // a field — it doesn't trigger notifyListeners().
-          settingsProvider.initLocale(context);
-
           return MaterialApp(
             title: 'Orange HR',
             debugShowCheckedModeBanner: false,

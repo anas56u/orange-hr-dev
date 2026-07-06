@@ -59,7 +59,7 @@ class HomeBottomNavBar extends StatelessWidget {
             ),
             CustomNavItem(
               icon: Iconsax.setting_2,
-              activeIcon: Iconsax.setting5,
+              activeIcon: Iconsax.setting_2,
               index: 4,
               onTap: () => context.read<HomeProvider>().updateTabIndex(4),
             ),

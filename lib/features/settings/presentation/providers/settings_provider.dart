@@ -9,52 +9,37 @@ import '../../domain/usecases/change_language_usecase.dart';
 /// [MaterialApp] reads [locale] via a [Consumer], so when
 /// [notifyListeners] fires, the entire app rebuilds with the
 /// new language — no hot reload required.
-///
-/// ## Why does this provider call context.setLocale()?
-///
-/// `context.setLocale()` is an EasyLocalization method that updates
-/// the translation engine. This is a **presentation-layer concern**
-/// (it touches the widget tree), so it belongs here — not in the
-/// repository or use case.
 class SettingsProvider extends ChangeNotifier {
   final ChangeLanguageUseCase _changeLanguageUseCase;
 
-  /// The current locale. [MaterialApp] reads this via a [Consumer].
-  Locale _locale = const Locale('en', 'US');
-  Locale get locale => _locale;
+  /// The user-selected locale. Starts as null (meaning: use whatever
+  /// EasyLocalization has from its own persistence). Once the user
+  /// explicitly changes the language, this is set and becomes the
+  /// source of truth.
+  Locale? _locale;
+  Locale get locale => _locale ?? const Locale('en', 'US');
 
   SettingsProvider({required ChangeLanguageUseCase changeLanguageUseCase})
       // ignore: prefer_initializing_formals
       : _changeLanguageUseCase = changeLanguageUseCase;
 
-  /// Called once at app startup to sync the provider's state
-  /// with EasyLocalization's persisted locale.
+  /// Changes the app language. Two things happen:
   ///
-  /// Without this, [_locale] would default to English even if
-  /// the user previously selected Arabic.
-  void initLocale(BuildContext context) {
-    _locale = context.locale;
-  }
-
-  /// Changes the app language. Three things happen in order:
-  ///
-  /// 1. `context.setLocale()` — tells EasyLocalization to load
-  ///    the new translation file (e.g., ar.json).
-  /// 2. `_changeLanguageUseCase.execute()` — persists the choice
-  ///    (will use SharedPreferences once implemented).
-  /// 3. `notifyListeners()` — triggers a rebuild of every widget
-  ///    listening to this provider (including [MaterialApp]).
+  /// 1. `context.setLocale()` tells EasyLocalization to load
+  ///    the new translation strings (e.g., ar.json).
+  /// 2. We update [_locale] and call [notifyListeners], which
+  ///    triggers the [Consumer] in main.dart to rebuild
+  ///    [MaterialApp] with the new locale.
   Future<void> updateLanguage(BuildContext context, AppLanguage language) async {
-    // Step 1: Tell EasyLocalization to swap translations.
-    // This is a presentation-layer call — it needs BuildContext.
+    // Tell EasyLocalization to swap the translation strings.
     await context.setLocale(language.locale);
 
-    // Step 2: Persist the choice via the domain layer.
+    // Persist the choice via the domain layer.
     await _changeLanguageUseCase.execute(language.locale);
 
-    // Step 3: Update our state and notify listeners.
-    // THIS is the line that was missing before — without it,
-    // MaterialApp never knew the locale changed.
+    // Update our state and notify listeners.
+    // The Consumer<SettingsProvider> in main.dart will rebuild
+    // MaterialApp with this new locale value.
     _locale = language.locale;
     notifyListeners();
   }

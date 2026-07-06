@@ -87,10 +87,7 @@ class SettingsScreen extends StatelessWidget {
                 titleColor: const Color(0xFFE53935),
                 trailing: const SizedBox.shrink(),
                 onTap: () {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (_) => const LoginScreen()),
-                  );
+                
                 },
               ),
               const SizedBox(height: 32),
