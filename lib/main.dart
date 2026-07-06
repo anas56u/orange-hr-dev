@@ -47,24 +47,46 @@ class MyApp extends StatelessWidget {
           create: (_) => LoginProvider(loginUseCase: LoginUseCase()),
         ),
         ChangeNotifierProvider(
-          create: (_) => SettingsProvider(
-            changeLanguageUseCase: ChangeLanguageUseCase(
-              SettingsRepositoryImpl(),
-            ),
-          ),
+          create: (ctx) {
+            final provider = SettingsProvider(
+              changeLanguageUseCase: ChangeLanguageUseCase(
+                SettingsRepositoryImpl(),
+              ),
+            );
+            return provider;
+          },
         ),
       ],
-      child: MaterialApp(
-        title: 'Orange HR',
-        debugShowCheckedModeBanner: false,
-        localizationsDelegates: context.localizationDelegates,
-        supportedLocales: context.supportedLocales,
-        locale: context.locale,
-        theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
-          useMaterial3: true,
-        ),
-        home: const SplashScreen(),
+      // ┌─────────────────────────────────────────────────────┐
+      // │  THIS IS THE FIX: Consumer<SettingsProvider> wraps  │
+      // │  MaterialApp so it REBUILDS when locale changes.    │
+      // └─────────────────────────────────────────────────────┘
+      child: Consumer<SettingsProvider>(
+        builder: (context, settingsProvider, _) {
+          // On the very first build, sync the provider's _locale
+          // with whatever EasyLocalization has persisted.
+          // This is safe in build() because initLocale only assigns
+          // a field — it doesn't trigger notifyListeners().
+          settingsProvider.initLocale(context);
+
+          return MaterialApp(
+            title: 'Orange HR',
+            debugShowCheckedModeBanner: false,
+            localizationsDelegates: context.localizationDelegates,
+            supportedLocales: context.supportedLocales,
+            // KEY CHANGE: locale now comes from the provider.
+            // When settingsProvider.notifyListeners() fires,
+            // this Consumer rebuilds, passing the NEW locale
+            // to MaterialApp — causing the entire app to
+            // re-render with the new language.
+            locale: settingsProvider.locale,
+            theme: ThemeData(
+              colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
+              useMaterial3: true,
+            ),
+            home: const SplashScreen(),
+          );
+        },
       ),
     );
   }
