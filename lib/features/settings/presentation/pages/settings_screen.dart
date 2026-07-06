@@ -11,6 +11,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -22,7 +23,7 @@ class SettingsScreen extends StatelessWidget {
               // Header Title
               const SizedBox(height: 12),
               Text(
-                'settings'.tr(),
+                context.tr('settings'),
                 style: const TextStyle(
                   fontSize: 28,
                   fontWeight: FontWeight.w800,
@@ -33,17 +34,17 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 20),
 
               // Preferences Section
-              SettingsSectionTitle(title: 'preferences'.tr()),
-              const DarkModeToggleTile(),
-              const LanguageSelectorTile(),
+              SettingsSectionTitle(title: context.tr('preferences')),
+              DarkModeToggleTile(),
+              LanguageSelectorTile(),
 
               // General Section
-              SettingsSectionTitle(title: 'general'.tr()),
+              SettingsSectionTitle(title: context.tr('general')),
               SettingsTileWidget(
                 icon: Iconsax.info_circle,
                 iconBackgroundColor: const Color(0xFF1976D2).withValues(alpha: 0.12),
                 iconColor: const Color(0xFF1976D2),
-                title: 'about'.tr(),
+                title: context.tr('about'),
                 subtitle: 'Orange HR Mobile Suite',
                 onTap: () {
                   showAboutDialog(
@@ -65,9 +66,9 @@ class SettingsScreen extends StatelessWidget {
                 icon: Iconsax.mobile,
                 iconBackgroundColor: const Color(0xFF8E24AA).withValues(alpha: 0.12),
                 iconColor: const Color(0xFF8E24AA),
-                title: 'app_version'.tr(),
+                title: context.tr('app_version'),
                 trailing: Text(
-                  'version_number'.tr(),
+                  context.tr('version_number'),
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,
@@ -82,7 +83,7 @@ class SettingsScreen extends StatelessWidget {
                 icon: Iconsax.logout,
                 iconBackgroundColor: const Color(0xFFE53935).withValues(alpha: 0.12),
                 iconColor: const Color(0xFFE53935),
-                title: 'logout'.tr(),
+                title: context.tr('logout'),
                 titleColor: const Color(0xFFE53935),
                 trailing: const SizedBox.shrink(),
                 onTap: () {

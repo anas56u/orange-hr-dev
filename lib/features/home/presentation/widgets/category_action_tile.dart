@@ -13,6 +13,7 @@ class CategoryActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
       child: InkWell(
@@ -37,7 +38,7 @@ class CategoryActionTile extends StatelessWidget {
             children: [
               Expanded(
                 child: Text(
-                  title.tr(),
+                  context.tr(title),
                   style: const TextStyle(
                     color: Colors.black87,
                     fontSize: 15,

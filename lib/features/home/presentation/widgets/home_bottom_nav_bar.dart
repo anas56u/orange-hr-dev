@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:easy_localization/easy_localization.dart';
 import '../providers/home_provider.dart';
 
 class HomeBottomNavBar extends StatelessWidget {
@@ -8,7 +9,7 @@ class HomeBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    context.locale; // Subscribe to locale changes
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18),
       decoration: BoxDecoration(

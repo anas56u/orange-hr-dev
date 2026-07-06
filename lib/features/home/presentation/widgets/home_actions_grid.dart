@@ -77,6 +77,7 @@ class HomeActionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
       sliver: SliverGrid(
@@ -142,6 +143,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return GestureDetector(
       onTapDown: (_) {
         setState(() {
@@ -194,7 +196,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
             ),
             const SizedBox(height: 29),
             Text(
-              widget.category.title.tr(),
+              context.tr(widget.category.title),
               style: TextStyle(
                 // إذا كان مضغوطاً نجعل النص أبيض، وإلا أسود
                 color: isPressed ? Colors.white : Colors.black,

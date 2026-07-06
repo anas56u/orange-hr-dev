@@ -8,6 +8,7 @@ class HomeTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
@@ -21,7 +22,7 @@ class HomeTabContent extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      'hi_user'.tr(args: ['Anas']),
+                      context.tr('hi_user', args: ['Anas']),
                       style: const TextStyle(
                         color: Colors.black,
                         fontSize: 25,
@@ -32,7 +33,7 @@ class HomeTabContent extends StatelessWidget {
                     ),
                     const SizedBox(height: 8),
                     Text(
-                      'welcome_back_short'.tr(),
+                      context.tr('welcome_back_short'),
                       style: const TextStyle(
                         color: Color(0xFF606060),
                         fontSize: 18,
@@ -50,7 +51,7 @@ class HomeTabContent extends StatelessWidget {
             ],
           ),
         ),
-        const HomeActionsGrid(),
+        HomeActionsGrid(),
         const SliverToBoxAdapter(child: SizedBox(height: 24)),
       ],
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/features/home/presentation/providers/home_provider.dart';
 import 'package:orange_hr_dev/features/home/presentation/widgets/home_app_bar_widget.dart';
 import 'package:orange_hr_dev/features/home/presentation/widgets/home_bottom_nav_bar.dart';
@@ -14,18 +15,19 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return Selector<HomeProvider, int>(
       selector: (context, provider) => provider.currentTabIndex,
       builder: (context, currentIndex, child) {
         return Scaffold(
-          bottomNavigationBar: const HomeBottomNavBar(),
+          bottomNavigationBar: HomeBottomNavBar(),
           backgroundColor: Colors.white,
           // Hide the shared AppBar on Notifications (index 3) and Settings (index 4)
-          appBar: (currentIndex == 3 || currentIndex == 4) ? null : const HomeAppBar(),
+          appBar: (currentIndex == 3 || currentIndex == 4) ? null : HomeAppBar(),
           body: SafeArea(
             child: IndexedStack(
               index: currentIndex,
-              children: const [
+              children: [
                 HomeTabContent(), // Index 0: Home
                 EmployeeDirectoryScreen(), // Index 1: Address Book
                 InboxScreen(), // Index 2: Inbox / Worklist

@@ -26,6 +26,7 @@ class CategoryDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return ChangeNotifierProvider<CategoryDetailProvider>(
       create: (_) {
         final provider = CategoryDetailProvider(
@@ -51,6 +52,7 @@ class _CategoryDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -94,7 +96,7 @@ class _CategoryDetailBody extends StatelessWidget {
                       const SizedBox(width: 16),
                       Expanded(
                         child: Text(
-                          category.displayTitle.tr(),
+                          context.tr(category.displayTitle),
                           style: const TextStyle(
                             color: Colors.black,
                             fontSize: 22,

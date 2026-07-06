@@ -15,6 +15,7 @@ class _DarkModeToggleTileState extends State<DarkModeToggleTile> {
 
   @override
   Widget build(BuildContext context) {
+    context.locale; // Subscribe to locale changes
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
       decoration: BoxDecoration(
@@ -61,7 +62,7 @@ class _DarkModeToggleTileState extends State<DarkModeToggleTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'dark_mode'.tr(),
+                        context.tr('dark_mode'),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -70,7 +71,7 @@ class _DarkModeToggleTileState extends State<DarkModeToggleTile> {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'dark_mode_desc'.tr(),
+                        context.tr('dark_mode_desc'),
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,

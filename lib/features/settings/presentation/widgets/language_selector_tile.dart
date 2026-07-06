@@ -40,7 +40,7 @@ class LanguageSelectorTile extends StatelessWidget {
               ),
               const SizedBox(height: 20),
               Text(
-                'language'.tr(),
+                context.tr('language'),
                 style: const TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w800,
@@ -49,7 +49,7 @@ class LanguageSelectorTile extends StatelessWidget {
               ),
               const SizedBox(height: 6),
               Text(
-                'language_desc'.tr(),
+                context.tr('language_desc'),
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey.shade600,
@@ -101,7 +101,7 @@ class LanguageSelectorTile extends StatelessWidget {
                         const SizedBox(width: 16),
                         Expanded(
                           child: Text(
-                            lang == AppLanguage.english ? 'english'.tr() : 'arabic'.tr(),
+                            lang == AppLanguage.english ? context.tr('english') : context.tr('arabic'),
                             style: TextStyle(
                               fontSize: 16,
                               fontWeight: isSelected ? FontWeight.w700 : FontWeight.w600,
@@ -131,7 +131,7 @@ class LanguageSelectorTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentLang = AppLanguage.fromLocale(context.locale);
-    final currentName = currentLang == AppLanguage.english ? 'english'.tr() : 'arabic'.tr();
+    final currentName = currentLang == AppLanguage.english ? context.tr('english') : context.tr('arabic');
 
     return Container(
       margin: const EdgeInsets.only(bottom: 12),
@@ -175,7 +175,7 @@ class LanguageSelectorTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'language'.tr(),
+                        context.tr('language'),
                         style: const TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
@@ -184,7 +184,7 @@ class LanguageSelectorTile extends StatelessWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        'language_desc'.tr(),
+                        context.tr('language_desc'),
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w400,
