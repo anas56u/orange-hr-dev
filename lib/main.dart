@@ -24,7 +24,7 @@ void main() async {
       ],
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
-      useOnlyLangCode: true,
+      useOnlyLangCode: false,
       child: MyApp(),
     ),
   );
@@ -58,15 +58,15 @@ class MyApp extends StatelessWidget {
         ),
       ],
      
-      child: Consumer<SettingsProvider>(
-        builder: (context, settingsProvider, _) {
+      child: Builder(
+        builder: (context) {
           return MaterialApp(
             title: 'Orange HR',
             debugShowCheckedModeBanner: false,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
            
-            locale: settingsProvider.appLocale,
+            locale: context.locale,
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
               useMaterial3: true,

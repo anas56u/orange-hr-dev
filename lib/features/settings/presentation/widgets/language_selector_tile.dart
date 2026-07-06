@@ -61,9 +61,10 @@ class LanguageSelectorTile extends StatelessWidget {
                 return GestureDetector(
                   onTap: () async {
                     Navigator.pop(bottomSheetContext);
-                    await context.setLocale(lang.locale);
+                    final exactLocale = lang.locale;
+                    await context.setLocale(exactLocale);
                     if (context.mounted) {
-                      Provider.of<SettingsProvider>(context, listen: false).changeLanguage(lang.locale);
+                      Provider.of<SettingsProvider>(context, listen: false).changeLanguage(exactLocale);
                     }
                   },
                   child: AnimatedContainer(
