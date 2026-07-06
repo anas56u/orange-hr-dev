@@ -63,7 +63,7 @@ class LanguageSelectorTile extends StatelessWidget {
                     Navigator.pop(bottomSheetContext);
                     await context.setLocale(lang.locale);
                     if (context.mounted) {
-                      context.read<SettingsProvider>().updateLanguage(lang);
+                      Provider.of<SettingsProvider>(context, listen: false).changeLanguage(lang.locale);
                     }
                   },
                   child: AnimatedContainer(

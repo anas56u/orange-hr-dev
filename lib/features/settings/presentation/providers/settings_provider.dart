@@ -11,12 +11,9 @@ import '../../domain/usecases/change_language_usecase.dart';
 class SettingsProvider extends ChangeNotifier {
   final ChangeLanguageUseCase _changeLanguageUseCase;
 
-  /// The user-selected locale. Starts as null (meaning: use whatever
-  /// EasyLocalization has from its own persistence). Once the user
-  /// explicitly changes the language, this is set and becomes the
-  /// source of truth.
-  Locale? _locale;
-  Locale get locale => _locale ?? const Locale('en', 'US');
+  Locale _appLocale = const Locale('ar');
+  Locale get appLocale => _appLocale;
+  Locale get locale => _appLocale;
 
   SettingsProvider({required ChangeLanguageUseCase changeLanguageUseCase})
       // ignore: prefer_initializing_formals
@@ -24,16 +21,18 @@ class SettingsProvider extends ChangeNotifier {
 
   /// Changes the app language state and persists the choice:
   ///
-  /// 1. Persists the choice via the domain layer.
-  /// 2. Updates [_locale] and calls [notifyListeners], keeping
-  ///    our state in sync with the app's selected language.
-  Future<void> updateLanguage(AppLanguage language) async {
-    // Persist the choice via the domain layer.
-    await _changeLanguageUseCase.execute(language.locale);
-
-    // Update our state and notify listeners.
-    _locale = language.locale;
+  /// 1. Updates [_appLocale].
+  /// 2. Persists the choice via the domain layer.
+  /// 3. Calls [notifyListeners], keeping our state in sync with the app's UI.
+  Future<void> changeLanguage(Locale newLocale) async {
+    _appLocale = newLocale;
+    await _changeLanguageUseCase.execute(newLocale);
     notifyListeners();
+  }
+
+  /// Changes the app language state using [AppLanguage].
+  Future<void> updateLanguage(AppLanguage language) async {
+    await changeLanguage(language.locale);
   }
 }
 

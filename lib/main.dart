@@ -66,7 +66,7 @@ class MyApp extends StatelessWidget {
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
            
-            locale: context.locale,
+            locale: settingsProvider.appLocale,
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
               useMaterial3: true,
