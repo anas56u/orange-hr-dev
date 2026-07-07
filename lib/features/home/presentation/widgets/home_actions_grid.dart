@@ -194,7 +194,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
               color: isPressed ? Colors.white : widget.category.iconColor,
               size: 40.0,
             ),
-            const SizedBox(height: 29),
+            const SizedBox(height: 12),
             Text(
               context.tr(widget.category.title),
               style: TextStyle(
@@ -204,6 +204,8 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
                 fontWeight: FontWeight.bold,
                 height: 1.2,
               ),
+              overflow: TextOverflow.ellipsis,
+              maxLines: 2,
             ),
           ],
         ),

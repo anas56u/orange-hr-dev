@@ -1,9 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/features/home/presentation/pages/home_screen.dart';
 import 'package:orange_hr_dev/features/login/domain/usecases/biometric_login_usecase.dart';
-import 'package:orange_hr_dev/features/login/presentation/widgets/biometric_login_widget.dart';
 
 import '../../domain/entities/login_state.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -49,7 +47,7 @@ class LoginProvider extends ChangeNotifier {
       final isSuccess = await biometricLoginUseCase();
       _isLoadingBiometric = false;
       notifyListeners();
-      if (isSuccess){
+      if (isSuccess && context.mounted){
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => const HomeScreen()),

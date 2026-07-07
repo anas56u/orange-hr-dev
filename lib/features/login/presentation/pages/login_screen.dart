@@ -229,8 +229,8 @@ class _LoginScreenState extends State<LoginScreen>
                             const Spacer(),
 
                             // ── Biometric section ──────────────────────
-                            const Padding(
-                              padding: EdgeInsets.only(bottom: 32, top: 36),
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 32, top: 36),
                               child: BiometricLoginWidget(),
                             ),
                           ],

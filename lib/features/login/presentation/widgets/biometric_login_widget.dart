@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/login_provider.dart';
 
 /// A small bottom‑aligned widget showing a fingerprint icon with a
-/// "Biometric Login" label. Currently visual‑only (no‑op on tap).
+/// "Biometric Login" label. Triggers biometric authentication on tap.
 class BiometricLoginWidget extends StatelessWidget {
   const BiometricLoginWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final provider = context.watch<LoginProvider>();
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -45,9 +50,9 @@ class BiometricLoginWidget extends StatelessWidget {
 
         // Biometric button
         GestureDetector(
-          onTap: () {
-            // No-op — placeholder for future biometric integration.
-          },
+          onTap: provider.isLoadingBiometric
+              ? null
+              : () => provider.authenticateWithBiometric(context),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -62,11 +67,19 @@ class BiometricLoginWidget extends StatelessWidget {
                     width: 1.5,
                   ),
                 ),
-                child: const Icon(
-                  Iconsax.finger_scan,
-                  size: 28,
-                  color: Color(0xFFFF6D00),
-                ),
+                child: provider.isLoadingBiometric
+                    ? const Padding(
+                        padding: EdgeInsets.all(16),
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2.5,
+                          color: Color(0xFFFF6D00),
+                        ),
+                      )
+                    : const Icon(
+                        Iconsax.finger_scan,
+                        size: 28,
+                        color: Color(0xFFFF6D00),
+                      ),
               ),
               const SizedBox(height: 10),
               Text(
@@ -85,3 +98,4 @@ class BiometricLoginWidget extends StatelessWidget {
     );
   }
 }
+
