@@ -38,6 +38,7 @@ dependencies:
   iconsax: ^0.0.8
   easy_localization: ^3.0.5
   local_auth: ^3.0.1
+  flutter_native_splash: ^2.4.8
 
 dev_dependencies:
   flutter_test:
@@ -49,6 +50,7 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -91,3 +93,17 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/to/font-from-package
+flutter_native_splash:
+  color: "#FFFFFF" # يمكنك تغيير هذا للون الذي يناسب تطبيقك
+  image: "assets/images/logo.png"
+  android: true
+  ios: true
+  web: true
+flutter_launcher_icons:
+  android: "launcher_icon" # سيقوم بتسمية الأيقونة في أندرويد بهذا الاسم
+  ios: true # تفعيل توليد الأيقونات لنظام iOS
+  image_path: "assets/images/logo.png" # مسار صورتك هنا
+  
+  # يمكنك أيضاً تحديد لون خلفية مخصص للأندرويد (اختياري)
+  # adaptive_icon_background: "#ffffff"
+  # adaptive_icon_foreground: "assets/images/app_icon.png"  
