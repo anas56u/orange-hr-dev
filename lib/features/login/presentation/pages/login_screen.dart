@@ -45,6 +45,9 @@ class _LoginScreenState extends State<LoginScreen>
     ).animate(_fadeAnimation);
 
     _fadeController.forward();
+
+    // Ensure any previous login state is silently cleared when entering LoginScreen.
+    context.read<LoginProvider>().resetStateSilently();
   }
 
   @override

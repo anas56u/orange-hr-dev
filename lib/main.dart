@@ -18,10 +18,7 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [
-        Locale('en', 'US'),
-        Locale('ar', 'SA'),
-      ],
+      supportedLocales: const [Locale('en', 'US'), Locale('ar', 'SA')],
       path: 'assets/translations',
       fallbackLocale: const Locale('en', 'US'),
       useOnlyLangCode: false,
@@ -40,9 +37,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (_) => SplashProvider(initAppUseCase: InitAppUseCase()),
         ),
-        ChangeNotifierProvider(
-          create: (_) => HomeProvider(),
-        ),
+        ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(
           create: (_) => LoginProvider(loginUseCase: LoginUseCase()),
         ),
@@ -57,7 +52,7 @@ class MyApp extends StatelessWidget {
           },
         ),
       ],
-     
+
       child: Builder(
         builder: (context) {
           return MaterialApp(
@@ -65,7 +60,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             localizationsDelegates: context.localizationDelegates,
             supportedLocales: context.supportedLocales,
-           
+
             locale: context.locale,
             theme: ThemeData(
               colorScheme: ColorScheme.fromSeed(seedColor: Colors.orange),
@@ -78,4 +73,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
+  

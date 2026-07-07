@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:iconsax/iconsax.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:provider/provider.dart';
+import 'package:orange_hr_dev/features/home/presentation/providers/home_provider.dart';
+import 'package:orange_hr_dev/features/login/presentation/pages/login_screen.dart';
+import 'package:orange_hr_dev/features/login/presentation/providers/login_provider.dart';
 import '../widgets/dark_mode_toggle_tile.dart';
 import '../widgets/language_selector_tile.dart';
 import '../widgets/settings_section_title.dart';
@@ -16,22 +19,23 @@ class SettingsScreen extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          padding: const EdgeInsets.symmetric(vertical: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Header Title
-              const SizedBox(height: 12),
-              Text(
-                context.tr('settings'),
-                style: const TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.w800,
-                  color: Color(0xFF1E1E1E),
-                  letterSpacing: -0.5,
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Text(
+                  context.tr('settings'),
+                  style: const TextStyle(
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF1E1E1E),
+                  ),
                 ),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 12),
 
               // Preferences Section
               SettingsSectionTitle(title: context.tr('preferences')),
@@ -41,9 +45,6 @@ class SettingsScreen extends StatelessWidget {
               // General Section
               SettingsSectionTitle(title: context.tr('general')),
               SettingsTileWidget(
-                icon: Iconsax.info_circle,
-                iconBackgroundColor: const Color(0xFF1976D2).withValues(alpha: 0.12),
-                iconColor: const Color(0xFF1976D2),
                 title: context.tr('about'),
                 subtitle: 'Orange HR Mobile Suite',
                 onTap: () {
@@ -63,16 +64,12 @@ class SettingsScreen extends StatelessWidget {
                 },
               ),
               SettingsTileWidget(
-                icon: Iconsax.mobile,
-                iconBackgroundColor: const Color(0xFF8E24AA).withValues(alpha: 0.12),
-                iconColor: const Color(0xFF8E24AA),
                 title: context.tr('app_version'),
                 trailing: Text(
                   context.tr('version_number'),
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.grey.shade600,
+                    color: Color(0xFF757575),
                   ),
                 ),
               ),
@@ -80,14 +77,15 @@ class SettingsScreen extends StatelessWidget {
               const SizedBox(height: 16),
               // Logout button
               SettingsTileWidget(
-                icon: Iconsax.logout,
-                iconBackgroundColor: const Color(0xFFE53935).withValues(alpha: 0.12),
-                iconColor: const Color(0xFFE53935),
                 title: context.tr('logout'),
-                titleColor: const Color(0xFFE53935),
-                trailing: const SizedBox.shrink(),
+                titleColor: const Color(0xFFD32F2F),
                 onTap: () {
-                
+                  context.read<LoginProvider>().logout();
+                  context.read<HomeProvider>().updateTabIndex(0);
+                  Navigator.of(context).pushAndRemoveUntil(
+                    MaterialPageRoute(builder: (context) => const LoginScreen()),
+                    (route) => false,
+                  );
                 },
               ),
               const SizedBox(height: 32),

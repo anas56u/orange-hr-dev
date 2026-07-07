@@ -20,7 +20,7 @@ class ContactInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 19.0),
+      padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 19.0),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(

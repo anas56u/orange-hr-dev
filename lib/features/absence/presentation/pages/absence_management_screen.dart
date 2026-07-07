@@ -193,7 +193,7 @@ class _AbsenceManagementBody extends StatelessWidget {
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.fromSeed(
               seedColor: const Color(0xFF1976D2),
-              primary: const Color(0xFF1976D2),
+              primary: const Color.fromARGB(255, 224, 117, 17),
             ),
           ),
           child: child!,
@@ -219,7 +219,7 @@ class _AbsenceManagementBody extends StatelessWidget {
           data: ThemeData.light().copyWith(
             colorScheme: ColorScheme.fromSeed(
               seedColor: const Color(0xFF1976D2),
-              primary: const Color(0xFF1976D2),
+              primary: const Color.fromARGB(255, 224, 117, 17),
             ),
           ),
           child: child!,
@@ -280,10 +280,7 @@ class _AbsenceManagementBody extends StatelessWidget {
             parent: anim1,
             curve: Curves.easeOutBack,
           ).value,
-          child: FadeTransition(
-            opacity: anim1,
-            child: child,
-          ),
+          child: FadeTransition(opacity: anim1, child: child),
         );
       },
     );

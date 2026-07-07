@@ -11,14 +11,14 @@ class SettingsSectionTitle extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.only(left: 4, right: 4, bottom: 12, top: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 8, top: 24),
       child: Text(
         title.toUpperCase(),
         style: const TextStyle(
           fontSize: 13,
-          fontWeight: FontWeight.w700,
-          color: Color(0xFFFF6D00),
-          letterSpacing: 1.2,
+          fontWeight: FontWeight.w600,
+          color: Color(0xFF757575),
+          letterSpacing: 0.8,
         ),
       ),
     );

@@ -147,18 +147,99 @@ const List<Employee> _mockEmployees = [
   ),
 ];
 
-class EmployeeDirectoryScreen extends StatelessWidget {
+class EmployeeDirectoryScreen extends StatefulWidget {
   const EmployeeDirectoryScreen({super.key});
 
   @override
+  State<EmployeeDirectoryScreen> createState() => _EmployeeDirectoryScreenState();
+}
+
+class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
+  final TextEditingController _searchController = TextEditingController();
+  String _searchQuery = '';
+
+  @override
+  void dispose() {
+    _searchController.dispose();
+    super.dispose();
+  }
+
+  int _getRelevanceScore(Employee e, String query) {
+    if (query.isEmpty) return 0;
+    final q = query.toLowerCase();
+
+    final nameLower = e.name.toLowerCase();
+    final positionLower = e.position.toLowerCase();
+    final unitLower = e.unit.toLowerCase();
+    final orgLower = e.organization.toLowerCase();
+    final mobileLower = e.mobile.toLowerCase();
+
+    // 1. First Name / Full Name starts directly with the query (Score: 100)
+    if (nameLower.startsWith(q)) {
+      return 100;
+    }
+
+    // 2. Last Name or any name word starts with the query (Score: 80)
+    final nameWords = nameLower.split(' ');
+    if (nameWords.any((word) => word.startsWith(q))) {
+      return 80;
+    }
+
+    // 3. Department, Unit, or Position starts with the query (Score: 60)
+    if (positionLower.startsWith(q) || unitLower.startsWith(q) || orgLower.startsWith(q)) {
+      return 60;
+    }
+    final posWords = positionLower.split(' ');
+    final orgWords = orgLower.split(' ');
+    if (posWords.any((w) => w.startsWith(q)) || orgWords.any((w) => w.startsWith(q))) {
+      return 50;
+    }
+
+    // 4. Mobile number starts with the query (Score: 40)
+    if (mobileLower.startsWith(q)) {
+      return 40;
+    }
+
+    // 5. Contains as a substring (Score: 10) - placed at the very bottom
+    if (nameLower.contains(q) || positionLower.contains(q) || unitLower.contains(q) || orgLower.contains(q)) {
+      return 10;
+    }
+
+    return 0; // No match
+  }
+
+  List<Employee> get _filteredEmployees {
+    if (_searchQuery.trim().isEmpty) {
+      return _mockEmployees;
+    }
+    final query = _searchQuery.trim();
+
+    final scored = _mockEmployees
+        .map((e) => MapEntry(e, _getRelevanceScore(e, query)))
+        .where((entry) => entry.value > 0)
+        .toList();
+
+    // Sort descending by relevance score, then alphabetically
+    scored.sort((a, b) {
+      final scoreComparison = b.value.compareTo(a.value);
+      if (scoreComparison != 0) return scoreComparison;
+      return a.key.name.compareTo(b.key.name);
+    });
+
+    return scored.map((entry) => entry.key).toList();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final employees = _filteredEmployees;
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Padding(
           padding: EdgeInsets.only(left: 20.0, top: 16.0, right: 20.0),
           child: Text(
-            "Employee Directory", 
+            "Employee Directory",
             style: TextStyle(
               color: Colors.black,
               fontSize: 22,
@@ -167,24 +248,71 @@ class EmployeeDirectoryScreen extends StatelessWidget {
             ),
           ),
         ),
-        const DirectorySearchBar(),
+        DirectorySearchBar(
+          controller: _searchController,
+          onChanged: (value) {
+            setState(() {
+              _searchQuery = value;
+            });
+          },
+          onClear: () {
+            _searchController.clear();
+            setState(() {
+              _searchQuery = '';
+            });
+          },
+        ),
         Expanded(
-          child: ListView.separated(
-            physics: const BouncingScrollPhysics(),
-            itemCount: _mockEmployees.length,
-            separatorBuilder: (context, index) => const Divider(
-              color: Color(0xFFEEEEEE),
-              height: 1,
-              thickness: 1,
-              indent: 20,
-              endIndent: 20,
-            ),
-            itemBuilder: (context, index) {
-              return EmployeeListItem(employee: _mockEmployees[index]);
-            },
-          ),
+          child: employees.isEmpty
+              ? _buildEmptyState()
+              : ListView.separated(
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: employees.length,
+                  separatorBuilder: (context, index) => const Divider(
+                    color: Color(0xFFEEEEEE),
+                    height: 1,
+                    thickness: 1,
+                    indent: 20,
+                    endIndent: 20,
+                  ),
+                  itemBuilder: (context, index) {
+                    return EmployeeListItem(employee: employees[index]);
+                  },
+                ),
         ),
       ],
+    );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Icon(
+            Icons.person_search_outlined,
+            size: 64,
+            color: Colors.grey.shade400,
+          ),
+          const SizedBox(height: 16),
+          Text(
+            "No employees found",
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+              color: Colors.grey.shade700,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Text(
+            "No results matching \"$_searchQuery\"",
+            style: TextStyle(
+              fontSize: 14,
+              color: Colors.grey.shade500,
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

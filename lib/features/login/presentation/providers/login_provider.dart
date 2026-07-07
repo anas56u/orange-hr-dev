@@ -72,6 +72,19 @@ class LoginProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  /// Silently resets the state without calling notifyListeners (safe for initState).
+  void resetStateSilently() {
+    _state = const LoginInitial();
+    _autoValidate = false;
+  }
+
+  /// Logs out the user and clears persistent/in-memory login state.
+  void logout() {
+    _state = const LoginInitial();
+    _autoValidate = false;
+    notifyListeners();
+  }
+
   /// Validates the form and, if valid, fires the mock login use case.
   ///
   /// The caller should pass the current text‑field values. Returns early

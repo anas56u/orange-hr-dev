@@ -37,6 +37,7 @@ dependencies:
   provider: ^6.1.5+1
   iconsax: ^0.0.8
   easy_localization: ^3.0.5
+  local_auth: ^3.0.1
 
 dev_dependencies:
   flutter_test:
