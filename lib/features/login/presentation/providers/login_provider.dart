@@ -1,5 +1,9 @@
 import 'package:flutter/foundation.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/features/home/presentation/pages/home_screen.dart';
+import 'package:orange_hr_dev/features/login/domain/usecases/biometric_login_usecase.dart';
+import 'package:orange_hr_dev/features/login/presentation/widgets/biometric_login_widget.dart';
 
 import '../../domain/entities/login_state.dart';
 import '../../domain/usecases/login_usecase.dart';
@@ -8,9 +12,12 @@ import '../../domain/usecases/login_usecase.dart';
 /// via [ChangeNotifier].
 class LoginProvider extends ChangeNotifier {
   final LoginUseCase loginUseCase;
+  final BiometricLoginUsecase biometricLoginUseCase;
 
-  LoginProvider({required this.loginUseCase});
-
+  LoginProvider({
+    required this.loginUseCase,
+    required this.biometricLoginUseCase,
+  });
 
   // ---------------------------------------------------------------------------
   // State
@@ -18,6 +25,8 @@ class LoginProvider extends ChangeNotifier {
 
   LoginState _state = const LoginInitial();
   LoginState get state => _state;
+  bool _isLoadingBiometric = false;
+  bool get isLoadingBiometric => _isLoadingBiometric;
 
   bool _isPasswordVisible = false;
   bool get isPasswordVisible => _isPasswordVisible;
@@ -33,6 +42,25 @@ class LoginProvider extends ChangeNotifier {
 
   /// Jordanian mobile: starts with `07`, exactly 10 digits.
   static final _phoneRegex = RegExp(r'^07\d{8}$');
+  Future<void> authenticateWithBiometric(BuildContext context) async {
+    _isLoadingBiometric = true;
+    notifyListeners();
+    try{
+      final isSuccess = await biometricLoginUseCase();
+      _isLoadingBiometric = false;
+      notifyListeners();
+      if (isSuccess){
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const HomeScreen()),
+        );
+      }
+    }catch(e){
+      _isLoadingBiometric = false;
+      notifyListeners();
+    }
+    
+  }
 
   /// Returns an error string if [phone] is invalid, `null` otherwise.
   String? validatePhone(String? phone) {
@@ -89,10 +117,7 @@ class LoginProvider extends ChangeNotifier {
   ///
   /// The caller should pass the current text‑field values. Returns early
   /// (with an [LoginError] state) when validation fails.
-  Future<void> login({
-    required String phone,
-    required String password,
-  }) async {
+  Future<void> login({required String phone, required String password}) async {
     // Enable inline validation from this point on.
     _autoValidate = true;
     notifyListeners();
@@ -119,12 +144,12 @@ class LoginProvider extends ChangeNotifier {
       if (success) {
         _state = LoginSuccess(message: 'login_success'.tr());
       } else {
-        _state = LoginError(
-          message: 'login_error'.tr(),
-        );
+        _state = LoginError(message: 'login_error'.tr());
       }
     } catch (e) {
-      _state = LoginError(message: 'something_went_wrong'.tr(args: [e.toString()]));
+      _state = LoginError(
+        message: 'something_went_wrong'.tr(args: [e.toString()]),
+      );
     }
 
     notifyListeners();

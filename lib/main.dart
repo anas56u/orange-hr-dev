@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/features/home/presentation/providers/home_provider.dart';
+import 'package:orange_hr_dev/features/login/domain/repo/login_repo.dart';
+import 'package:orange_hr_dev/features/login/domain/usecases/biometric_login_usecase.dart';
 import 'package:provider/provider.dart';
 
 import 'features/login/domain/usecases/login_usecase.dart';
@@ -39,7 +41,10 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(create: (_) => HomeProvider()),
         ChangeNotifierProvider(
-          create: (_) => LoginProvider(loginUseCase: LoginUseCase()),
+          create: (_) => LoginProvider(loginUseCase: LoginUseCase(),
+              biometricLoginUseCase: BiometricLoginUsecase(
+                 repository:LoginRepository(),
+              )),
         ),
         ChangeNotifierProvider(
           create: (ctx) {
