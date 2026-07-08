@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:provider/provider.dart';
+import 'package:orange_hr_dev/features/settings/domain/entities/app_language.dart';
 import 'package:orange_hr_dev/features/settings/presentation/providers/settings_provider.dart';
-
-enum AppLanguage {
-  english(Locale('en', 'US')),
-  arabic(Locale('ar', 'SA'));
-
-  final Locale locale;
-  const AppLanguage(this.locale);
-
-  static AppLanguage fromLocale(Locale locale) {
-    if (locale.languageCode == 'ar') {
-      return AppLanguage.arabic;
-    }
-    return AppLanguage.english;
-  }
-}
 
 class LanguageSelectorTile extends StatelessWidget {
   const LanguageSelectorTile({super.key});
+
+  String _getLanguageName(BuildContext context, AppLanguage lang) {
+    switch (lang) {
+      case AppLanguage.system:
+        return context.tr('language_system');
+      case AppLanguage.english:
+        return context.tr('english');
+      case AppLanguage.arabic:
+        return context.tr('arabic');
+    }
+  }
 
   void _showLanguageBottomSheet(BuildContext context) {
     final theme = Theme.of(context);
@@ -33,7 +30,8 @@ class LanguageSelectorTile extends StatelessWidget {
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
       builder: (bottomSheetContext) {
-        final currentLang = AppLanguage.fromLocale(context.locale);
+        final currentLang =
+            context.watch<SettingsProvider>().selectedLanguage;
         return SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
@@ -72,26 +70,28 @@ class LanguageSelectorTile extends StatelessWidget {
                   return InkWell(
                     onTap: () async {
                       Navigator.pop(bottomSheetContext);
-                      final exactLocale = lang.locale;
-                      await context.setLocale(exactLocale);
-                      if (context.mounted) {
-                        Provider.of<SettingsProvider>(context, listen: false).changeLanguage(exactLocale);
-                      }
+                      await context
+                          .read<SettingsProvider>()
+                          .setLanguageMode(context, lang);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16),
                       decoration: BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(color: appColors.settingsTileBorder, width: 1.0),
+                          bottom: BorderSide(
+                            color: appColors.settingsTileBorder,
+                            width: 1.0,
+                          ),
                         ),
                       ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            lang == AppLanguage.english ? context.tr('english') : context.tr('arabic'),
+                            _getLanguageName(context, lang),
                             style: theme.textTheme.titleMedium?.copyWith(
-                              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
+                              fontWeight:
+                                  isSelected ? FontWeight.w600 : FontWeight.w400,
                               color: isSelected ? appColors.brandOrange : null,
                             ),
                           ),
@@ -117,8 +117,10 @@ class LanguageSelectorTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentLang = AppLanguage.fromLocale(context.locale);
-    final currentName = currentLang == AppLanguage.english ? context.tr('english') : context.tr('arabic');
+    context.locale;
+    final currentLang =
+        context.select<SettingsProvider, AppLanguage>((p) => p.selectedLanguage);
+    final currentName = _getLanguageName(context, currentLang);
     final theme = Theme.of(context);
     final appColors = theme.extension<AppColorsExtension>()!;
 

@@ -38,7 +38,7 @@ class SettingsScreen extends StatelessWidget {
 
               // Preferences Section
               SettingsSectionTitle(title: context.tr('preferences')),
-              DarkModeToggleTile(),
+              ThemeSelectorTile(),
               LanguageSelectorTile(),
 
               // General Section

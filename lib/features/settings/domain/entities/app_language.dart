@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 
 enum AppLanguage {
+  system(null, null, 'System Default', 'System Flag'),
   english('en', 'US', 'English', 'US Flag'),
   arabic('ar', 'SA', 'العربية', 'SA Flag');
 
-  final String languageCode;
-  final String countryCode;
+  final String? languageCode;
+  final String? countryCode;
   final String displayName;
   final String flagDescription;
 
@@ -16,9 +17,13 @@ enum AppLanguage {
     this.flagDescription,
   );
 
-  Locale get locale => Locale(languageCode, countryCode);
+  Locale? get locale =>
+      languageCode != null && countryCode != null
+          ? Locale(languageCode!, countryCode!)
+          : null;
 
-  static AppLanguage fromLocale(Locale locale) {
+  static AppLanguage fromLocale(Locale? locale) {
+    if (locale == null) return AppLanguage.system;
     if (locale.languageCode == 'ar') {
       return AppLanguage.arabic;
     }
