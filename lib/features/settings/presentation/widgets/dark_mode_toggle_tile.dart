@@ -1,26 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
+import 'package:orange_hr_dev/features/settings/domain/entities/app_theme_mode.dart';
+import 'package:orange_hr_dev/features/settings/presentation/providers/theme_provider.dart';
+import 'package:provider/provider.dart';
 
-class DarkModeToggleTile extends StatefulWidget {
+class DarkModeToggleTile extends StatelessWidget {
   const DarkModeToggleTile({super.key});
-
-  @override
-  State<DarkModeToggleTile> createState() => _DarkModeToggleTileState();
-}
-
-class _DarkModeToggleTileState extends State<DarkModeToggleTile> {
-  // Strictly UI only local state per requirements
-  bool _isDarkMode = false;
 
   @override
   Widget build(BuildContext context) {
     context.locale; // Subscribe to locale changes
+
+    // Efficiently listen ONLY to boolean dark mode state changes
+    final isDarkMode = context.select<ThemeProvider, bool>((p) => p.isDarkMode);
+    final theme = Theme.of(context);
+    final appColors = theme.extension<AppColorsExtension>()!;
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: appColors.settingsTileBackground,
         border: Border(
-          bottom: BorderSide(color: Color(0xFFEEEEEE), width: 1.0),
+          bottom: BorderSide(color: appColors.settingsTileBorder, width: 1.0),
         ),
       ),
       child: Row(
@@ -31,30 +33,26 @@ class _DarkModeToggleTileState extends State<DarkModeToggleTile> {
               children: [
                 Text(
                   context.tr('dark_mode'),
-                  style: const TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                    color: Color(0xFF1E1E1E),
-                  ),
+                  style: theme.textTheme.titleMedium,
                 ),
                 const SizedBox(height: 4),
                 Text(
                   context.tr('dark_mode_desc'),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF757575),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: appColors.subtitleColor,
                   ),
                 ),
               ],
             ),
           ),
           Switch.adaptive(
-            value: _isDarkMode,
-            activeTrackColor: const Color(0xFFFF6D00),
+            value: isDarkMode,
+            activeTrackColor: appColors.brandOrange,
             onChanged: (value) {
-              setState(() {
-                _isDarkMode = value;
-              });
+              // Read provider without subscribing to rebuilds when triggering action
+              context.read<ThemeProvider>().changeTheme(
+                value ? AppThemeMode.dark : AppThemeMode.light,
+              );
             },
           ),
         ],

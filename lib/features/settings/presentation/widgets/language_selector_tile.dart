@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:provider/provider.dart';
 import 'package:orange_hr_dev/features/settings/presentation/providers/settings_provider.dart';
 
@@ -22,9 +23,12 @@ class LanguageSelectorTile extends StatelessWidget {
   const LanguageSelectorTile({super.key});
 
   void _showLanguageBottomSheet(BuildContext context) {
+    final theme = Theme.of(context);
+    final appColors = theme.extension<AppColorsExtension>()!;
+
     showModalBottomSheet(
       context: context,
-      backgroundColor: Colors.white,
+      backgroundColor: appColors.settingsTileBackground,
       shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
       ),
@@ -42,7 +46,7 @@ class LanguageSelectorTile extends StatelessWidget {
                     width: 40,
                     height: 4,
                     decoration: BoxDecoration(
-                      color: const Color(0xFFE0E0E0),
+                      color: appColors.settingsTileBorder,
                       borderRadius: BorderRadius.circular(2),
                     ),
                   ),
@@ -50,18 +54,16 @@ class LanguageSelectorTile extends StatelessWidget {
                 const SizedBox(height: 20),
                 Text(
                   context.tr('language'),
-                  style: const TextStyle(
+                  style: theme.textTheme.titleMedium?.copyWith(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF1E1E1E),
                   ),
                 ),
                 const SizedBox(height: 6),
                 Text(
                   context.tr('language_desc'),
-                  style: const TextStyle(
-                    fontSize: 13,
-                    color: Color(0xFF757575),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: appColors.subtitleColor,
                   ),
                 ),
                 const SizedBox(height: 16),
@@ -78,9 +80,9 @@ class LanguageSelectorTile extends StatelessWidget {
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(vertical: 16),
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         border: Border(
-                          bottom: BorderSide(color: Color(0xFFEEEEEE), width: 1.0),
+                          bottom: BorderSide(color: appColors.settingsTileBorder, width: 1.0),
                         ),
                       ),
                       child: Row(
@@ -88,16 +90,15 @@ class LanguageSelectorTile extends StatelessWidget {
                         children: [
                           Text(
                             lang == AppLanguage.english ? context.tr('english') : context.tr('arabic'),
-                            style: TextStyle(
-                              fontSize: 16,
+                            style: theme.textTheme.titleMedium?.copyWith(
                               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w400,
-                              color: isSelected ? const Color(0xFFFF6D00) : const Color(0xFF1E1E1E),
+                              color: isSelected ? appColors.brandOrange : null,
                             ),
                           ),
                           if (isSelected)
-                            const Icon(
+                            Icon(
                               Icons.check_rounded,
-                              color: Color(0xFFFF6D00),
+                              color: appColors.brandOrange,
                               size: 22,
                             ),
                         ],
@@ -118,15 +119,17 @@ class LanguageSelectorTile extends StatelessWidget {
   Widget build(BuildContext context) {
     final currentLang = AppLanguage.fromLocale(context.locale);
     final currentName = currentLang == AppLanguage.english ? context.tr('english') : context.tr('arabic');
+    final theme = Theme.of(context);
+    final appColors = theme.extension<AppColorsExtension>()!;
 
     return InkWell(
       onTap: () => _showLanguageBottomSheet(context),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: appColors.settingsTileBackground,
           border: Border(
-            bottom: BorderSide(color: Color(0xFFEEEEEE), width: 1.0),
+            bottom: BorderSide(color: appColors.settingsTileBorder, width: 1.0),
           ),
         ),
         child: Row(
@@ -137,18 +140,13 @@ class LanguageSelectorTile extends StatelessWidget {
                 children: [
                   Text(
                     context.tr('language'),
-                    style: const TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: Color(0xFF1E1E1E),
-                    ),
+                    style: theme.textTheme.titleMedium,
                   ),
                   const SizedBox(height: 4),
                   Text(
                     context.tr('language_desc'),
-                    style: const TextStyle(
-                      fontSize: 13,
-                      color: Color(0xFF757575),
+                    style: theme.textTheme.bodySmall?.copyWith(
+                      color: appColors.subtitleColor,
                     ),
                   ),
                 ],
@@ -159,16 +157,15 @@ class LanguageSelectorTile extends StatelessWidget {
               children: [
                 Text(
                   currentName,
-                  style: const TextStyle(
-                    fontSize: 14,
-                    color: Color(0xFF757575),
+                  style: theme.textTheme.bodySmall?.copyWith(
+                    color: appColors.subtitleColor,
                   ),
                 ),
                 const SizedBox(width: 4),
-                const Icon(
+                Icon(
                   Icons.arrow_forward_ios_rounded,
                   size: 16,
-                  color: Color(0xFFBDBDBD),
+                  color: appColors.subtitleColor,
                 ),
               ],
             ),

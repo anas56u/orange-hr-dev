@@ -1,5 +1,7 @@
 import 'dart:ui';
 
+import '../entities/app_theme_mode.dart';
+
 /// Abstract contract for settings persistence.
 ///
 /// The domain layer depends on this abstraction — the data layer
@@ -13,4 +15,12 @@ abstract class SettingsRepository {
 
   /// Retrieves the previously persisted locale, if any.
   Locale? getCurrentLocale();
+
+  /// Retrieves the user's persisted theme preference.
+  /// Returns [AppThemeMode.system] if nothing has been saved.
+  AppThemeMode getTheme();
+
+  /// Persists the user's theme preference.
+  Future<void> saveTheme(AppThemeMode mode);
 }
+

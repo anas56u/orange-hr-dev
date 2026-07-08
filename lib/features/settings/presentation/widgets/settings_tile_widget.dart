@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 class SettingsTileWidget extends StatelessWidget {
   final IconData? icon;
@@ -24,14 +25,17 @@ class SettingsTileWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final appColors = theme.extension<AppColorsExtension>()!;
+
     return InkWell(
       onTap: onTap,
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
-        decoration: const BoxDecoration(
-          color: Colors.white,
+        decoration: BoxDecoration(
+          color: appColors.settingsTileBackground,
           border: Border(
-            bottom: BorderSide(color: Color(0xFFEEEEEE), width: 1.0),
+            bottom: BorderSide(color: appColors.settingsTileBorder, width: 1.0),
           ),
         ),
         child: Row(
@@ -42,19 +46,16 @@ class SettingsTileWidget extends StatelessWidget {
                 children: [
                   Text(
                     title,
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontWeight: FontWeight.w500,
-                      color: titleColor ?? const Color(0xFF1E1E1E),
+                    style: theme.textTheme.titleMedium?.copyWith(
+                      color: titleColor,
                     ),
                   ),
                   if (subtitle != null) ...[
                     const SizedBox(height: 4),
                     Text(
                       subtitle!,
-                      style: const TextStyle(
-                        fontSize: 13,
-                        color: Color(0xFF757575),
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: appColors.subtitleColor,
                       ),
                     ),
                   ],
@@ -66,10 +67,10 @@ class SettingsTileWidget extends StatelessWidget {
               trailing!,
             ] else if (onTap != null) ...[
               const SizedBox(width: 12),
-              const Icon(
+              Icon(
                 Icons.arrow_forward_ios_rounded,
                 size: 16,
-                color: Color(0xFFBDBDBD),
+                color: appColors.subtitleColor,
               ),
             ],
           ],
