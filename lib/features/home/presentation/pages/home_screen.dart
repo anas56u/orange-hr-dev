@@ -23,7 +23,9 @@ class HomeScreen extends StatelessWidget {
           bottomNavigationBar: HomeBottomNavBar(),
           backgroundColor: Colors.white,
           // Hide the shared AppBar on Notifications (index 3) and Settings (index 4)
-          appBar: (currentIndex == 3 || currentIndex == 4) ? null : HomeAppBar(),
+          appBar: (currentIndex == 3 || currentIndex == 4)
+              ? null
+              : HomeAppBar(),
           body: SafeArea(
             child: IndexedStack(
               index: currentIndex,

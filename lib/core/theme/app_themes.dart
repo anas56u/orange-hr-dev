@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'app_colors_extension.dart';
 
 /// Centralized theme definitions for the Orange HR app.
-///
+
 /// Both themes share the Orange brand color (0xFFFF6D00) as the seed,
 /// ensuring brand consistency across light and dark modes.
 /// Custom semantic colors are provided via [AppColorsExtension].

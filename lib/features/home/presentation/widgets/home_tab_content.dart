@@ -8,7 +8,8 @@ class HomeTabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; // Subscribe to locale changes
+    context.locale;
+    final colorScheme = Theme.of(context).colorScheme;
     return CustomScrollView(
       physics: const BouncingScrollPhysics(),
       slivers: [
@@ -23,8 +24,8 @@ class HomeTabContent extends StatelessWidget {
                   children: [
                     Text(
                       context.tr('hi_user', args: ['Anas']),
-                      style: const TextStyle(
-                        color: Colors.black,
+                      style: TextStyle(
+                        color: colorScheme.onSurface,
                         fontSize: 25,
                         fontWeight: FontWeight.bold,
                         height: 1.2,
@@ -34,8 +35,8 @@ class HomeTabContent extends StatelessWidget {
                     const SizedBox(height: 8),
                     Text(
                       context.tr('welcome_back_short'),
-                      style: const TextStyle(
-                        color: Color(0xFF606060),
+                      style: TextStyle(
+                        color: colorScheme.onSurfaceVariant,
                         fontSize: 18,
                         height: 1.2,
                         letterSpacing: 0.2,
