@@ -4,6 +4,7 @@ import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/e
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/employee_details/contact_info_card.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/employee_details/info_field.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/employee_details/back_action_button.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 class EmployeeDetailsScreen extends StatelessWidget {
   final Employee employee;
@@ -12,14 +13,15 @@ class EmployeeDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          icon: Icon(Icons.arrow_back, color: appColors.primaryText),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

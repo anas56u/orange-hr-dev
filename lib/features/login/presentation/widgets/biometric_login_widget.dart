@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:provider/provider.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 import '../providers/login_provider.dart';
 
@@ -13,6 +14,7 @@ class BiometricLoginWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<LoginProvider>();
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -22,7 +24,7 @@ class BiometricLoginWidget extends StatelessWidget {
           children: [
             Expanded(
               child: Divider(
-                color: Colors.grey.shade300,
+                color: appColors.dividerColor,
                 thickness: 0.8,
               ),
             ),
@@ -33,13 +35,13 @@ class BiometricLoginWidget extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey.shade500,
+                  color: appColors.secondaryText,
                 ),
               ),
             ),
             Expanded(
               child: Divider(
-                color: Colors.grey.shade300,
+                color: appColors.dividerColor,
                 thickness: 0.8,
               ),
             ),
@@ -61,33 +63,33 @@ class BiometricLoginWidget extends StatelessWidget {
                 height: 60,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: const Color(0xFFFFF3E0),
+                  color: appColors.brandOrange.withValues(alpha: 0.12),
                   border: Border.all(
-                    color: const Color(0xFFFF6D00).withValues(alpha: 0.25),
+                    color: appColors.brandOrange.withValues(alpha: 0.25),
                     width: 1.5,
                   ),
                 ),
                 child: provider.isLoadingBiometric
-                    ? const Padding(
-                        padding: EdgeInsets.all(16),
+                    ? Padding(
+                        padding: const EdgeInsets.all(16),
                         child: CircularProgressIndicator(
                           strokeWidth: 2.5,
-                          color: Color(0xFFFF6D00),
+                          color: appColors.brandOrange,
                         ),
                       )
-                    : const Icon(
+                    : Icon(
                         Iconsax.finger_scan,
                         size: 28,
-                        color: Color(0xFFFF6D00),
+                        color: appColors.brandOrange,
                       ),
               ),
               const SizedBox(height: 10),
               Text(
                 'biometric_login'.tr(),
-                style: const TextStyle(
+                style: TextStyle(
                   fontSize: 13,
                   fontWeight: FontWeight.w600,
-                  color: Color(0xFF546E7A),
+                  color: appColors.secondaryText,
                   letterSpacing: 0.3,
                 ),
               ),

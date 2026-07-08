@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'absence_type_list_item.dart';
 
 /// A modal bottom sheet that displays a selectable list of absence types with
@@ -43,11 +44,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
   late List<String> _filteredTypes;
 
   // --- Const style tokens ---
-  static const _titleStyle = TextStyle(
-    color: Colors.black,
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  );
 
   static const _handleWidth = 40.0;
   static const _handleHeight = 4.0;
@@ -96,12 +92,14 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
+
     return Container(
       constraints: BoxConstraints(
         maxHeight: MediaQuery.of(context).size.height * 0.75,
       ),
-      decoration: const BoxDecoration(
-        color: Colors.white,
+      decoration: BoxDecoration(
+        color: appColors.cardBackground,
         borderRadius: _sheetRadius,
       ),
       child: Padding(
@@ -141,7 +139,7 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
             ),
 
             const SizedBox(height: 4),
-            const Divider(height: 1, color: Color(0xFFEEEEEE)),
+            Divider(height: 1, color: appColors.dividerColor),
 
             // --- Types list or empty state ---
             Flexible(
@@ -173,12 +171,20 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
 
   /// Builds the default header displaying the title and search icon button.
   Widget _buildDefaultHeader() {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        const Text('Select Type', style: _titleStyle),
+        Text(
+          'Select Type',
+          style: TextStyle(
+            color: appColors.primaryText,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         IconButton(
-          icon: const Icon(Icons.search, color: Colors.black87, size: 24),
+          icon: Icon(Icons.search, color: appColors.primaryText, size: 24),
           onPressed: () {
             setState(() {
               _isSearching = true;
@@ -192,27 +198,28 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
 
   /// Builds the active search header with an autofocus TextField and close button.
   Widget _buildSearchHeader() {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Row(
       children: [
-        const Icon(Icons.search, color: Colors.orange, size: 22),
+        Icon(Icons.search, color: appColors.brandOrange, size: 22),
         const SizedBox(width: 12),
         Expanded(
           child: TextField(
             controller: _searchController,
             autofocus: true,
             onChanged: _onSearchChanged,
-            style: const TextStyle(fontSize: 16, color: Colors.black87),
-            decoration: const InputDecoration(
+            style: TextStyle(fontSize: 16, color: appColors.primaryText),
+            decoration: InputDecoration(
               hintText: 'Search absence type...',
-              hintStyle: TextStyle(color: Color(0xFF9E9E9E), fontSize: 16),
+              hintStyle: TextStyle(color: appColors.secondaryText, fontSize: 16),
               border: InputBorder.none,
               isDense: true,
-              contentPadding: EdgeInsets.symmetric(vertical: 8.0),
+              contentPadding: const EdgeInsets.symmetric(vertical: 8.0),
             ),
           ),
         ),
         IconButton(
-          icon: const Icon(Icons.close, color: Colors.black87, size: 24),
+          icon: Icon(Icons.close, color: appColors.primaryText, size: 24),
           onPressed: _clearAndCloseSearch,
           tooltip: 'Close search',
         ),
@@ -220,26 +227,26 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     );
   }
 
-  /// High-performance const empty state when no search results match.
+  /// High-performance empty state when no search results match.
   Widget _buildEmptyState() {
-    return const Center(
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
+    return Center(
       child: Padding(
-        padding: EdgeInsets.symmetric(vertical: 48.0, horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 24.0),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             Icon(
               Icons.search_off_rounded,
               size: 48,
-              color: Color(0xFFBDBDBD),
+              color: appColors.secondaryText,
             ),
-            SizedBox(height: 12),
+            const SizedBox(height: 12),
             Text(
               'No types found',
               style: TextStyle(
-                color: Color(0xFF757575),
-                fontSize: 16,
-                fontWeight: FontWeight.w500,
+                color: appColors.secondaryText,
+                fontSize: 15,
               ),
             ),
           ],

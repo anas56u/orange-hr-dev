@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 class AwesomeSuccessDialog extends StatelessWidget {
   final VoidCallback onConfirm;
@@ -10,6 +11,7 @@ class AwesomeSuccessDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Dialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(28.0),
@@ -20,11 +22,11 @@ class AwesomeSuccessDialog extends StatelessWidget {
         width: 340,
         padding: const EdgeInsets.all(32.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: appColors.cardBackground,
           borderRadius: BorderRadius.circular(28.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.06),
+              color: appColors.shadowColor,
               blurRadius: 36,
               spreadRadius: 4,
               offset: const Offset(0, 18),
@@ -44,10 +46,10 @@ class AwesomeSuccessDialog extends StatelessWidget {
             // ---------------------------------------------------------------
             // Title
             // ---------------------------------------------------------------
-            const Text(
+            Text(
               'Awesome Success!',
               style: TextStyle(
-                color: Color(0xFF1E1E1E),
+                color: appColors.primaryText,
                 fontSize: 24,
                 fontWeight: FontWeight.w800,
                 letterSpacing: -0.5,
@@ -60,10 +62,10 @@ class AwesomeSuccessDialog extends StatelessWidget {
             // ---------------------------------------------------------------
             // Message
             // ---------------------------------------------------------------
-            const Text(
+            Text(
               'Your absence request has been submitted successfully and sent for approval.',
               style: TextStyle(
-                color: Color(0xFF616161),
+                color: appColors.secondaryText,
                 fontSize: 15,
                 height: 1.5,
                 fontWeight: FontWeight.w400,

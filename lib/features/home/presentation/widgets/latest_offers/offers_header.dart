@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// Header widget for the Latest Offers screen.
 class OffersHeader extends StatelessWidget {
@@ -8,23 +9,25 @@ class OffersHeader extends StatelessWidget {
   // Pre-defined constants to avoid per-frame allocations.
   static const _iconColor = Color(0xFFFF6B35);
 
-  static const _titleStyle = TextStyle(
-    color: Colors.black,
-    fontSize: 24,
-    fontWeight: FontWeight.bold,
-    height: 1.2,
-  );
-
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
       child: Row(
         children: [
           // Orange tag icon — same icon & color used on the home grid tile.
-          Icon(Iconsax.tag5, color: _iconColor, size: 40),
-          SizedBox(width: 14),
-          Text('Latest Offers', style: _titleStyle),
+          const Icon(Iconsax.tag5, color: _iconColor, size: 40),
+          const SizedBox(width: 14),
+          Text(
+            'Latest Offers',
+            style: TextStyle(
+              color: appColors.primaryText,
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+              height: 1.2,
+            ),
+          ),
         ],
       ),
     );

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// A tappable menu row with a label and a trailing chevron,
 /// inside a rounded bordered container — used for "My Qualification"
@@ -15,6 +16,7 @@ class MenuOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return InkWell(
       borderRadius: BorderRadius.circular(12.0),
       onTap: onTap,
@@ -22,10 +24,10 @@ class MenuOptionTile extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 18.0),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: appColors.cardBackground,
           borderRadius: BorderRadius.circular(12.0),
           border: Border.all(
-            color: const Color(0xFFE0E0E0),
+            color: appColors.dividerColor,
             width: 1.0,
           ),
         ),
@@ -34,16 +36,16 @@ class MenuOptionTile extends StatelessWidget {
             Expanded(
               child: Text(
                 title,
-                style: const TextStyle(
-                  color: Colors.black87,
+                style: TextStyle(
+                  color: appColors.primaryText,
                   fontSize: 15,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Colors.black54,
+              color: appColors.secondaryText,
               size: 24,
             ),
           ],

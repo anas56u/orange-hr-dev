@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/inbox/domain/models/worklist_item.dart';
 import 'package:orange_hr_dev/features/inbox/presentation/widgets/worklist_item_icon.dart';
 
@@ -10,6 +11,7 @@ class WorklistListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bool isPersonItem = item.senderName != null;
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 14.0),
@@ -32,8 +34,8 @@ class WorklistListItem extends StatelessWidget {
                   )
                 : Text(
                     item.message,
-                    style: const TextStyle(
-                      color: Colors.black87,
+                    style: TextStyle(
+                      color: appColors.primaryText,
                       fontSize: 14,
                       fontWeight: FontWeight.w400,
                       height: 1.4,
@@ -47,8 +49,8 @@ class WorklistListItem extends StatelessWidget {
             padding: const EdgeInsets.only(top: 2.0),
             child: Text(
               item.timeAgo,
-              style: const TextStyle(
-                color: Color(0xFF9E9E9E),
+              style: TextStyle(
+                color: appColors.secondaryText,
                 fontSize: 13,
                 fontWeight: FontWeight.w400,
               ),
@@ -67,6 +69,7 @@ class _SenderAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return ClipOval(
       child: Image.network(
         imageUrl,
@@ -76,8 +79,8 @@ class _SenderAvatar extends StatelessWidget {
         errorBuilder: (context, error, stackTrace) => Container(
           width: 42,
           height: 42,
-          color: Colors.grey[300],
-          child: const Icon(Icons.person, color: Colors.grey, size: 22),
+          color: appColors.avatarPlaceholder,
+          child: Icon(Icons.person, color: appColors.iconDefault, size: 22),
         ),
       ),
     );
@@ -92,13 +95,14 @@ class _PersonMessageBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           senderName,
-          style: const TextStyle(
-            color: Colors.black,
+          style: TextStyle(
+            color: appColors.primaryText,
             fontSize: 14,
             fontWeight: FontWeight.w600,
           ),
@@ -106,8 +110,8 @@ class _PersonMessageBody extends StatelessWidget {
         const SizedBox(height: 2),
         Text(
           message,
-          style: const TextStyle(
-            color: Color(0xFF9E9E9E),
+          style: TextStyle(
+            color: appColors.secondaryText,
             fontSize: 13,
             fontWeight: FontWeight.w400,
           ),

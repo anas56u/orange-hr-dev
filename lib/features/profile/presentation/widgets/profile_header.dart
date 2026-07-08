@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 class ProfileHeader extends StatelessWidget {
   final String imageUrl;
@@ -14,6 +15,7 @@ class ProfileHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Column(
       children: [
         Padding(
@@ -27,8 +29,8 @@ class ProfileHeader extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) => Container(
                 width: 100,
                 height: 100,
-                color: Colors.grey[300],
-                child: const Icon(Icons.person, size: 48, color: Colors.grey),
+                color: appColors.avatarPlaceholder,
+                child: Icon(Icons.person, size: 48, color: appColors.iconDefault),
               ),
             ),
           ),
@@ -37,8 +39,8 @@ class ProfileHeader extends StatelessWidget {
         // --- Name ---
         Text(
           name,
-          style: const TextStyle(
-            color: Color(0xFFFF8C00),
+          style: TextStyle(
+            color: appColors.brandOrange,
             fontSize: 20,
             fontWeight: FontWeight.w600,
             letterSpacing: 0.2,
@@ -48,8 +50,8 @@ class ProfileHeader extends StatelessWidget {
         // --- Job Title ---
         Text(
           jobTitle,
-          style: const TextStyle(
-            color: Colors.black87,
+          style: TextStyle(
+            color: appColors.primaryText,
             fontSize: 15,
             fontWeight: FontWeight.w400,
           ),

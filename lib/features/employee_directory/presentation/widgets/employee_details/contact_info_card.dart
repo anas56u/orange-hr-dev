@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 class ContactInfoCard extends StatelessWidget {
   final String label;
@@ -18,20 +19,21 @@ class ContactInfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 19.0),
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.08),
+            color: appColors.shadowColor,
             offset: const Offset(0, 4),
             blurRadius: 12,
           ),
         ],
-        color: Colors.white,
+        color: appColors.cardBackground,
         borderRadius: BorderRadius.circular(16.0),
-        border: Border.all(color: const Color(0xFFE0E0E0), width: 1.0),
+        border: Border.all(color: appColors.dividerColor, width: 1.0),
       ),
       child: Row(
         children: [
@@ -41,8 +43,8 @@ class ContactInfoCard extends StatelessWidget {
               children: [
                 Text(
                   label,
-                  style: const TextStyle(
-                    color: Color(0xFFFF8C00),
+                  style: TextStyle(
+                    color: appColors.brandOrange,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
@@ -50,8 +52,8 @@ class ContactInfoCard extends StatelessWidget {
                 const SizedBox(height: 7),
                 Text(
                   value,
-                  style: const TextStyle(
-                    color: Colors.black87,
+                  style: TextStyle(
+                    color: appColors.primaryText,
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                   ),

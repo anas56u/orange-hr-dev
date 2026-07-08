@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/notifications/domain/models/notification_item.dart';
 
 /// A single row in the notifications list.
@@ -16,6 +17,7 @@ class NotificationListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       color:
            Colors.transparent,
@@ -33,8 +35,8 @@ class NotificationListItem extends StatelessWidget {
               children: [
                 Text(
                   notification.senderName,
-                  style: const TextStyle(
-                    color: Colors.black,
+                  style: TextStyle(
+                    color: appColors.primaryText,
                     fontSize: 15,
                     fontWeight: FontWeight.w600,
                     letterSpacing: 0.1,
@@ -43,8 +45,8 @@ class NotificationListItem extends StatelessWidget {
                 const SizedBox(height: 2),
                 Text(
                   notification.actionText,
-                  style: const TextStyle(
-                    color: Color(0xFF9E9E9E),
+                  style: TextStyle(
+                    color: appColors.secondaryText,
                     fontSize: 13,
                     fontWeight: FontWeight.w400,
                   ),
@@ -56,8 +58,8 @@ class NotificationListItem extends StatelessWidget {
           // --- Time Ago ---
           Text(
             notification.timeAgo,
-            style: const TextStyle(
-              color: Color(0xFF9E9E9E),
+            style: TextStyle(
+              color: appColors.secondaryText,
               fontSize: 13,
               fontWeight: FontWeight.w400,
             ),
@@ -76,6 +78,7 @@ class _AvatarCircle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return ClipOval(
       child: Image.network(
         imageUrl,
@@ -85,8 +88,8 @@ class _AvatarCircle extends StatelessWidget {
         errorBuilder: (context, error, stackTrace) => Container(
           width: 46,
           height: 46,
-          color: Colors.grey[300],
-          child: const Icon(Icons.person, color: Colors.grey, size: 24),
+          color: appColors.avatarPlaceholder,
+          child: Icon(Icons.person, color: appColors.iconDefault, size: 24),
         ),
       ),
     );

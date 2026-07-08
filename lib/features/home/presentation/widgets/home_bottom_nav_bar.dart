@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../providers/home_provider.dart';
 
 class HomeBottomNavBar extends StatelessWidget {
@@ -10,17 +11,18 @@ class HomeBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.locale; // Subscribe to locale changes
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: appColors.cardBackground,
         borderRadius: const BorderRadius.only(
           topLeft: Radius.circular(30),
           topRight: Radius.circular(30),
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.11),
+            color: appColors.shadowColor,
             blurRadius: 20,
             offset: const Offset(
               0,
@@ -95,12 +97,13 @@ class CustomNavItem extends StatelessWidget {
         selector: (context, provider) => provider.currentTabIndex == index,
         builder: (context, isSelected, child) {
           // الكود هنا بداخل الـ builder لن يُنفذ إلا إذا تغيرت قيمة isSelected فقط!
+          final appColors = Theme.of(context).extension<AppColorsExtension>()!;
           return Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               Icon(
                 isSelected ? activeIcon : icon,
-                color: isSelected ? Colors.black : Colors.grey.shade400,
+                color: isSelected ? appColors.primaryText : appColors.secondaryText,
                 size: 26,
               ),
               const SizedBox(height: 6),
@@ -110,7 +113,7 @@ class CustomNavItem extends StatelessWidget {
                 height: 4,
                 width: isSelected ? 16 : 0,
                 decoration: BoxDecoration(
-                  color: isSelected ? Colors.orange : Colors.transparent,
+                  color: isSelected ? appColors.brandOrange : Colors.transparent,
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),

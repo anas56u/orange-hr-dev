@@ -1,6 +1,7 @@
 import 'dart:async'; // 1. إضافة المكتبة
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../providers/home_provider.dart';
 
 class HomeCarouselBanner extends StatefulWidget {
@@ -86,22 +87,23 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
   }
 
   Widget _buildImageItem(String imageUrl) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Image.network(
       imageUrl,
       fit: BoxFit.cover,
       loadingBuilder: (context, child, loadingProgress) {
         if (loadingProgress == null) return child;
         return Container(
-          color: Colors.grey[100],
-          child: const Center(
-            child: CircularProgressIndicator(color: Colors.orange),
+          color: appColors.inputFillColor,
+          child: Center(
+            child: CircularProgressIndicator(color: appColors.brandOrange),
           ),
         );
       },
       errorBuilder: (context, error, stackTrace) {
         return Container(
-          color: Colors.grey[100],
-          child: const Icon(Icons.broken_image, color: Colors.grey, size: 40),
+          color: appColors.inputFillColor,
+          child: Icon(Icons.broken_image, color: appColors.iconDefault, size: 40),
         );
       },
     );
@@ -114,6 +116,7 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
         return Selector<HomeProvider, int>(
           selector: (context, provider) => provider.currentBannerIndex,
           builder: (context, currentIndex, child) {
+            final appColors = Theme.of(context).extension<AppColorsExtension>()!;
             bool isActive = currentIndex == index;
             return AnimatedContainer(
               duration: const Duration(milliseconds: 300),
@@ -121,7 +124,7 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
               width: isActive ? 24.0 : 8.0,
               height: 8.0,
               decoration: BoxDecoration(
-                color: isActive ? Colors.orange : Colors.grey[300],
+                color: isActive ? appColors.brandOrange : appColors.dividerColor,
                 borderRadius: BorderRadius.circular(4.0),
               ),
             );

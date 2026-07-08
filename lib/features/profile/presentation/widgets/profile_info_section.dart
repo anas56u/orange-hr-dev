@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// A vertical list of labelled info rows (Email, Mobile, Unit, etc.)
 /// separated by subtle dividers. Each field has an orange label and
@@ -43,6 +44,7 @@ class _ProfileInfoRow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 12.0),
       child: Column(
@@ -50,8 +52,8 @@ class _ProfileInfoRow extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              color: Color(0xFFFF8C00),
+            style: TextStyle(
+              color: appColors.brandOrange,
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),
@@ -59,8 +61,8 @@ class _ProfileInfoRow extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.black87,
+            style: TextStyle(
+              color: appColors.primaryText,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/profile/presentation/pages/profile_screen.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -9,7 +10,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     context.locale; // Subscribe to locale changes
     return AppBar(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
       elevation: 0,
       scrolledUnderElevation: 0,
       leadingWidth: 85,
@@ -27,6 +28,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   }
 
   Widget _buildProfileAvatar(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Material(
       color: Colors.transparent,
       shape: const CircleBorder(),
@@ -43,8 +45,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           height: 40,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Colors.grey[200],
-            border: Border.all(color: Colors.grey[300]!, width: 1),
+            color: appColors.avatarPlaceholder,
+            border: Border.all(color: appColors.dividerColor, width: 1),
           ),
           child: ClipRRect(
             borderRadius: BorderRadius.circular(20),
@@ -52,7 +54,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               'https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=256',
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return const Icon(Icons.person, color: Colors.grey);
+                return Icon(Icons.person, color: appColors.iconDefault);
               },
             ),
           ),

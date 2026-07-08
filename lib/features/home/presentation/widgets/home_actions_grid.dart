@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../../domain/entities/action_category.dart';
 import '../pages/category_detail_screen.dart';
 import '../pages/latest_offers_screen.dart';
@@ -144,6 +145,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
   @override
   Widget build(BuildContext context) {
     context.locale; // Subscribe to locale changes
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return GestureDetector(
       onTapDown: (_) {
         setState(() {
@@ -174,11 +176,11 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
         duration: const Duration(milliseconds: 150), // سرعة التغير
         decoration: BoxDecoration(
           // إذا كان مضغوطاً نجعل الخلفية سوداء، وإلا بيضاء
-          color: isPressed ? Colors.black : Colors.white,
+          color: isPressed ? appColors.primaryText : appColors.cardBackground,
           borderRadius: BorderRadius.circular(24.0),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.04),
+              color: appColors.shadowColor,
               blurRadius: 15,
               offset: const Offset(0, 8),
             ),
@@ -191,7 +193,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
           children: [
             Icon(
               widget.category.icon,
-              color: isPressed ? Colors.white : widget.category.iconColor,
+              color: isPressed ? appColors.cardBackground : widget.category.iconColor,
               size: 40.0,
             ),
             const SizedBox(height: 12),
@@ -199,7 +201,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
               context.tr(widget.category.title),
               style: TextStyle(
                 // إذا كان مضغوطاً نجعل النص أبيض، وإلا أسود
-                color: isPressed ? Colors.white : Colors.black,
+                color: isPressed ? appColors.cardBackground : appColors.primaryText,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,
                 height: 1.2,

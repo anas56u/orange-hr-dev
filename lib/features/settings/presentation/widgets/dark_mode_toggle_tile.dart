@@ -10,9 +10,8 @@ class DarkModeToggleTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; // Subscribe to locale changes
+    context.locale; 
 
-    // Efficiently listen ONLY to boolean dark mode state changes
     final isDarkMode = context.select<ThemeProvider, bool>((p) => p.isDarkMode);
     final theme = Theme.of(context);
     final appColors = theme.extension<AppColorsExtension>()!;
@@ -49,7 +48,6 @@ class DarkModeToggleTile extends StatelessWidget {
             value: isDarkMode,
             activeTrackColor: appColors.brandOrange,
             onChanged: (value) {
-              // Read provider without subscribing to rebuilds when triggering action
               context.read<ThemeProvider>().changeTheme(
                 value ? AppThemeMode.dark : AppThemeMode.light,
               );

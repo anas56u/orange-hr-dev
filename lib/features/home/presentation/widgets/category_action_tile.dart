@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// Reusable tile widget for a sub-action item within a category.
 ///
@@ -14,6 +15,7 @@ class CategoryActionTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.locale; // Subscribe to locale changes
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),
       child: InkWell(
@@ -25,28 +27,28 @@ class CategoryActionTile extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.black.withValues(alpha: 0.09),
+                color: appColors.shadowColor,
                 offset: const Offset(0, 4),
                 blurRadius: 10,
               ),
             ],
-            color: Colors.white,
+            color: appColors.cardBackground,
             borderRadius: BorderRadius.circular(12.0),
-            border: Border.all(color: const Color(0xFFE0E0E0), width: 1.0),
+            border: Border.all(color: appColors.dividerColor, width: 1.0),
           ),
           child: Row(
             children: [
               Expanded(
                 child: Text(
                   context.tr(title),
-                  style: const TextStyle(
-                    color: Colors.black87,
+                  style: TextStyle(
+                    color: appColors.primaryText,
                     fontSize: 15,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
               ),
-              const Icon(Icons.chevron_right, color: Colors.black54, size: 24),
+              Icon(Icons.chevron_right, color: appColors.secondaryText, size: 24),
             ],
           ),
         ),

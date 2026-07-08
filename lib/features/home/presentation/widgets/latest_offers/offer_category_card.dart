@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../../../domain/entities/offer_category.dart';
 
 /// A tappable card widget displaying a single offer category.
@@ -20,13 +21,6 @@ class OfferCategoryCard extends StatelessWidget {
 
   static const _emojiStyle = TextStyle(fontSize: 52);
 
-  static const _titleStyle = TextStyle(
-    color: Colors.black87,
-    fontSize: 16,
-    fontWeight: FontWeight.bold,
-    height: 1.35,
-  );
-
   static const _cardPadding = EdgeInsets.symmetric(
     horizontal: 12.0,
     vertical: 20.0,
@@ -34,13 +28,14 @@ class OfferCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: appColors.cardBackground,
         borderRadius: BorderRadius.circular(_cardRadius),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
+            color: appColors.shadowColor,
             blurRadius: 14,
             offset: const Offset(0, 5),
           ),
@@ -67,7 +62,12 @@ class OfferCategoryCard extends StatelessWidget {
                   textAlign: TextAlign.center,
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
-                  style: _titleStyle,
+                  style: TextStyle(
+                    color: appColors.primaryText,
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    height: 1.35,
+                  ),
                 ),
               ],
             ),

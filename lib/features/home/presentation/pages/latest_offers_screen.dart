@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../../data/datasources/offers_local_data_source.dart';
 import '../../data/repositories/offers_repository_impl.dart';
 import '../../domain/usecases/get_offer_categories_usecase.dart';
@@ -47,14 +48,15 @@ class _LatestOffersBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F5F5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Consumer<LatestOffersProvider>(
           builder: (context, provider, _) {
             if (provider.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.orange),
+              return Center(
+                child: CircularProgressIndicator(color: appColors.brandOrange),
               );
             }
 
@@ -67,9 +69,9 @@ class _LatestOffersBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0, top: 8.0),
                   child: IconButton(
-                    icon: const Icon(
+                    icon: Icon(
                       Icons.arrow_back,
-                      color: Colors.black87,
+                      color: appColors.primaryText,
                     ),
                     onPressed: () => Navigator.of(context).pop(),
                   ),

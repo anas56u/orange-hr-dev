@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/features/profile/presentation/widgets/profile_header.dart';
 import 'package:orange_hr_dev/features/profile/presentation/widgets/profile_info_section.dart';
 import 'package:orange_hr_dev/features/profile/presentation/widgets/menu_option_tile.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// Profile screen showing the logged-in user's details.
 ///
@@ -12,14 +13,15 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        backgroundColor: Theme.of(context).appBarTheme.backgroundColor,
         elevation: 0,
         surfaceTintColor: Colors.transparent,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          icon: Icon(Icons.arrow_back, color: appColors.primaryText),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

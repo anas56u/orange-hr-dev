@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// A tappable outlined field that displays the selected absence type
 /// or a placeholder hint when no type has been chosen yet.
@@ -17,6 +18,7 @@ class AbsenceTypeField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasValue = selectedType != null && selectedType!.isNotEmpty;
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
@@ -28,12 +30,12 @@ class AbsenceTypeField extends StatelessWidget {
           decoration: InputDecoration(
             labelText: 'Absence Type',
             labelStyle: TextStyle(
-              color: hasValue ? Colors.orange : Colors.black54,
+              color: hasValue ? appColors.brandOrange : appColors.primaryText,
               fontSize: 16,
               fontWeight: FontWeight.w500,
             ),
-            floatingLabelStyle: const TextStyle(
-              color: Colors.orange,
+            floatingLabelStyle: TextStyle(
+              color: appColors.brandOrange,
               fontSize: 14,
               fontWeight: FontWeight.w500,
             ),
@@ -44,14 +46,14 @@ class AbsenceTypeField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               borderSide: BorderSide(
-                color: const Color(0xFFE0E0E0),
+                color: appColors.inputBorderColor,
                 width: 1.0,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               borderSide: BorderSide(
-                color: const Color(0xFFE0E0E0),
+                color: appColors.inputBorderColor,
                 width: 1.0,
               ),
             ),
@@ -61,13 +63,13 @@ class AbsenceTypeField extends StatelessWidget {
             children: [
               Text(
                 hasValue ? selectedType! : '',
-                style: const TextStyle(
-                  color: Colors.black87,
+                style: TextStyle(
+                  color: appColors.primaryText,
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Icon(Icons.chevron_right, color: Colors.black87, size: 24),
+              Icon(Icons.chevron_right, color: appColors.iconDefault, size: 24),
             ],
           ),
         ),

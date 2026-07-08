@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// Displays the employee's circular avatar with an orange border,
 /// name in orange, and position underneath.
@@ -16,6 +17,7 @@ class EmployeeAvatarSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Column(
       children: [
         Padding(
@@ -29,8 +31,8 @@ class EmployeeAvatarSection extends StatelessWidget {
               errorBuilder: (context, error, stackTrace) => Container(
                 width: 100,
                 height: 100,
-                color: Colors.grey[300],
-                child: const Icon(Icons.person, size: 48, color: Colors.grey),
+                color: appColors.avatarPlaceholder,
+                child: Icon(Icons.person, size: 48, color: appColors.iconDefault),
               ),
             ),
           ),
@@ -38,8 +40,8 @@ class EmployeeAvatarSection extends StatelessWidget {
         const SizedBox(height: 16),
         Text(
           name,
-          style: const TextStyle(
-            color: Color(0xFFFF8C00),
+          style: TextStyle(
+            color: appColors.brandOrange,
             fontSize: 22,
             fontWeight: FontWeight.bold,
             letterSpacing: 0.2,
@@ -48,8 +50,8 @@ class EmployeeAvatarSection extends StatelessWidget {
         const SizedBox(height: 5),
         Text(
           position,
-          style: const TextStyle(
-            color: Colors.black87,
+          style: TextStyle(
+            color: appColors.primaryText,
             fontSize: 17,
             fontWeight: FontWeight.w600,
           ),

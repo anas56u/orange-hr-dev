@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/login/presentation/pages/login_screen.dart';
 import 'package:provider/provider.dart';
 import '../providers/splash_provider.dart';
@@ -81,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Center(
         child: AnimatedBuilder(
           animation: _controller,
@@ -105,6 +106,7 @@ class _SplashScreenState extends State<SplashScreen>
   // ---------------------------------------------------------------------------
 
   Widget _buildOrangeLogo() {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return AnimatedBuilder(
       animation: _glowAnimation,
       builder: (context, child) {
@@ -115,7 +117,7 @@ class _SplashScreenState extends State<SplashScreen>
             borderRadius: BorderRadius.circular(28),
             boxShadow: [
               BoxShadow(
-                color: const Color(0xFFFF6D00)
+                color: appColors.brandOrange
                     .withValues(alpha: 0.28 * _glowAnimation.value),
                 blurRadius: 36 * _glowAnimation.value,
                 spreadRadius: 2 * _glowAnimation.value,

@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:orange_hr_dev/features/home/presentation/providers/home_provider.dart';
 import 'package:orange_hr_dev/features/login/presentation/pages/login_screen.dart';
 import 'package:orange_hr_dev/features/login/presentation/providers/login_provider.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../widgets/dark_mode_toggle_tile.dart';
 import '../widgets/language_selector_tile.dart';
 import '../widgets/settings_section_title.dart';
@@ -16,6 +17,7 @@ class SettingsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     context.locale; 
     final theme = Theme.of(context);
+    final appColors = theme.extension<AppColorsExtension>()!;
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       body: SafeArea(
@@ -64,9 +66,9 @@ class SettingsScreen extends StatelessWidget {
                 title: context.tr('app_version'),
                 trailing: Text(
                   context.tr('version_number'),
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 14,
-                    color: Color(0xFF757575),
+                    color: appColors.subtitleColor,
                   ),
                 ),
               ),

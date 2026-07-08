@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// A styled text field with rounded borders, prefix/suffix icons,
 /// and consistent theming for the login screen.
@@ -30,7 +31,8 @@ class LoginTextField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const primaryOrange = Color(0xFFFF6D00);
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
+    final primaryOrange = appColors.brandOrange;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -39,10 +41,10 @@ class LoginTextField extends StatelessWidget {
         if (labelText != null) ...[
           Text(
             labelText!,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Color(0xFF37474F),
+              color: appColors.primaryText,
               letterSpacing: 0.2,
             ),
           ),
@@ -57,7 +59,7 @@ class LoginTextField extends StatelessWidget {
             boxShadow: [
               if (errorText == null)
                 BoxShadow(
-                  color: Colors.black.withValues(alpha: 0.04),
+                  color: appColors.shadowColor,
                   blurRadius: 12,
                   offset: const Offset(0, 4),
                 ),
@@ -69,10 +71,10 @@ class LoginTextField extends StatelessWidget {
             keyboardType: keyboardType,
             enabled: enabled,
             onChanged: onChanged,
-            style: const TextStyle(
+            style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w500,
-              color: Color(0xFF1E1E1E),
+              color: appColors.primaryText,
             ),
             cursorColor: primaryOrange,
             decoration: InputDecoration(
@@ -80,7 +82,7 @@ class LoginTextField extends StatelessWidget {
               hintStyle: TextStyle(
                 fontSize: 15,
                 fontWeight: FontWeight.w400,
-                color: Colors.grey.shade400,
+                color: appColors.secondaryText,
               ),
               prefixIcon: Padding(
                 padding: const EdgeInsets.only(left: 16, right: 12),
@@ -89,7 +91,7 @@ class LoginTextField extends StatelessWidget {
                   size: 22,
                   color: errorText != null
                       ? const Color(0xFFE53935)
-                      : const Color(0xFF90A4AE),
+                      : appColors.iconDefault,
                 ),
               ),
               prefixIconConstraints: const BoxConstraints(
@@ -104,8 +106,8 @@ class LoginTextField extends StatelessWidget {
                   : null,
               filled: true,
               fillColor: enabled
-                  ? const Color(0xFFF8F9FB)
-                  : const Color(0xFFEEEEEE),
+                  ? appColors.inputFillColor
+                  : appColors.dividerColor,
               contentPadding: const EdgeInsets.symmetric(
                 horizontal: 20,
                 vertical: 18,
@@ -119,7 +121,7 @@ class LoginTextField extends StatelessWidget {
                 borderSide: errorText != null
                     ? const BorderSide(color: Color(0xFFE53935), width: 1.2)
                     : BorderSide(
-                        color: Colors.grey.shade200,
+                        color: appColors.inputBorderColor,
                         width: 1,
                       ),
               ),
@@ -135,7 +137,7 @@ class LoginTextField extends StatelessWidget {
               disabledBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(16),
                 borderSide: BorderSide(
-                  color: Colors.grey.shade200,
+                  color: appColors.inputBorderColor,
                   width: 1,
                 ),
               ),

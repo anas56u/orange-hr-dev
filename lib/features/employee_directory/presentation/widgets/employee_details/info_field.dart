@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 class InfoField extends StatelessWidget {
   final String label;
@@ -8,6 +9,7 @@ class InfoField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.only(left: 12),
       child: Column(
@@ -15,8 +17,8 @@ class InfoField extends StatelessWidget {
         children: [
           Text(
             label,
-            style: const TextStyle(
-              color: Color(0xFFFF8C00),
+            style: TextStyle(
+              color: appColors.brandOrange,
               fontSize: 13,
               fontWeight: FontWeight.w500,
             ),
@@ -24,8 +26,8 @@ class InfoField extends StatelessWidget {
           const SizedBox(height: 4),
           Text(
             value,
-            style: const TextStyle(
-              color: Colors.black87,
+            style: TextStyle(
+              color: appColors.primaryText,
               fontSize: 16,
               fontWeight: FontWeight.w600,
             ),

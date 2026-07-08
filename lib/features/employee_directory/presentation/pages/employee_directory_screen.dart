@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/directory_search_bar.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/employee_list_item.dart';
 
@@ -232,16 +233,17 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
   @override
   Widget build(BuildContext context) {
     final employees = _filteredEmployees;
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(left: 20.0, top: 16.0, right: 20.0),
+        Padding(
+          padding: const EdgeInsets.only(left: 20.0, top: 16.0, right: 20.0),
           child: Text(
             "Employee Directory",
             style: TextStyle(
-              color: Colors.black,
+              color: appColors.primaryText,
               fontSize: 22,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.2,
@@ -268,8 +270,8 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
               : ListView.separated(
                   physics: const BouncingScrollPhysics(),
                   itemCount: employees.length,
-                  separatorBuilder: (context, index) => const Divider(
-                    color: Color(0xFFEEEEEE),
+                  separatorBuilder: (context, index) => Divider(
+                    color: appColors.dividerColor,
                     height: 1,
                     thickness: 1,
                     indent: 20,
@@ -285,6 +287,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
   }
 
   Widget _buildEmptyState() {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -292,7 +295,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
           Icon(
             Icons.person_search_outlined,
             size: 64,
-            color: Colors.grey.shade400,
+            color: appColors.secondaryText,
           ),
           const SizedBox(height: 16),
           Text(
@@ -300,7 +303,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,
-              color: Colors.grey.shade700,
+              color: appColors.primaryText,
             ),
           ),
           const SizedBox(height: 8),
@@ -308,7 +311,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
             "No results matching \"$_searchQuery\"",
             style: TextStyle(
               fontSize: 14,
-              color: Colors.grey.shade500,
+              color: appColors.secondaryText,
             ),
           ),
         ],

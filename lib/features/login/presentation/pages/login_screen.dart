@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:iconsax/iconsax.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 import '../../../home/presentation/pages/home_screen.dart';
 import '../../domain/entities/login_state.dart';
@@ -166,7 +167,7 @@ class _LoginScreenState extends State<LoginScreen>
     _handleStateChange(state);
 
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: GestureDetector(
           onTap: () => FocusScope.of(context).unfocus(),
@@ -252,6 +253,7 @@ class _LoginScreenState extends State<LoginScreen>
   // ---------------------------------------------------------------------------
 
   Widget _buildLogoSection() {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Center(
       child: Container(
         width: 80,
@@ -260,7 +262,7 @@ class _LoginScreenState extends State<LoginScreen>
           borderRadius: BorderRadius.circular(20),
           boxShadow: [
             BoxShadow(
-              color: const Color(0xFFFF6D00).withValues(alpha: 0.18),
+              color: appColors.brandOrange.withValues(alpha: 0.18),
               blurRadius: 24,
               offset: const Offset(0, 8),
             ),
@@ -278,15 +280,16 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Widget _buildHeading() {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'welcome_back'.tr(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 28,
             fontWeight: FontWeight.w800,
-            color: Color(0xFF1E1E1E),
+            color: appColors.primaryText,
             letterSpacing: -0.5,
             height: 1.2,
           ),
@@ -294,10 +297,10 @@ class _LoginScreenState extends State<LoginScreen>
         const SizedBox(height: 8),
         Text(
           'login_subtitle'.tr(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 15,
             fontWeight: FontWeight.w400,
-            color: Color(0xFF78909C),
+            color: appColors.secondaryText,
             height: 1.4,
           ),
         ),
@@ -328,6 +331,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Widget _buildPasswordField(LoginProvider provider, bool isLoading) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     final error = provider.autoValidate
         ? provider.validatePassword(_passwordController.text)
         : null;
@@ -350,7 +354,7 @@ class _LoginScreenState extends State<LoginScreen>
         icon: Icon(
           provider.isPasswordVisible ? Iconsax.eye : Iconsax.eye_slash,
           size: 20,
-          color: const Color(0xFF90A4AE),
+          color: appColors.iconDefault,
         ),
         splashRadius: 20,
       ),
@@ -358,6 +362,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   Widget _buildForgotPassword() {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Align(
       alignment: Alignment.centerRight,
       child: TextButton(
@@ -371,10 +376,10 @@ class _LoginScreenState extends State<LoginScreen>
         ),
         child: Text(
           'forgot_password'.tr(),
-          style: const TextStyle(
+          style: TextStyle(
             fontSize: 13.5,
             fontWeight: FontWeight.w600,
-            color: Color(0xFFFF6D00),
+            color: appColors.brandOrange,
           ),
         ),
       ),

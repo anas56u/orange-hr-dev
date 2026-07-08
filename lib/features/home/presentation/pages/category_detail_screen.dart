@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:easy_localization/easy_localization.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../../data/datasources/category_local_data_source.dart';
 import '../../data/repositories/category_repository_impl.dart';
 import '../../domain/entities/action_category.dart';
@@ -53,14 +54,15 @@ class _CategoryDetailBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     context.locale; // Subscribe to locale changes
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Consumer<CategoryDetailProvider>(
           builder: (context, provider, _) {
             if (provider.isLoading) {
-              return const Center(
-                child: CircularProgressIndicator(color: Colors.orange),
+              return Center(
+                child: CircularProgressIndicator(color: appColors.brandOrange),
               );
             }
 
@@ -74,7 +76,7 @@ class _CategoryDetailBody extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0, top: 8.0),
                   child: IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black87),
+                    icon: Icon(Icons.arrow_back, color: appColors.primaryText),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
@@ -97,8 +99,8 @@ class _CategoryDetailBody extends StatelessWidget {
                       Expanded(
                         child: Text(
                           context.tr(category.displayTitle),
-                          style: const TextStyle(
-                            color: Colors.black,
+                          style: TextStyle(
+                            color: appColors.primaryText,
                             fontSize: 22,
                             fontWeight: FontWeight.bold,
                             height: 1.2,

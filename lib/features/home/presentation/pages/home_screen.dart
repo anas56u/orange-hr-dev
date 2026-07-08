@@ -21,7 +21,7 @@ class HomeScreen extends StatelessWidget {
       builder: (context, currentIndex, child) {
         return Scaffold(
           bottomNavigationBar: HomeBottomNavBar(),
-          backgroundColor: Colors.white,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
           // Hide the shared AppBar on Notifications (index 3) and Settings (index 4)
           appBar: (currentIndex == 3 || currentIndex == 4)
               ? null

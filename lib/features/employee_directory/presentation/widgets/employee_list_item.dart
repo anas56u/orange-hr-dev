@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/pages/employee_directory_screen.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/pages/employee_details_screen.dart';
 
@@ -12,6 +13,7 @@ class EmployeeListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return InkWell(
       onTap: () {
         Navigator.of(context).push(
@@ -34,8 +36,8 @@ class EmployeeListItem extends StatelessWidget {
                 errorBuilder: (context, error, stackTrace) => Container(
                   width: 50,
                   height: 50,
-                  color: Colors.grey[300],
-                  child: const Icon(Icons.person, color: Colors.grey),
+                  color: appColors.avatarPlaceholder,
+                  child: Icon(Icons.person, color: appColors.iconDefault),
                 ),
               ),
             ),
@@ -47,8 +49,8 @@ class EmployeeListItem extends StatelessWidget {
                 children: [
                   Text(
                     employee.name,
-                    style: const TextStyle(
-                      color: Colors.black,
+                    style: TextStyle(
+                      color: appColors.primaryText,
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       letterSpacing: 0.2,
@@ -57,8 +59,8 @@ class EmployeeListItem extends StatelessWidget {
                   const SizedBox(height: 4),
                   Text(
                     employee.position,
-                    style: const TextStyle(
-                      color: Color(0xFF9E9E9E), // Grey color for position
+                    style: TextStyle(
+                      color: appColors.secondaryText,
                       fontSize: 14,
                     ),
                   ),
@@ -66,9 +68,9 @@ class EmployeeListItem extends StatelessWidget {
               ),
             ),
             // Trailing icon
-            const Icon(
+            Icon(
               Icons.chevron_right,
-              color: Colors.black,
+              color: appColors.secondaryText,
               size: 24,
             ),
           ],

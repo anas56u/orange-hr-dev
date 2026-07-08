@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 /// A single selectable row in the [AbsenceTypesScreen] list.
 ///
@@ -32,19 +33,18 @@ class AbsenceTypeListItem extends StatelessWidget {
     vertical: 16.0,
   );
 
-  static const _bottomBorder = Border(
-    bottom: BorderSide(color: Color(0xFFEEEEEE), width: 1.0),
-  );
-
-  static const _unselectedBorderColor = Color(0xFFBDBDBD);
-
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return InkWell(
       onTap: onTap,
       child: Container(
         padding: _itemPadding,
-        decoration: const BoxDecoration(border: _bottomBorder),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(color: appColors.dividerColor, width: 1.0),
+          ),
+        ),
         child: Row(
           children: [
             // --- Radio circle indicator ---
@@ -54,7 +54,7 @@ class AbsenceTypeListItem extends StatelessWidget {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 border: Border.all(
-                  color: isSelected ? Colors.orange : _unselectedBorderColor,
+                  color: isSelected ? appColors.brandOrange : appColors.inputBorderColor,
                   width: 2.0,
                 ),
               ),
@@ -63,9 +63,9 @@ class AbsenceTypeListItem extends StatelessWidget {
                       child: Container(
                         width: 12,
                         height: 12,
-                        decoration: const BoxDecoration(
+                        decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Colors.orange,
+                          color: appColors.brandOrange,
                         ),
                       ),
                     )
@@ -76,7 +76,7 @@ class AbsenceTypeListItem extends StatelessWidget {
               child: Text(
                 title,
                 style: TextStyle(
-                  color: isSelected ? Colors.orange : Colors.black54,
+                  color: isSelected ? appColors.brandOrange : appColors.primaryText,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),

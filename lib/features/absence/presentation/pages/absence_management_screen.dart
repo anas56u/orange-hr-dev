@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:orange_hr_dev/features/home/presentation/pages/home_screen.dart';
+import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../providers/absence_provider.dart';
 import '../widgets/absence_type_field.dart';
 import '../widgets/absence_type_bottom_sheet.dart';
@@ -29,12 +30,6 @@ class AbsenceManagementScreen extends StatelessWidget {
 class _AbsenceManagementBody extends StatelessWidget {
   const _AbsenceManagementBody();
 
-  static const _titleStyle = TextStyle(
-    color: Colors.black,
-    fontSize: 20,
-    fontWeight: FontWeight.bold,
-  );
-
   static const _months = [
     'January',
     'February',
@@ -52,8 +47,9 @@ class _AbsenceManagementBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SafeArea(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -64,11 +60,18 @@ class _AbsenceManagementBody extends StatelessWidget {
               child: Row(
                 children: [
                   IconButton(
-                    icon: const Icon(Icons.arrow_back, color: Colors.black87),
+                    icon: Icon(Icons.arrow_back, color: appColors.primaryText),
                     onPressed: () => Navigator.of(context).pop(),
                   ),
                   const SizedBox(width: 4),
-                  const Text('Submit Absence', style: _titleStyle),
+                  Text(
+                    'Submit Absence',
+                    style: TextStyle(
+                      color: appColors.primaryText,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -309,6 +312,7 @@ class _FormActionField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final hasValue = value != null && value!.isNotEmpty;
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
@@ -322,7 +326,7 @@ class _FormActionField extends StatelessWidget {
               text: TextSpan(
                 text: label,
                 style: TextStyle(
-                  color: hasValue ? Colors.orange : Colors.black87,
+                  color: hasValue ? appColors.brandOrange : appColors.primaryText,
                   fontSize: hasValue ? 14 : 16,
                   fontWeight: FontWeight.w500,
                 ),
@@ -341,14 +345,14 @@ class _FormActionField extends StatelessWidget {
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               borderSide: BorderSide(
-                color: const Color(0xFFE0E0E0),
+                color: appColors.inputBorderColor,
                 width: 1.0,
               ),
             ),
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(12.0),
               borderSide: BorderSide(
-                color: const Color(0xFFE0E0E0),
+                color: appColors.inputBorderColor,
                 width: 1.0,
               ),
             ),
@@ -358,13 +362,13 @@ class _FormActionField extends StatelessWidget {
             children: [
               Text(
                 hasValue ? value! : '',
-                style: const TextStyle(
-                  color: Colors.black87,
+                style: TextStyle(
+                  color: appColors.primaryText,
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              Icon(icon, color: Colors.black87, size: 22),
+              Icon(icon, color: appColors.iconDefault, size: 22),
             ],
           ),
         ),
@@ -389,6 +393,7 @@ class _SubmitButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.fromLTRB(20.0, 8.0, 20.0, 16.0),
       child: SizedBox(
@@ -397,8 +402,8 @@ class _SubmitButton extends StatelessWidget {
         child: ElevatedButton(
           onPressed: enabled ? onPressed : null,
           style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.orange,
-            disabledBackgroundColor: const Color(0xFFE0E0E0),
+            backgroundColor: appColors.brandOrange,
+            disabledBackgroundColor: appColors.inputBorderColor,
             foregroundColor: Colors.white,
             disabledForegroundColor: Colors.white,
             shape: RoundedRectangleBorder(
@@ -434,20 +439,21 @@ class _DurationCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 12.0),
       child: Container(
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         decoration: BoxDecoration(
-          color: const Color(0xFFEEEEEE),
+          color: appColors.dividerColor,
           borderRadius: BorderRadius.circular(12.0),
         ),
         child: Center(
           child: Text(
             durationText,
-            style: const TextStyle(
-              color: Colors.black,
+            style: TextStyle(
+              color: appColors.primaryText,
               fontSize: 16,
               fontWeight: FontWeight.bold,
             ),
