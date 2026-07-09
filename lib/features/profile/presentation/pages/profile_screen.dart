@@ -4,10 +4,6 @@ import 'package:orange_hr_dev/features/profile/presentation/widgets/profile_info
 import 'package:orange_hr_dev/features/profile/presentation/widgets/menu_option_tile.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// Profile screen showing the logged-in user's details.
-///
-/// Uses dummy data for now — in a real app these values would
-/// come from a ProfileProvider or a User entity passed in.
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -32,7 +28,6 @@ class ProfileScreen extends StatelessWidget {
           children: [
             SizedBox(height: 8),
 
-            // --- Avatar + Name + Title ---
             Center(
               child: ProfileHeader(
                 imageUrl:

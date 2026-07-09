@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 class DirectorySearchBar extends StatelessWidget {
@@ -15,6 +16,7 @@ class DirectorySearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 16.0),
@@ -23,7 +25,7 @@ class DirectorySearchBar extends StatelessWidget {
         onChanged: onChanged,
         style: TextStyle(color: appColors.primaryText, fontSize: 15),
         decoration: InputDecoration(
-          hintText: "Search by name, position, unit...",
+          hintText: "Search by name, position, unit...".tr(),
           hintStyle: TextStyle(
             color: appColors.secondaryText,
             fontSize: 15,

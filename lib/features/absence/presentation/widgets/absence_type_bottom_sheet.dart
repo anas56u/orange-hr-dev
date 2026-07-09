@@ -1,19 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'absence_type_list_item.dart';
 
-/// A modal bottom sheet that displays a selectable list of absence types with
-/// interactive search functionality.
-///
-/// **Local State Management Decision:**
-/// We manage transient search UI state ([_isSearching], [_searchController], and
-/// [_filteredTypes]) locally within this [StatefulWidget] instead of polluting
-/// [AbsenceProvider]. Since filtering the absence types list is a transient visual
-/// concern specific to this modal bottom sheet and has no impact on global business
-/// logic or form data until a type is actually chosen, keeping it scoped locally
-/// adheres to clean architecture principles and prevents unnecessary provider rebuilds.
 class AbsenceTypeBottomSheet extends StatefulWidget {
-  /// The type that is already selected on the form, if any.
+
   final String? currentSelection;
 
   const AbsenceTypeBottomSheet({super.key, this.currentSelection});
@@ -23,7 +14,7 @@ class AbsenceTypeBottomSheet extends StatefulWidget {
 }
 
 class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
-  /// Absence types available for selection.
+
   static const List<String> _absenceTypes = [
     'Annual Leave',
     'Sick Leave',
@@ -38,12 +29,9 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     'Type #4',
   ];
 
-  // --- Transient Local Search State ---
   bool _isSearching = false;
   late final TextEditingController _searchController;
   late List<String> _filteredTypes;
-
-  // --- Const style tokens ---
 
   static const _handleWidth = 40.0;
   static const _handleHeight = 4.0;
@@ -63,7 +51,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     super.dispose();
   }
 
-  /// Filters [_filteredTypes] dynamically based on user input.
   void _onSearchChanged(String query) {
     final cleanQuery = query.trim().toLowerCase();
     setState(() {
@@ -77,7 +64,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     });
   }
 
-  /// Clears the search field and resets the header to default state.
   void _clearAndCloseSearch() {
     setState(() {
       _isSearching = false;
@@ -88,7 +74,7 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
 
   @override
   Widget build(BuildContext context) {
-    // Determine keyboard inset so the sheet adjusts smoothly when keyboard opens
+
     final bottomInset = MediaQuery.of(context).viewInsets.bottom;
     final bottomPadding = MediaQuery.of(context).padding.bottom;
 
@@ -107,7 +93,7 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // --- Drag handle ---
+
             const Padding(
               padding: EdgeInsets.only(top: 12.0, bottom: 8.0),
               child: Center(
@@ -124,7 +110,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
               ),
             ),
 
-            // --- Header with AnimatedCrossFade ---
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 4.0),
               child: AnimatedCrossFade(
@@ -141,7 +126,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
             const SizedBox(height: 4),
             Divider(height: 1, color: appColors.dividerColor),
 
-            // --- Types list or empty state ---
             Flexible(
               child: _filteredTypes.isEmpty
                   ? _buildEmptyState()
@@ -161,7 +145,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
                     ),
             ),
 
-            // Bottom safe-area spacing
             SizedBox(height: bottomPadding + 8),
           ],
         ),
@@ -169,14 +152,13 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     );
   }
 
-  /// Builds the default header displaying the title and search icon button.
   Widget _buildDefaultHeader() {
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Select Type',
+          'Select Type'.tr(),
           style: TextStyle(
             color: appColors.primaryText,
             fontSize: 20,
@@ -196,7 +178,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     );
   }
 
-  /// Builds the active search header with an autofocus TextField and close button.
   Widget _buildSearchHeader() {
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Row(
@@ -227,7 +208,6 @@ class _AbsenceTypeBottomSheetState extends State<AbsenceTypeBottomSheet> {
     );
   }
 
-  /// High-performance empty state when no search results match.
   Widget _buildEmptyState() {
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Center(

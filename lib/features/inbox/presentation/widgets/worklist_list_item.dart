@@ -18,7 +18,7 @@ class WorklistListItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // --- Leading: icon or avatar ---
+
           if (isPersonItem)
             _SenderAvatar(imageUrl: item.senderImageUrl!)
           else

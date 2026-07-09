@@ -175,5 +175,4 @@ class ThemeSelectorTile extends StatelessWidget {
   }
 }
 
-/// Backward-compatibility alias so existing imports keep working.
 typedef DarkModeToggleTile = ThemeSelectorTile;

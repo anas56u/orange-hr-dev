@@ -15,14 +15,14 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; // Subscribe to locale changes
+    context.locale;
     return Selector<HomeProvider, int>(
       selector: (context, provider) => provider.currentTabIndex,
       builder: (context, currentIndex, child) {
         return Scaffold(
           bottomNavigationBar: HomeBottomNavBar(),
           backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-          // Hide the shared AppBar on Notifications (index 3) and Settings (index 4)
+
           appBar: (currentIndex == 3 || currentIndex == 4)
               ? null
               : HomeAppBar(),
@@ -30,11 +30,11 @@ class HomeScreen extends StatelessWidget {
             child: IndexedStack(
               index: currentIndex,
               children: [
-                HomeTabContent(), // Index 0: Home
-                EmployeeDirectoryScreen(), // Index 1: Address Book
-                InboxScreen(), // Index 2: Inbox / Worklist
-                NotificationsScreen(), // Index 3: Notifications
-                SettingsScreen(), // Index 4: Settings
+                HomeTabContent(),
+                EmployeeDirectoryScreen(),
+                InboxScreen(),
+                NotificationsScreen(),
+                SettingsScreen(),
               ],
             ),
           ),

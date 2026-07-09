@@ -55,27 +55,23 @@ class EmployeeDetailsScreen extends StatelessWidget {
               label: 'Mobile:',
               value: employee.mobile,
               actionIcon: Icons.phone,
-              actionIconColor: const Color(0xFF66BB6A), // Green
+              actionIconColor: const Color(0xFF66BB6A),
             ),
 
             const SizedBox(height: 24),
 
-            // --- Unit ---
             InfoField(label: 'Unit', value: employee.unit),
 
             const SizedBox(height: 20),
 
-            // --- Organization ---
             InfoField(label: 'Organization', value: employee.organization),
 
             const SizedBox(height: 20),
 
-            // --- Address ---
             InfoField(label: 'Address:', value: employee.address),
 
             const SizedBox(height: 38),
 
-            // --- Back Button ---
             const BackActionButton(),
 
             const SizedBox(height: 24),

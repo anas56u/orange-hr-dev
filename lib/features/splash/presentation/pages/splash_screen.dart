@@ -22,19 +22,16 @@ class _SplashScreenState extends State<SplashScreen>
   void initState() {
     super.initState();
 
-    // ── Animation setup ────────────────────────────────────────────────
     _controller = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 1400),
     );
 
-    // Fade: 0 → 1 over the first 60% of the timeline.
     _fadeAnimation = CurvedAnimation(
       parent: _controller,
       curve: const Interval(0.0, 0.6, curve: Curves.easeOut),
     );
 
-    // Scale: 0.6 → 1.0 with a gentle elastic overshoot.
     _scaleAnimation = Tween<double>(begin: 0.6, end: 1.0).animate(
       CurvedAnimation(
         parent: _controller,
@@ -42,7 +39,6 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
 
-    // Glow (shadow opacity): fades in during the second half.
     _glowAnimation = CurvedAnimation(
       parent: _controller,
       curve: const Interval(0.4, 1.0, curve: Curves.easeOutCubic),
@@ -50,7 +46,6 @@ class _SplashScreenState extends State<SplashScreen>
 
     _controller.forward();
 
-    // ── App initialization (runs concurrently with animation) ──────────
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _startAppInitialization();
     });
@@ -75,10 +70,6 @@ class _SplashScreenState extends State<SplashScreen>
     super.dispose();
   }
 
-  // ---------------------------------------------------------------------------
-  // Build
-  // ---------------------------------------------------------------------------
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -100,10 +91,6 @@ class _SplashScreenState extends State<SplashScreen>
       ),
     );
   }
-
-  // ---------------------------------------------------------------------------
-  // Logo — matches the login screen's visual style
-  // ---------------------------------------------------------------------------
 
   Widget _buildOrangeLogo() {
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;

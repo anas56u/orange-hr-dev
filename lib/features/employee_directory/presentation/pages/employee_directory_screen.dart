@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/directory_search_bar.dart';
 import 'package:orange_hr_dev/features/employee_directory/presentation/widgets/employee_list_item.dart';
@@ -175,18 +176,15 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
     final orgLower = e.organization.toLowerCase();
     final mobileLower = e.mobile.toLowerCase();
 
-    // 1. First Name / Full Name starts directly with the query (Score: 100)
     if (nameLower.startsWith(q)) {
       return 100;
     }
 
-    // 2. Last Name or any name word starts with the query (Score: 80)
     final nameWords = nameLower.split(' ');
     if (nameWords.any((word) => word.startsWith(q))) {
       return 80;
     }
 
-    // 3. Department, Unit, or Position starts with the query (Score: 60)
     if (positionLower.startsWith(q) || unitLower.startsWith(q) || orgLower.startsWith(q)) {
       return 60;
     }
@@ -196,17 +194,15 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
       return 50;
     }
 
-    // 4. Mobile number starts with the query (Score: 40)
     if (mobileLower.startsWith(q)) {
       return 40;
     }
 
-    // 5. Contains as a substring (Score: 10) - placed at the very bottom
     if (nameLower.contains(q) || positionLower.contains(q) || unitLower.contains(q) || orgLower.contains(q)) {
       return 10;
     }
 
-    return 0; // No match
+    return 0;
   }
 
   List<Employee> get _filteredEmployees {
@@ -220,7 +216,6 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
         .where((entry) => entry.value > 0)
         .toList();
 
-    // Sort descending by relevance score, then alphabetically
     scored.sort((a, b) {
       final scoreComparison = b.value.compareTo(a.value);
       if (scoreComparison != 0) return scoreComparison;
@@ -232,6 +227,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     final employees = _filteredEmployees;
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
 
@@ -241,7 +237,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
         Padding(
           padding: const EdgeInsets.only(left: 20.0, top: 16.0, right: 20.0),
           child: Text(
-            "Employee Directory",
+            "Employee Directory".tr(),
             style: TextStyle(
               color: appColors.primaryText,
               fontSize: 22,
@@ -299,7 +295,7 @@ class _EmployeeDirectoryScreenState extends State<EmployeeDirectoryScreen> {
           ),
           const SizedBox(height: 16),
           Text(
-            "No employees found",
+            "No employees found".tr(),
             style: TextStyle(
               fontSize: 18,
               fontWeight: FontWeight.w600,

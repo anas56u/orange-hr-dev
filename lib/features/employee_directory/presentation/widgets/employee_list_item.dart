@@ -42,7 +42,7 @@ class EmployeeListItem extends StatelessWidget {
               ),
             ),
             const SizedBox(width: 16),
-            // Details
+
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -67,7 +67,7 @@ class EmployeeListItem extends StatelessWidget {
                 ],
               ),
             ),
-            // Trailing icon
+
             Icon(
               Icons.chevron_right,
               color: appColors.secondaryText,

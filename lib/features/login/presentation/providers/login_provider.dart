@@ -6,8 +6,6 @@ import 'package:orange_hr_dev/features/login/domain/usecases/biometric_login_use
 import '../../domain/entities/login_state.dart';
 import '../../domain/usecases/login_usecase.dart';
 
-/// Manages all login‑related state and exposes it to the UI
-/// via [ChangeNotifier].
 class LoginProvider extends ChangeNotifier {
   final LoginUseCase loginUseCase;
   final BiometricLoginUsecase biometricLoginUseCase;
@@ -17,10 +15,6 @@ class LoginProvider extends ChangeNotifier {
     required this.biometricLoginUseCase,
   });
 
-  // ---------------------------------------------------------------------------
-  // State
-  // ---------------------------------------------------------------------------
-
   LoginState _state = const LoginInitial();
   LoginState get state => _state;
   bool _isLoadingBiometric = false;
@@ -29,14 +23,8 @@ class LoginProvider extends ChangeNotifier {
   bool _isPasswordVisible = false;
   bool get isPasswordVisible => _isPasswordVisible;
 
-  /// Turns on auto‑validation after the first submit attempt so that
-  /// the user isn't bombarded with errors before they even try.
   bool _autoValidate = false;
   bool get autoValidate => _autoValidate;
-
-  // ---------------------------------------------------------------------------
-  // Validation helpers
-  // ---------------------------------------------------------------------------
 
   Future<void> authenticateWithBiometric(BuildContext context) async {
     _isLoadingBiometric = true;
@@ -55,10 +43,9 @@ class LoginProvider extends ChangeNotifier {
       _isLoadingBiometric = false;
       notifyListeners();
     }
-    
+
   }
 
-  /// Returns an error string if [username] is invalid, `null` otherwise.
   String? validateUsername(String? username) {
     if (username == null || username.trim().isEmpty) {
       return 'username_required'.tr();
@@ -69,10 +56,8 @@ class LoginProvider extends ChangeNotifier {
     return null;
   }
 
-  /// Backward-compatible alias.
   String? validatePhone(String? phone) => validateUsername(phone);
 
-  /// Returns an error string if [password] is invalid, `null` otherwise.
   String? validatePassword(String? password) {
     if (password == null || password.isEmpty) {
       return 'password_required'.tr();
@@ -83,56 +68,41 @@ class LoginProvider extends ChangeNotifier {
     return null;
   }
 
-  // ---------------------------------------------------------------------------
-  // Actions
-  // ---------------------------------------------------------------------------
-
-  /// Toggles the password field between obscured / visible.
   void togglePasswordVisibility() {
     _isPasswordVisible = !_isPasswordVisible;
     notifyListeners();
   }
 
-  /// Resets back to the initial idle state (e.g. to clear a previous error).
   void resetState() {
     _state = const LoginInitial();
     notifyListeners();
   }
 
-  /// Silently resets the state without calling notifyListeners (safe for initState).
   void resetStateSilently() {
     _state = const LoginInitial();
     _autoValidate = false;
   }
 
-  /// Logs out the user and clears persistent/in-memory login state.
   void logout() {
     _state = const LoginInitial();
     _autoValidate = false;
     notifyListeners();
   }
 
-  /// Validates the form and, if valid, fires the mock login use case.
-  ///
-  /// The caller should pass the current text‑field values. Returns early
-  /// (with an [LoginError] state) when validation fails.
   Future<void> login({String? username, String? phone, required String password}) async {
     final user = (username ?? phone ?? '').trim();
 
-    // Enable inline validation from this point on.
     _autoValidate = true;
     notifyListeners();
 
-    // ---- client‑side validation ----
     final userError = validateUsername(user);
     final passwordError = validatePassword(password);
 
     if (userError != null || passwordError != null) {
-      // Don't call the use case — the form‑level errors are enough.
+
       return;
     }
 
-    // ---- fire mock network request ----
     _state = const LoginLoading();
     notifyListeners();
 

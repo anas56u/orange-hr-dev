@@ -8,15 +8,6 @@ import '../providers/latest_offers_provider.dart';
 import '../widgets/latest_offers/offer_category_card.dart';
 import '../widgets/latest_offers/offers_header.dart';
 
-/// Dedicated screen for the "Latest Offers" category.
-///
-/// Displays a 2-column grid of offer sub-categories (Banks, Hotels, etc.)
-/// each represented by an emoji illustration and a title, matching the
-/// design image exactly.
-///
-/// Uses a scoped [ChangeNotifierProvider] that auto-disposes when
-/// this screen is popped off the navigation stack — same lifecycle
-/// pattern as [CategoryDetailScreen].
 class LatestOffersScreen extends StatelessWidget {
   const LatestOffersScreen({super.key});
 
@@ -31,7 +22,7 @@ class LatestOffersScreen extends StatelessWidget {
             ),
           ),
         );
-        // Load the categories immediately after creation.
+
         provider.loadCategories();
         return provider;
       },
@@ -40,9 +31,6 @@ class LatestOffersScreen extends StatelessWidget {
   }
 }
 
-/// The actual scaffold body — separated from [LatestOffersScreen] so that
-/// [Consumer] can access the [LatestOffersProvider] from the ancestor
-/// [ChangeNotifierProvider] created above.
 class _LatestOffersBody extends StatelessWidget {
   const _LatestOffersBody();
 
@@ -65,7 +53,7 @@ class _LatestOffersBody extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                // --- Back button ---
+
                 Padding(
                   padding: const EdgeInsets.only(left: 4.0, top: 8.0),
                   child: IconButton(
@@ -77,15 +65,10 @@ class _LatestOffersBody extends StatelessWidget {
                   ),
                 ),
 
-                // --- Header: tag icon + title ---
                 const OffersHeader(),
 
                 const SizedBox(height: 20),
 
-                // --- Category grid ---
-                // Uses GridView.builder for the same lazy-building /
-                // widget-recycling semantics as ListView.builder,
-                // adapted for the 2-column layout shown in the design.
                 Expanded(
                   child: GridView.builder(
                     padding: const EdgeInsets.symmetric(
@@ -106,7 +89,7 @@ class _LatestOffersBody extends StatelessWidget {
                       return OfferCategoryCard(
                         category: category,
                         onTap: () {
-                          
+
                         },
                       );
                     },

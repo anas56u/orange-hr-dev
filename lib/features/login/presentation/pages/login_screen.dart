@@ -31,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen>
   void initState() {
     super.initState();
 
-    // Entrance animation for the form.
     _fadeController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 800),
@@ -47,7 +46,6 @@ class _LoginScreenState extends State<LoginScreen>
 
     _fadeController.forward();
 
-    // Ensure any previous login state is silently cleared when entering LoginScreen.
     context.read<LoginProvider>().resetStateSilently();
   }
 
@@ -59,14 +57,8 @@ class _LoginScreenState extends State<LoginScreen>
     super.dispose();
   }
 
-  // ---------------------------------------------------------------------------
-  // State listener — reacts to provider changes via didChangeDependencies
-  // ---------------------------------------------------------------------------
-
   LoginState? _previousState;
 
-  /// We use a post‑frame callback so that Snackbars / navigation don't
-  /// fire during the build phase.
   void _handleStateChange(LoginState state) {
     if (state == _previousState) return;
     _previousState = state;
@@ -106,7 +98,6 @@ class _LoginScreenState extends State<LoginScreen>
               ),
             );
 
-          // Navigate to Home after the snackbar is visible.
           Future.delayed(const Duration(milliseconds: 800), () {
             if (!mounted) return;
             Navigator.pushReplacement(
@@ -153,17 +144,12 @@ class _LoginScreenState extends State<LoginScreen>
     });
   }
 
-  // ---------------------------------------------------------------------------
-  // Build
-  // ---------------------------------------------------------------------------
-
   @override
   Widget build(BuildContext context) {
     final provider = context.watch<LoginProvider>();
     final state = provider.state;
     final isLoading = state is LoginLoading;
 
-    // Fire side‑effects (snackbar, navigation) based on state transitions.
     _handleStateChange(state);
 
     return Scaffold(
@@ -189,32 +175,26 @@ class _LoginScreenState extends State<LoginScreen>
                           children: [
                             const SizedBox(height: 48),
 
-                            // ── Logo ───────────────────────────────────
                             _buildLogoSection(),
 
                             const SizedBox(height: 40),
 
-                            // ── Heading ────────────────────────────────
                             _buildHeading(),
 
                             const SizedBox(height: 36),
 
-                            // ── Username field ─────────────────────────
                             _buildUsernameField(provider, isLoading),
 
                             const SizedBox(height: 20),
 
-                            // ── Password field ─────────────────────────
                             _buildPasswordField(provider, isLoading),
 
                             const SizedBox(height: 8),
 
-                            // ── Forgot password ────────────────────────
                             _buildForgotPassword(),
 
                             const SizedBox(height: 28),
 
-                            // ── Login button ───────────────────────────
                             LoginButton(
                               text: 'login_btn'.tr(),
                               isLoading: isLoading,
@@ -226,10 +206,8 @@ class _LoginScreenState extends State<LoginScreen>
                                       ),
                             ),
 
-                            // Push biometric section to the bottom.
                             const Spacer(),
 
-                            // ── Biometric section ──────────────────────
                             Padding(
                               padding: const EdgeInsets.only(bottom: 32, top: 36),
                               child: BiometricLoginWidget(),
@@ -247,10 +225,6 @@ class _LoginScreenState extends State<LoginScreen>
       ),
     );
   }
-
-  // ---------------------------------------------------------------------------
-  // Sub‑builders
-  // ---------------------------------------------------------------------------
 
   Widget _buildLogoSection() {
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
@@ -322,7 +296,7 @@ class _LoginScreenState extends State<LoginScreen>
       enabled: !isLoading,
       errorText: error,
       onChanged: (_) {
-        // Re‑validate on every keystroke once auto‑validate is on.
+
         if (provider.autoValidate) {
           provider.resetState();
         }
@@ -367,7 +341,7 @@ class _LoginScreenState extends State<LoginScreen>
       alignment: Alignment.centerRight,
       child: TextButton(
         onPressed: () {
-          // No-op — placeholder for future forgot‑password flow.
+
         },
         style: TextButton.styleFrom(
           padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 2),

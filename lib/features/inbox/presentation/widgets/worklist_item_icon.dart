@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/features/inbox/domain/models/worklist_item.dart';
 
-/// Maps a [WorklistItemType] to its corresponding circular icon
-/// and background colour, matching the design screenshot.
 class WorklistItemIcon extends StatelessWidget {
   final WorklistItemType type;
 
@@ -13,23 +11,23 @@ class WorklistItemIcon extends StatelessWidget {
     final (IconData icon, Color bg, Color fg) = switch (type) {
       WorklistItemType.leaveApproval => (
           Icons.access_time,
-          const Color(0xFFE3F2FD), // light blue
-          const Color(0xFF1E88E5), // blue
+          const Color(0xFFE3F2FD),
+          const Color(0xFF1E88E5),
         ),
       WorklistItemType.cardRequest => (
           Icons.favorite,
-          const Color(0xFFFCE4EC), // light pink
-          const Color(0xFFEC407A), // pink
+          const Color(0xFFFCE4EC),
+          const Color(0xFFEC407A),
         ),
       WorklistItemType.objectiveApproved => (
           Icons.check_circle_outline,
-          const Color(0xFFE8F5E9), // light green
-          const Color(0xFF43A047), // green
+          const Color(0xFFE8F5E9),
+          const Color(0xFF43A047),
         ),
       WorklistItemType.leaveRequest => (
           Icons.person,
-          const Color(0xFFF5F5F5), // light grey
-          const Color(0xFF757575), // grey
+          const Color(0xFFF5F5F5),
+          const Color(0xFF757575),
         ),
     };
 

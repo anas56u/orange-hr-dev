@@ -13,8 +13,8 @@ class SplashProvider extends ChangeNotifier {
     _isLoading = true;
     notifyListeners();
     await initAppUseCase.execute();
-    
+
     _isLoading = false;
-    notifyListeners(); 
+    notifyListeners();
   }
 }

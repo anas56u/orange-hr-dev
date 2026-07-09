@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/features/home/presentation/pages/home_screen.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../providers/absence_provider.dart';
@@ -7,14 +8,6 @@ import '../widgets/absence_type_field.dart';
 import '../widgets/absence_type_bottom_sheet.dart';
 import '../widgets/awesome_success_dialog.dart';
 
-/// Main screen for the Absence Management feature.
-/// Displays the "Submit Absence" form matching the design:
-///   - A tappable **Absence Type** field that opens a [showModalBottomSheet]
-///     containing [AbsenceTypeBottomSheet].
-///   - **Date** field that opens [showDatePicker].
-///   - **From Time** and **To Time** fields that open [showTimePicker].
-///   - A **SUBMIT** button enabled only when every field is filled
-///     (controlled by [AbsenceProvider.canSubmit]).
 class AbsenceManagementScreen extends StatelessWidget {
   const AbsenceManagementScreen({super.key});
 
@@ -54,7 +47,7 @@ class _AbsenceManagementBody extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // --- Header: back button + title ---
+
             Padding(
               padding: const EdgeInsets.only(left: 4.0, top: 8.0),
               child: Row(
@@ -65,7 +58,7 @@ class _AbsenceManagementBody extends StatelessWidget {
                   ),
                   const SizedBox(width: 4),
                   Text(
-                    'Submit Absence',
+                    'Submit Absence'.tr(),
                     style: TextStyle(
                       color: appColors.primaryText,
                       fontSize: 20,
@@ -78,7 +71,6 @@ class _AbsenceManagementBody extends StatelessWidget {
 
             const SizedBox(height: 16),
 
-            // --- Form fields ---
             Expanded(
               child: Consumer<AbsenceProvider>(
                 builder: (context, provider, _) {
@@ -90,13 +82,12 @@ class _AbsenceManagementBody extends StatelessWidget {
                     physics: const BouncingScrollPhysics(),
                     padding: EdgeInsets.zero,
                     children: [
-                      // ── Absence Type field ──
+
                       AbsenceTypeField(
                         selectedType: provider.selectedType,
                         onTap: () => _showTypeBottomSheet(context, provider),
                       ),
 
-                      // ── Date field ──
                       _FormActionField(
                         label: 'Date',
                         value: formattedDate,
@@ -108,7 +99,6 @@ class _AbsenceManagementBody extends StatelessWidget {
                         ),
                       ),
 
-                      // ── From Time field ──
                       _FormActionField(
                         label: 'From Time',
                         value: provider.fromTime?.format(context),
@@ -120,7 +110,6 @@ class _AbsenceManagementBody extends StatelessWidget {
                         ),
                       ),
 
-                      // ── To Time field ──
                       _FormActionField(
                         label: 'To Time',
                         value: provider.toTime?.format(context),
@@ -132,7 +121,6 @@ class _AbsenceManagementBody extends StatelessWidget {
                         ),
                       ),
 
-                      // ── Calculated Duration Box ──
                       if (provider.calculatedDuration != null)
                         _DurationCard(
                           durationText: provider.calculatedDuration!,
@@ -143,7 +131,6 @@ class _AbsenceManagementBody extends StatelessWidget {
               ),
             ),
 
-            // --- Submit button ---
             Consumer<AbsenceProvider>(
               builder: (context, provider, _) {
                 return _SubmitButton(
@@ -158,10 +145,6 @@ class _AbsenceManagementBody extends StatelessWidget {
       ),
     );
   }
-
-  // ---------------------------------------------------------------------------
-  // Helpers
-  // ---------------------------------------------------------------------------
 
   void _showTypeBottomSheet(
     BuildContext context,
@@ -239,34 +222,23 @@ class _AbsenceManagementBody extends StatelessWidget {
     BuildContext context,
     AbsenceProvider provider,
   ) async {
-    // 1. Trigger submission method in the provider and wait for it to complete.
+
     await provider.submitAbsence();
 
-    // Guard against using context across async gaps if the widget was unmounted.
     if (!context.mounted) return;
 
-    // 2. Display the high-performance AwesomeSuccessDialog using showGeneralDialog.
-    // Why showGeneralDialog? It allows us to customize the enter/exit transition
-    // duration and animation curves without needing boilerplate animation controllers.
-    //
-    // Clean Architecture & Decoupling:
-    // We pass the navigation callback directly into [onConfirm]. The dialog itself
-    // has no knowledge of [HomeScreen] or route stacks; it simply invokes this
-    // callback when the user clicks DONE.
     showGeneralDialog(
       context: context,
-      barrierDismissible: false, // Prevent closing by tapping outside
+      barrierDismissible: false,
       barrierLabel: 'Success Dialog',
       barrierColor: Colors.black.withValues(alpha: 0.5),
       transitionDuration: const Duration(milliseconds: 350),
       pageBuilder: (context, anim1, anim2) {
         return AwesomeSuccessDialog(
           onConfirm: () {
-            // Automatically close the dialog first.
+
             Navigator.of(context).pop();
 
-            // Navigate to HomeScreen and clear the entire navigation stack so the
-            // user cannot press back and return to the absence submission form.
             Navigator.of(context).pushAndRemoveUntil(
               MaterialPageRoute(builder: (_) => const HomeScreen()),
               (route) => false,
@@ -274,9 +246,7 @@ class _AbsenceManagementBody extends StatelessWidget {
           },
         );
       },
-      // transitionBuilder coordinates how the dialog modal enters and exits the screen.
-      // We combine a CurvedAnimation with Curves.easeOutBack for a slight overshoot scale
-      // on entry, paired with a FadeTransition for smooth opacity fading.
+
       transitionBuilder: (context, anim1, anim2, child) {
         return Transform.scale(
           scale: CurvedAnimation(
@@ -290,12 +260,6 @@ class _AbsenceManagementBody extends StatelessWidget {
   }
 }
 
-// =============================================================================
-// Private reusable widgets
-// =============================================================================
-
-/// A reusable form field with a floating label and red asterisk,
-/// matching the exact layout of the screenshot.
 class _FormActionField extends StatelessWidget {
   final String label;
   final String? value;
@@ -324,7 +288,7 @@ class _FormActionField extends StatelessWidget {
           decoration: InputDecoration(
             label: RichText(
               text: TextSpan(
-                text: label,
+                text: label.tr(),
                 style: TextStyle(
                   color: hasValue ? appColors.brandOrange : appColors.primaryText,
                   fontSize: hasValue ? 14 : 16,
@@ -377,9 +341,6 @@ class _FormActionField extends StatelessWidget {
   }
 }
 
-/// The submit button pinned to the bottom of the form.
-/// Visually disabled (greyed out with white text) when [enabled] is false.
-/// Displays a loading spinner when [isSubmitting] is true.
 class _SubmitButton extends StatelessWidget {
   final bool enabled;
   final bool isSubmitting;
@@ -420,9 +381,9 @@ class _SubmitButton extends StatelessWidget {
                     strokeWidth: 2.5,
                   ),
                 )
-              : const Text(
-                  'SUBMIT',
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              : Text(
+                  'SUBMIT'.tr(),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
         ),
       ),
@@ -430,8 +391,6 @@ class _SubmitButton extends StatelessWidget {
   }
 }
 
-/// Pinned container that displays the calculated absence duration
-/// (e.g. `01:45 HRS`) when both From Time and To Time are selected.
 class _DurationCard extends StatelessWidget {
   final String durationText;
 

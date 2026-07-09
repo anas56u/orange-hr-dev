@@ -1,16 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// A tappable outlined field that displays the selected absence type
-/// or a placeholder hint when no type has been chosen yet.
-///
-/// Matches the design: rounded orange/grey border, floating label on top,
-/// and chevron-right icon on the right.
 class AbsenceTypeField extends StatelessWidget {
-  /// The currently selected type name, or `null` for the hint state.
+
   final String? selectedType;
 
-  /// Called when the user taps the field.
   final VoidCallback? onTap;
 
   const AbsenceTypeField({super.key, this.selectedType, this.onTap});
@@ -28,7 +23,7 @@ class AbsenceTypeField extends StatelessWidget {
         child: InputDecorator(
           isEmpty: !hasValue,
           decoration: InputDecoration(
-            labelText: 'Absence Type',
+            labelText: 'Absence Type'.tr(),
             labelStyle: TextStyle(
               color: hasValue ? appColors.brandOrange : appColors.primaryText,
               fontSize: 16,
@@ -62,7 +57,7 @@ class AbsenceTypeField extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                hasValue ? selectedType! : '',
+                hasValue ? selectedType!.tr() : '',
                 style: TextStyle(
                   color: appColors.primaryText,
                   fontSize: 16,

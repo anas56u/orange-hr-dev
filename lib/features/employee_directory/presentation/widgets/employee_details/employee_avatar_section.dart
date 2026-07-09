@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// Displays the employee's circular avatar with an orange border,
-/// name in orange, and position underneath.
 class EmployeeAvatarSection extends StatelessWidget {
   final String imageUrl;
   final String name;

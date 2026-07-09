@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// A vertical list of labelled info rows (Email, Mobile, Unit, etc.)
-/// separated by subtle dividers. Each field has an orange label and
-/// a bold black value — matching the profile design.
 class ProfileInfoSection extends StatelessWidget {
   final String email;
   final String mobile;
@@ -35,7 +32,6 @@ class ProfileInfoSection extends StatelessWidget {
   }
 }
 
-/// A single label + value row within the info section.
 class _ProfileInfoRow extends StatelessWidget {
   final String label;
   final String value;

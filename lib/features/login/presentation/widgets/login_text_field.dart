@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// A styled text field with rounded borders, prefix/suffix icons,
-/// and consistent theming for the login screen.
 class LoginTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
@@ -37,7 +35,7 @@ class LoginTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // ── Label ──────────────────────────────────────────────────────
+
         if (labelText != null) ...[
           Text(
             labelText!,
@@ -51,7 +49,6 @@ class LoginTextField extends StatelessWidget {
           const SizedBox(height: 8),
         ],
 
-        // ── Input ──────────────────────────────────────────────────────
         AnimatedContainer(
           duration: const Duration(milliseconds: 200),
           decoration: BoxDecoration(
@@ -145,7 +142,6 @@ class LoginTextField extends StatelessWidget {
           ),
         ),
 
-        // ── Error message ──────────────────────────────────────────────
         AnimatedSize(
           duration: const Duration(milliseconds: 200),
           curve: Curves.easeOut,

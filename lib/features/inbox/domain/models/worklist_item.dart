@@ -1,4 +1,3 @@
-/// The type of a worklist item, determining which icon/color to show.
 enum WorklistItemType {
   leaveApproval,
   cardRequest,
@@ -6,18 +5,14 @@ enum WorklistItemType {
   leaveRequest,
 }
 
-/// Data model for a single worklist / inbox item.
 class WorklistItem {
   final WorklistItemType type;
 
-  /// For person-based items (e.g., "Bilal Alhamza").
   final String? senderName;
   final String? senderImageUrl;
 
-  /// The main message text.
   final String message;
 
-  /// How long ago the event occurred.
   final String timeAgo;
 
   const WorklistItem({
@@ -29,7 +24,6 @@ class WorklistItem {
   });
 }
 
-/// Dummy worklist data matching the design screenshot.
 const List<WorklistItem> mockWorklist = [
   WorklistItem(
     type: WorklistItemType.leaveApproval,

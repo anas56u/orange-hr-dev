@@ -10,7 +10,7 @@ class HomeBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; // Subscribe to locale changes
+    context.locale;
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 18),
@@ -92,11 +92,11 @@ class CustomNavItem extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: onTap,
-      // 3. هنا يكمن سر الأداء العالي: استخدمنا Selector يعيد قيمة bool فقط
+
       child: Selector<HomeProvider, bool>(
         selector: (context, provider) => provider.currentTabIndex == index,
         builder: (context, isSelected, child) {
-          // الكود هنا بداخل الـ builder لن يُنفذ إلا إذا تغيرت قيمة isSelected فقط!
+
           final appColors = Theme.of(context).extension<AppColorsExtension>()!;
           return Column(
             mainAxisSize: MainAxisSize.min,

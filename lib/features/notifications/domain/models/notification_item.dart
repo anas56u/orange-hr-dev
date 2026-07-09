@@ -1,4 +1,3 @@
-/// Data model for a single notification entry.
 class NotificationItem {
   final String senderName;
   final String senderImageUrl;
@@ -13,7 +12,6 @@ class NotificationItem {
   });
 }
 
-/// Dummy notifications matching the design screenshot.
 const List<NotificationItem> mockNotifications = [
   NotificationItem(
     senderName: 'Orange Radio',

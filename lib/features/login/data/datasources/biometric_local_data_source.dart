@@ -38,4 +38,3 @@ class BiometricLocalDataSourceImpl implements BiometricLocalDataSource {
     }
   }
 }
-

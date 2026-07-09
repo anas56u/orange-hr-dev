@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import 'package:orange_hr_dev/features/notifications/domain/models/notification_item.dart';
 
-/// A single row in the notifications list.
-///
-/// Renders a circular avatar, sender name (bold), action text (grey),
-/// and a right-aligned time label. Unread items get a subtle tinted
-/// background so the user can distinguish new from old at a glance.
 class NotificationListItem extends StatelessWidget {
   final NotificationItem notification;
 
@@ -24,11 +19,10 @@ class NotificationListItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 14.0),
       child: Row(
         children: [
-          // --- Avatar ---
+
           _AvatarCircle(imageUrl: notification.senderImageUrl),
           const SizedBox(width: 14),
 
-          // --- Name + Action ---
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -55,7 +49,6 @@ class NotificationListItem extends StatelessWidget {
             ),
           ),
 
-          // --- Time Ago ---
           Text(
             notification.timeAgo,
             style: TextStyle(
@@ -70,7 +63,6 @@ class NotificationListItem extends StatelessWidget {
   }
 }
 
-/// Small const-friendly widget for the circular avatar.
 class _AvatarCircle extends StatelessWidget {
   final String imageUrl;
 

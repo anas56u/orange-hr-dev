@@ -78,7 +78,7 @@ class HomeActionsGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; // Subscribe to locale changes
+    context.locale;
     return SliverPadding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
       sliver: SliverGrid(
@@ -110,7 +110,6 @@ class HomeActionsGrid extends StatelessWidget {
       return;
     }
 
-    // Intercept "Absence Management" — navigate to the dedicated screen.
     if (displayTitle == 'Absence Management') {
       Navigator.of(context).push(
         MaterialPageRoute(builder: (_) => const AbsenceManagementScreen()),
@@ -144,38 +143,35 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; // Subscribe to locale changes
+    context.locale;
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return GestureDetector(
       onTapDown: (_) {
         setState(() {
-          isPressed = true; // تغيير الحالة إلى "مضغوط"
+          isPressed = true;
         });
       },
-      // عند رفع الإصبع (اكتمال الضغطة بنجاح)
+
       onTapUp: (_) {
         setState(() {
-          isPressed = false; // إعادة الحالة للوضع الطبيعي
+          isPressed = false;
         });
 
-        // تنفيذ الحدث الفعلي إذا تم تمريره (مثل الانتقال لصفحة أخرى)
         if (widget.onTap != null) {
           widget.onTap!();
         }
       },
-      // عند سحب الإصبع بعيداً عن الكرت قبل إفلاته (إلغاء الضغطة)
+
       onTapCancel: () {
         setState(() {
           isPressed = false;
         });
       },
 
-      // Best Practice: استخدام AnimatedContainer بدلاً من Container العادي
-      // هذا سيعطي انتقالاً حركياً ناعماً (Smooth Transition) للألوان بدلاً من التغير المفاجئ
       child: AnimatedContainer(
-        duration: const Duration(milliseconds: 150), // سرعة التغير
+        duration: const Duration(milliseconds: 150),
         decoration: BoxDecoration(
-          // إذا كان مضغوطاً نجعل الخلفية سوداء، وإلا بيضاء
+
           color: isPressed ? appColors.primaryText : appColors.cardBackground,
           borderRadius: BorderRadius.circular(24.0),
           boxShadow: [
@@ -200,7 +196,7 @@ class _ActionCardWidgetState extends State<ActionCardWidget> {
             Text(
               context.tr(widget.category.title),
               style: TextStyle(
-                // إذا كان مضغوطاً نجعل النص أبيض، وإلا أسود
+
                 color: isPressed ? appColors.cardBackground : appColors.primaryText,
                 fontSize: 18.0,
                 fontWeight: FontWeight.bold,

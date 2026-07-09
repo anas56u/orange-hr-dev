@@ -36,7 +36,7 @@ class ProfileHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 16),
-        // --- Name ---
+
         Text(
           name,
           style: TextStyle(
@@ -47,7 +47,7 @@ class ProfileHeader extends StatelessWidget {
           ),
         ),
         const SizedBox(height: 4),
-        // --- Job Title ---
+
         Text(
           jobTitle,
           style: TextStyle(

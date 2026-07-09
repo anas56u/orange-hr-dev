@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// Reusable tile widget for a sub-action item within a category.
-///
-/// Matches the existing design system: rounded border, title text,
-/// trailing chevron — identical to [MenuOptionTile] in the profile feature.
 class CategoryActionTile extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
@@ -14,7 +10,7 @@ class CategoryActionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; // Subscribe to locale changes
+    context.locale;
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 6.0),

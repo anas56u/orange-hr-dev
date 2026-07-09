@@ -2,26 +2,19 @@ import 'package:flutter/material.dart';
 
 import 'app_colors_extension.dart';
 
-/// Centralized theme definitions for the Orange HR app.
-///
-/// Both themes share the Orange brand color (0xFFFF6D00) as the seed,
-/// ensuring brand consistency across light and dark modes.
-/// Custom semantic colors are provided via [AppColorsExtension].
 class AppThemes {
-  AppThemes._(); // Prevent instantiation.
+  AppThemes._();
 
-  // ── Brand constants ──────────────────────────────────────────────
   static const Color _brandOrange = Color(0xFFFF6D00);
 
-  // ── Light Theme Extension ────────────────────────────────────────
   static final _lightAppColors = AppColorsExtension(
-    // Existing Settings colors
+
     settingsTileBackground: Colors.white,
     settingsTileBorder: const Color(0xFFEEEEEE),
     subtitleColor: const Color(0xFF757575),
     sectionTitleColor: const Color(0xFF757575),
     brandOrange: _brandOrange,
-    // New app-wide semantic colors
+
     cardBackground: Colors.white,
     scaffoldBackground: Colors.white,
     primaryText: const Color(0xFF1E1E1E),
@@ -34,15 +27,14 @@ class AppThemes {
     avatarPlaceholder: const Color(0xFFE0E0E0),
   );
 
-  // ── Dark Theme Extension ─────────────────────────────────────────
   static final _darkAppColors = AppColorsExtension(
-    // Existing Settings colors
+
     settingsTileBackground: const Color(0xFF1E1E1E),
     settingsTileBorder: const Color(0xFF2C2C2C),
     subtitleColor: const Color(0xFF9E9E9E),
     sectionTitleColor: const Color(0xFF9E9E9E),
     brandOrange: _brandOrange,
-    // New app-wide semantic colors
+
     cardBackground: const Color(0xFF1E1E1E),
     scaffoldBackground: const Color(0xFF121212),
     primaryText: const Color(0xFFE0E0E0),
@@ -55,7 +47,6 @@ class AppThemes {
     avatarPlaceholder: const Color(0xFF424242),
   );
 
-  // ── Light ThemeData ──────────────────────────────────────────────
   static final ThemeData light = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
@@ -119,7 +110,6 @@ class AppThemes {
     extensions: [_lightAppColors],
   );
 
-  // ── Dark ThemeData ───────────────────────────────────────────────
   static final ThemeData dark = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,

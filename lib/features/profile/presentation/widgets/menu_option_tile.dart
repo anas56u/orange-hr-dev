@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// A tappable menu row with a label and a trailing chevron,
-/// inside a rounded bordered container — used for "My Qualification"
-/// and any future menu items on the profile screen.
 class MenuOptionTile extends StatelessWidget {
   final String title;
   final VoidCallback? onTap;
@@ -16,6 +14,7 @@ class MenuOptionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return InkWell(
       borderRadius: BorderRadius.circular(12.0),
@@ -35,7 +34,7 @@ class MenuOptionTile extends StatelessWidget {
           children: [
             Expanded(
               child: Text(
-                title,
+                title.tr(),
                 style: TextStyle(
                   color: appColors.primaryText,
                   fontSize: 15,

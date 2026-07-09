@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// A lightweight, beautifully styled custom pop-up dialog that displays
-/// information about the Orange HR application without standard system clutter.
 class AboutAppDialog extends StatelessWidget {
   const AboutAppDialog({super.key});
 
@@ -38,7 +36,7 @@ class AboutAppDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // --- Logo badge ---
+
             Container(
               width: 80,
               height: 80,
@@ -54,7 +52,6 @@ class AboutAppDialog extends StatelessWidget {
             ),
             const SizedBox(height: 16),
 
-            // --- App Title ---
             Text(
               'Orange HR',
               style: theme.textTheme.headlineSmall?.copyWith(
@@ -65,7 +62,6 @@ class AboutAppDialog extends StatelessWidget {
             ),
             const SizedBox(height: 6),
 
-            // --- Version Pill ---
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
               decoration: BoxDecoration(
@@ -83,7 +79,6 @@ class AboutAppDialog extends StatelessWidget {
             ),
             const SizedBox(height: 18),
 
-            // --- Description ---
             Text(
               'Empowering workplace excellence with Orange HR Mobile Suite. Seamlessly manage attendance, leave requests, approvals, and employee services anytime, anywhere.',
               style: theme.textTheme.bodyMedium?.copyWith(
@@ -94,7 +89,6 @@ class AboutAppDialog extends StatelessWidget {
             ),
             const SizedBox(height: 24),
 
-            // --- Close Button ---
             SizedBox(
               width: double.infinity,
               height: 48,

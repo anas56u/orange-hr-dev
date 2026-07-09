@@ -36,16 +36,11 @@ class AwesomeSuccessDialog extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            // ---------------------------------------------------------------
-            // Large success badge with a custom-drawn checkmark
-            // ---------------------------------------------------------------
+
             const _SuccessBadge(size: 130),
 
             const SizedBox(height: 32),
 
-            // ---------------------------------------------------------------
-            // Title
-            // ---------------------------------------------------------------
             Text(
               'Awesome Success!',
               style: TextStyle(
@@ -59,9 +54,6 @@ class AwesomeSuccessDialog extends StatelessWidget {
 
             const SizedBox(height: 12),
 
-            // ---------------------------------------------------------------
-            // Message
-            // ---------------------------------------------------------------
             Text(
               'Your absence request has been submitted successfully and sent for approval.',
               style: TextStyle(
@@ -75,9 +67,6 @@ class AwesomeSuccessDialog extends StatelessWidget {
 
             const SizedBox(height: 36),
 
-            // ---------------------------------------------------------------
-            // Confirmation Button
-            // ---------------------------------------------------------------
             SizedBox(
               width: double.infinity,
               height: 54,
@@ -108,9 +97,6 @@ class AwesomeSuccessDialog extends StatelessWidget {
   }
 }
 
-/// A large, professional success badge: a soft double-ring green circle
-/// with a checkmark drawn (and animated) via CustomPainter for crisp,
-/// perfectly-proportioned strokes at any size — no icon-font artifacts.
 class _SuccessBadge extends StatefulWidget {
   final double size;
 
@@ -134,13 +120,11 @@ class _SuccessBadgeState extends State<_SuccessBadge>
       duration: const Duration(milliseconds: 900),
     );
 
-    // Circle pops in with a gentle overshoot.
     _scale = CurvedAnimation(
       parent: _controller,
       curve: const Interval(0.0, 0.65, curve: Curves.elasticOut),
     );
 
-    // Checkmark draws itself in right after the circle lands.
     _checkProgress = CurvedAnimation(
       parent: _controller,
       curve: const Interval(0.45, 1.0, curve: Curves.easeOutCubic),
@@ -184,7 +168,7 @@ class _SuccessBadgeState extends State<_SuccessBadge>
             ),
           ],
         ),
-        // Soft white ring for a layered, three-dimensional feel.
+
         padding: EdgeInsets.all(widget.size * 0.07),
         child: Container(
           decoration: const BoxDecoration(
@@ -213,8 +197,6 @@ class _SuccessBadgeState extends State<_SuccessBadge>
   }
 }
 
-/// Draws a crisp, well-proportioned checkmark with rounded joints,
-/// animated as a stroke that "writes itself" from 0% to 100%.
 class _CheckmarkPainter extends CustomPainter {
   final double progress;
 
@@ -231,7 +213,6 @@ class _CheckmarkPainter extends CustomPainter {
       ..strokeJoin = StrokeJoin.round
       ..style = PaintingStyle.stroke;
 
-    // Checkmark points, proportioned relative to the badge size.
     final p1 = Offset(size.width * 0.28, size.height * 0.53);
     final p2 = Offset(size.width * 0.44, size.height * 0.68);
     final p3 = Offset(size.width * 0.74, size.height * 0.34);

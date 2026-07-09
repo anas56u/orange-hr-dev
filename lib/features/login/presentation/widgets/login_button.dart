@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// A full‑width primary action button with an orange gradient, loading
-/// spinner swap, and disabled styling.
 class LoginButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;

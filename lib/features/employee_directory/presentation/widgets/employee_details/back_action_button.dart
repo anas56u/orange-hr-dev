@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
-/// A full-width outlined "BACK" button matching the design.
 class BackActionButton extends StatelessWidget {
   const BackActionButton({super.key});
 

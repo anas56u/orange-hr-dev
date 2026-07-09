@@ -106,7 +106,7 @@ class MyApp extends StatelessWidget {
             theme: AppThemes.light,
             darkTheme: AppThemes.dark,
             themeMode: themeMode,
-            
+
             home: const SplashScreen(),
           );
         },
@@ -114,4 +114,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-  

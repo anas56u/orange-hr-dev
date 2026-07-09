@@ -61,7 +61,7 @@ class ContactInfoCard extends StatelessWidget {
               ],
             ),
           ),
-          // --- Action Icon ---
+
           InkWell(
             borderRadius: BorderRadius.circular(24),
             onTap: onActionTap,

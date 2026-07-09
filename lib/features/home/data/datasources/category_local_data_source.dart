@@ -28,7 +28,7 @@ class CategoryLocalDataSource {
         ),
       ],
     ),
-    // 1. لاحظ أننا أضفنا المسافة ليصبح "Jobs & Recruitment"
+
     "Jobs & Recruitment": const CategoryDetail(
       title: 'Jobs & Recruitment',
       icon: Iconsax.people5,

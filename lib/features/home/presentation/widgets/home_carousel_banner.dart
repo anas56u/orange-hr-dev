@@ -1,4 +1,4 @@
-import 'dart:async'; // 1. إضافة المكتبة
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
@@ -13,8 +13,8 @@ class HomeCarouselBanner extends StatefulWidget {
 
 class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
   late final PageController _pageController;
-  Timer? _timer; // 2. تعريف الـ Timer
-  
+  Timer? _timer;
+
   final List<String> _bannerImages = [
     'https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=1000',
     'https://images.unsplash.com/photo-1552664730-d307ca884978?q=80&w=1000',
@@ -25,19 +25,18 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: 0);
-    _startAutoPlay(); 
+    _startAutoPlay();
   }
 
   void _startAutoPlay() {
     _timer = Timer.periodic(const Duration(seconds: 5), (Timer timer) {
       if (_pageController.hasClients) {
         int nextPage = _pageController.page!.round() + 1;
-        
+
         if (nextPage >= _bannerImages.length) {
           nextPage = 0;
         }
-        
-        // حركة تمرير ناعمة للصفحة التالية
+
         _pageController.animateToPage(
           nextPage,
           duration: const Duration(milliseconds: 400),
@@ -49,7 +48,7 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
 
   @override
   void dispose() {
-    _timer?.cancel(); // 4. إيقاف الـ Timer لتجنب تسريب الذاكرة
+    _timer?.cancel();
     _pageController.dispose();
     super.dispose();
   }
@@ -61,7 +60,7 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
           child: AspectRatio(
-            aspectRatio: 16 / 8, 
+            aspectRatio: 16 / 8,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16.0),
               child: PageView.builder(
@@ -78,9 +77,9 @@ class _HomeCarouselBannerState extends State<HomeCarouselBanner> {
             ),
           ),
         ),
-        
+
         const SizedBox(height: 12),
-        
+
         _buildDotsIndicator(),
       ],
     );

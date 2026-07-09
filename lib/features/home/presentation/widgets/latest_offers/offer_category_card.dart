@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 import '../../../domain/entities/offer_category.dart';
 
-/// A tappable card widget displaying a single offer category.
-///
-/// Renders the category's emoji illustration centered above the title,
-/// inside a white rounded card with a subtle shadow — matching the
-/// design exactly. Uses [InkWell] for a native ripple effect.
-///
-/// All static layout constants (padding, decoration, text style) are
-/// declared as `const` or `static const` to minimize rebuild cost.
 class OfferCategoryCard extends StatelessWidget {
   final OfferCategory category;
   final VoidCallback? onTap;
 
   const OfferCategoryCard({super.key, required this.category, this.onTap});
-
 
   static const _cardRadius = 20.0;
 
@@ -28,6 +20,7 @@ class OfferCategoryCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    context.locale;
     final appColors = Theme.of(context).extension<AppColorsExtension>()!;
     return Container(
       decoration: BoxDecoration(
@@ -52,14 +45,14 @@ class OfferCategoryCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Emoji illustration — renders as full-color graphics
-                // on both Android and iOS.
+
                 Text(category.emoji, style: _emojiStyle),
                 const SizedBox(height: 14),
-                // Category title — centered, multi-line.
+
                 Text(
-                  category.title,
+                  category.title.tr(),
                   textAlign: TextAlign.center,
+
                   maxLines: 3,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(

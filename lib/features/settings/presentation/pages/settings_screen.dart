@@ -16,7 +16,7 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    context.locale; 
+    context.locale;
     final theme = Theme.of(context);
     final appColors = theme.extension<AppColorsExtension>()!;
     return Scaffold(
@@ -27,7 +27,7 @@ class SettingsScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header Title
+
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Text(
@@ -37,12 +37,10 @@ class SettingsScreen extends StatelessWidget {
               ),
               const SizedBox(height: 12),
 
-              // Preferences Section
               SettingsSectionTitle(title: context.tr('preferences')),
               ThemeSelectorTile(),
               LanguageSelectorTile(),
 
-              // General Section
               SettingsSectionTitle(title: context.tr('general')),
               SettingsTileWidget(
                 title: context.tr('about'),
@@ -66,7 +64,7 @@ class SettingsScreen extends StatelessWidget {
               ),
 
               const SizedBox(height: 16),
-              // Logout button
+
               SettingsTileWidget(
                 title: context.tr('logout'),
                 titleColor: const Color(0xFFD32F2F),

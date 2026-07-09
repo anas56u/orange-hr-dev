@@ -6,8 +6,6 @@ import 'package:orange_hr_dev/core/theme/app_colors_extension.dart';
 
 import '../providers/login_provider.dart';
 
-/// A small bottom‑aligned widget showing a fingerprint icon with a
-/// "Biometric Login" label. Triggers biometric authentication on tap.
 class BiometricLoginWidget extends StatelessWidget {
   const BiometricLoginWidget({super.key});
 
@@ -19,7 +17,7 @@ class BiometricLoginWidget extends StatelessWidget {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
-        // Divider line
+
         Row(
           children: [
             Expanded(
@@ -50,7 +48,6 @@ class BiometricLoginWidget extends StatelessWidget {
 
         const SizedBox(height: 24),
 
-        // Biometric button
         GestureDetector(
           onTap: provider.isLoadingBiometric
               ? null
@@ -100,4 +97,3 @@ class BiometricLoginWidget extends StatelessWidget {
     );
   }
 }
-
