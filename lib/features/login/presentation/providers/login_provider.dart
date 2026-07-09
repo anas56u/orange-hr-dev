@@ -38,8 +38,6 @@ class LoginProvider extends ChangeNotifier {
   // Validation helpers
   // ---------------------------------------------------------------------------
 
-  /// Jordanian mobile: starts with `07`, exactly 10 digits.
-  static final _phoneRegex = RegExp(r'^07\d{8}$');
   Future<void> authenticateWithBiometric(BuildContext context) async {
     _isLoadingBiometric = true;
     notifyListeners();
@@ -60,16 +58,19 @@ class LoginProvider extends ChangeNotifier {
     
   }
 
-  /// Returns an error string if [phone] is invalid, `null` otherwise.
-  String? validatePhone(String? phone) {
-    if (phone == null || phone.trim().isEmpty) {
-      return 'phone_required'.tr();
+  /// Returns an error string if [username] is invalid, `null` otherwise.
+  String? validateUsername(String? username) {
+    if (username == null || username.trim().isEmpty) {
+      return 'username_required'.tr();
     }
-    if (!_phoneRegex.hasMatch(phone.trim())) {
-      return 'phone_invalid'.tr();
+    if (username.trim().length < 3) {
+      return 'username_invalid'.tr();
     }
     return null;
   }
+
+  /// Backward-compatible alias.
+  String? validatePhone(String? phone) => validateUsername(phone);
 
   /// Returns an error string if [password] is invalid, `null` otherwise.
   String? validatePassword(String? password) {
@@ -115,16 +116,18 @@ class LoginProvider extends ChangeNotifier {
   ///
   /// The caller should pass the current text‑field values. Returns early
   /// (with an [LoginError] state) when validation fails.
-  Future<void> login({required String phone, required String password}) async {
+  Future<void> login({String? username, String? phone, required String password}) async {
+    final user = (username ?? phone ?? '').trim();
+
     // Enable inline validation from this point on.
     _autoValidate = true;
     notifyListeners();
 
     // ---- client‑side validation ----
-    final phoneError = validatePhone(phone);
+    final userError = validateUsername(user);
     final passwordError = validatePassword(password);
 
-    if (phoneError != null || passwordError != null) {
+    if (userError != null || passwordError != null) {
       // Don't call the use case — the form‑level errors are enough.
       return;
     }
@@ -135,7 +138,7 @@ class LoginProvider extends ChangeNotifier {
 
     try {
       final success = await loginUseCase.execute(
-        phone: phone.trim(),
+        username: user,
         password: password,
       );
 

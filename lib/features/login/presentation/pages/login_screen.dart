@@ -20,7 +20,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
-  final _phoneController = TextEditingController();
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
 
   late final AnimationController _fadeController;
@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   @override
   void dispose() {
-    _phoneController.dispose();
+    _usernameController.dispose();
     _passwordController.dispose();
     _fadeController.dispose();
     super.dispose();
@@ -199,8 +199,8 @@ class _LoginScreenState extends State<LoginScreen>
 
                             const SizedBox(height: 36),
 
-                            // ── Phone field ────────────────────────────
-                            _buildPhoneField(provider, isLoading),
+                            // ── Username field ─────────────────────────
+                            _buildUsernameField(provider, isLoading),
 
                             const SizedBox(height: 20),
 
@@ -221,7 +221,7 @@ class _LoginScreenState extends State<LoginScreen>
                               onPressed: isLoading
                                   ? null
                                   : () => provider.login(
-                                        phone: _phoneController.text,
+                                        username: _usernameController.text,
                                         password: _passwordController.text,
                                       ),
                             ),
@@ -308,17 +308,17 @@ class _LoginScreenState extends State<LoginScreen>
     );
   }
 
-  Widget _buildPhoneField(LoginProvider provider, bool isLoading) {
+  Widget _buildUsernameField(LoginProvider provider, bool isLoading) {
     final error = provider.autoValidate
-        ? provider.validatePhone(_phoneController.text)
+        ? provider.validateUsername(_usernameController.text)
         : null;
 
     return LoginTextField(
-      controller: _phoneController,
-      labelText: 'phone_number'.tr(),
-      hintText: 'phone_hint'.tr(),
-      prefixIcon: Iconsax.call,
-      keyboardType: TextInputType.phone,
+      controller: _usernameController,
+      labelText: 'username'.tr(),
+      hintText: 'username_hint'.tr(),
+      prefixIcon: Iconsax.user,
+      keyboardType: TextInputType.text,
       enabled: !isLoading,
       errorText: error,
       onChanged: (_) {

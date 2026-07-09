@@ -9,6 +9,7 @@ import '../widgets/dark_mode_toggle_tile.dart';
 import '../widgets/language_selector_tile.dart';
 import '../widgets/settings_section_title.dart';
 import '../widgets/settings_tile_widget.dart';
+import '../widgets/about_app_dialog.dart';
 
 class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
@@ -47,18 +48,9 @@ class SettingsScreen extends StatelessWidget {
                 title: context.tr('about'),
                 subtitle: 'Orange HR Mobile Suite',
                 onTap: () {
-                  showAboutDialog(
+                  showDialog(
                     context: context,
-                    applicationName: 'Orange HR',
-                    applicationVersion: '1.0.0+1',
-                    applicationIcon: Image.asset(
-                      'assets/images/logo.png',
-                      width: 48,
-                      height: 48,
-                    ),
-                    children: [
-                      const Text('Empowering workplace excellence with Orange HR Mobile Suite.'),
-                    ],
+                    builder: (_) => const AboutAppDialog(),
                   );
                 },
               ),
